@@ -68,9 +68,10 @@ __Important__ - FileChooserActivity uses `Intent.ACTION_GET_INTENT` to show the 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			// We must check to ensure that the calling Intent is not Intent.ACTION_GET_INTENT
 			if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-				// Display the file chooser dialog with default options.
-				showFileChooser();
+				// Display the file chooser with all file types
+				showFileChooser("*/*");
 			}
 		}
 
@@ -115,6 +116,6 @@ __Important__ - FileChooserActivity uses `Intent.ACTION_GET_INTENT` to show the 
 			Log.d(TAG, "External storage disconneted");
 			finish();
 		}
-	    }
+	}
 
 Project also hosted at [Google Code](http://code.google.com/p/afilechooser/)
