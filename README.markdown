@@ -1,32 +1,32 @@
-# aFileChooser - Android Library Project
+# aFileChooser - Android File Chooser
 
-Android developers often desire to present a user with a method of selecting a file from the external storage. Android's Intent system gives developers the ability to implicitly hook into other app's components, but if the user does not have a file explorer present, the developer must instruct them to install one, or build one, themselves. 
+Android developers often desire a way to present a user with a method of selecting a file from "external" storage. Android's `Intent` system gives developers the ability to implicitly hook into other app's components, but if the user doesn't have a file explorer installed, the developer must instruct them to install one, or build one, themselves. 
 
-aFileChooser is an Android Library Project that simplifies this process.
+aFileChooser is an __Android Library Project__ that simplifies this process.
 
-aFileChooser's features:
+Features:
 
  * Streamlines the `Intent.ACTION_GET_CONTENT` Intent calling process
  * Provides a built-in file explorer
  * Converts URI's into java Files
- * Determine MIME data types
- * Retrieve image thumbnails for media files
+ * Specify and determine MIME data types
+ * Easily retrieve image thumbnails for media files
  * Follows Android conventions and is extremely simple to implement
 
 ## Installation
 
-First import the aFileChooser project into Eclipse. Then, add aFileChooser to your project as an Android Library Project. If you are unfamiliar with Android Library Projects, refer to the official documentation [here](http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject).
+Import aFileChooser and add it to your project as an Android Library Project. If you are unfamiliar with Android Library Projects, refer to the official documentation [here](http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject).
 
-Next, in your project, create an Activity that extends FileChooserActivity and add it to your AndroidManifest.xml. 
+Next, in your project, create an Activity that `extends FileChooserActivity` and add it to your AndroidManifest.xml file. 
 
-__Important__ You must se the Intent Filters, `android:theme` and `android:configChanges` as bellow:
+__Important__ You must use `intent-filter`, `android:theme` and `android:configChanges` as seen bellow:
 
      <activity
-            android:name="com.foo.ChooserActivity"
-            android:label="Choose file from SD"
+            android:name=".FileChooserTestActivity"
+            android:label="Choose a file"
             android:theme="@android:style/Theme.Light"
-            android:configChanges="orientation|keyboard|keyboardHidden" >
-            <intent-filter >
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize" >
+            <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
                 
 				<category android:name="android.intent.category.DEFAULT" />
@@ -36,28 +36,28 @@ __Important__ You must se the Intent Filters, `android:theme` and `android:confi
             </intent-filter>
     </activity>
 
-The String used for `android:label` will be the text that shows on the IntentChooser Dialog.
+Note: The `String` used for `android:label` will be shown on the `IntentChooser` dialog.
 
 ## Usage
 
-In your Activity you only need to implement `showFileChooser()` and `onFileSelect()` : 
+To initiate the file selection, simply call `showFileChooser()` and listen for the selected file by overriding `onFileSelect()`. E.g.: 
 
     public class FileChooserTestActivity extends FileChooserActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			if (!isIntentGetContent()) {
 				showFileChooser();
 			}
 		}
 
 		@Override
 		protected void onFileSelect(File file) {
-		       // Here you handle the file selection.
+			// Here you handle the file selection.
 		}
     }
 
-__Important__ - FileChooserActivity uses `Intent.ACTION_GET_INTENT` to show the file explorer. Your Activity must check the Intent Action, to ensure that it is not `ACTION_GET_INTENT`
+__Important__ - `FileChooserActivity` uses `Intent.ACTION_GET_CONTENT` to show the embedded file explorer. Your `Activity` must check the `Intent` `action`, to ensure that it is not `ACTION_GET_CONTENT`.
 
 ### A more robust implementation
 
@@ -68,8 +68,8 @@ __Important__ - FileChooserActivity uses `Intent.ACTION_GET_INTENT` to show the 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			// We must check to ensure that the calling Intent is not Intent.ACTION_GET_INTENT
-			if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+			// We must check to ensure that the calling Intent is not Intent.ACTION_GET_CONTENT
+			if (!isIntentGetContent()) {
 				// Display the file chooser with all file types
 				showFileChooser("*/*");
 			}
@@ -85,7 +85,7 @@ __Important__ - FileChooserActivity uses `Intent.ACTION_GET_INTENT` to show the 
 				Log.d(TAG, "File path: " + path);
 
 				// Get the MIME type of the Selected File.			
-				String mimeType = FileUtils.getMimeType(context, file);
+				final String mimeType = FileUtils.getMimeType(context, file);
 				Log.d(TAG, "File MIME type: " + mimeType);
 
 				// Get the Uri of the Selected File
