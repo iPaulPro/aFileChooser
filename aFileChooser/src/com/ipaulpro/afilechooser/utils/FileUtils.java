@@ -42,6 +42,7 @@ import com.ipaulpro.afilechooser.R;
 public class FileUtils {
 	/** TAG for log messages. */
 	static final String TAG = "FileUtils";
+	private static final boolean DEBUG = true; // Set to false to disable logging
 
 	public static final String TYPE_AUDIO = "audio"; 
 	public static final String TYPE_DOC = "doc"; 
@@ -192,7 +193,7 @@ public class FileUtils {
 
 	public static String getPath(Context context, Uri uri) throws URISyntaxException {
 
-		Log.d(TAG+" File -", 
+		if(DEBUG) Log.d(TAG+" File -", 
 				"Authority: " + uri.getAuthority() + 
 				", Fragment: " + uri.getFragment() + 
 				", Port: " + uri.getPort() +
@@ -261,7 +262,7 @@ public class FileUtils {
 		try {
 			mimeTypes = mtp.fromXmlResource(in);
 		} catch (Exception e) {
-			Log.e(TAG, "getMimeTypes", e);
+			if(DEBUG) Log.e(TAG, "getMimeTypes", e);
 		}
 		return mimeTypes;
 	} 
@@ -285,7 +286,7 @@ public class FileUtils {
 	 * @return
 	 */
 	public static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
-		Log.d(TAG, "Attempting to get thumbnail");
+		if(DEBUG) Log.d(TAG, "Attempting to get thumbnail");
 		Bitmap bm = null;
 		if (uri != null) {
 			final ContentResolver resolver = context.getContentResolver();
@@ -294,7 +295,7 @@ public class FileUtils {
 				cursor = resolver.query(uri, null, null,null, null); 
 				if (cursor.moveToFirst()) {
 					final int id = cursor.getInt(0);
-					Log.d(TAG, "Got thumb ID: "+id);					
+					if(DEBUG) Log.d(TAG, "Got thumb ID: "+id);					
 
 					if (mimeType.contains("video")) {
 						bm = MediaStore.Video.Thumbnails.getThumbnail(
@@ -312,7 +313,7 @@ public class FileUtils {
 					}
 				}	
 			} catch (Exception e) {
-				Log.e(TAG, "getThumbnail", e);
+				if(DEBUG) Log.e(TAG, "getThumbnail", e);
 			} finally {
 				if (cursor != null) cursor.close();
 			}

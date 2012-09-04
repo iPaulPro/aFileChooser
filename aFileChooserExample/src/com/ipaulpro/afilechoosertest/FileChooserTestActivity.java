@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -49,7 +50,8 @@ public class FileChooserTestActivity extends FileChooserActivity {
 			
 			// Get the path of the Selected File.
 			final String path = file.getAbsolutePath();
-			Log.d(TAG, "File path: " + path);
+			Toast.makeText(FileChooserTestActivity.this, 
+					"File Selected: "+path, Toast.LENGTH_LONG).show();
 
 			// Get the MIME type of the Selected File.			
 			String mimeType = FileUtils.getMimeType(context, file);

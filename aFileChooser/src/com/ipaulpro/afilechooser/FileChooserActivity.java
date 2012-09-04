@@ -33,6 +33,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
@@ -42,7 +43,7 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
  */
 public class FileChooserActivity extends ListActivity {
 	
-	private static final boolean mLogging = true; // Set to false to disable logging
+	private static final boolean DEBUG = true; // Set to false to disable logging
 	private static final String TAG = "ChooserActivity"; // The log tag
 
 	public static final int REQUEST_CODE = 6384; // onActivityResult request code
@@ -50,16 +51,16 @@ public class FileChooserActivity extends ListActivity {
 	
 	private static final String PATH = "path";
 	private static final String BREADCRUMB = "breadcrumb";
+	private static final String POSTIION = "position";
 	private static final String HIDDEN_PREFIX = ".";
 
 	private String mPath; // The current file path
 	private ArrayList<String> mBreadcrumb = new ArrayList<String>(); // Path history 
-
+	
 	private boolean mExternalStorageAvailable = false;
 	private boolean mExternalStorageWriteable = false;
 	
 	private File mExternalDir;
-	private FileListAdapter mAdapter;
 	private ArrayList<File> mList = new ArrayList<File>();
 
 	/**
@@ -102,13 +103,12 @@ public class FileChooserActivity extends ListActivity {
 	private BroadcastReceiver mExternalStorageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (mLogging) Log.d(TAG, "External storage broadcast recieved: "
+			if (DEBUG) Log.d(TAG, "External storage broadcast recieved: "
 					+ intent.getData());
 			updateExternalStorageState();
 		}
 	};
 	
-	/* *************************** Methods **************************** */
 
 	/**
 	 * Activities extending FileChooserActivity must check against this, and implement
@@ -118,7 +118,7 @@ public class FileChooserActivity extends ListActivity {
 	protected boolean isIntentGetContent() {
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
-		if (mLogging) Log.d(TAG, "Intent Action: "+action);
+		if (DEBUG) Log.d(TAG, "Intent Action: "+action);
 		return Intent.ACTION_GET_CONTENT.equals(action);
 	}
 	
@@ -157,13 +157,13 @@ public class FileChooserActivity extends ListActivity {
 	/**
 	 * Fill the list with the current directory contents. 
 	 */
-	private void fillList() {
-		if (mLogging) Log.d(TAG, "Current path: "+this.mPath);
+	private void fillList(int position) {
+		if (DEBUG) Log.d(TAG, "Current path: "+this.mPath);
 		
 		// Set the cuttent path as the Activity title
 		setTitle(this.mPath);
 		// Clear the list adapter
-		this.mAdapter.clear();
+		((FileListAdapter) getListAdapter()).clear();
 		
 		// Our current directory File instance
 		final File pathDir = new File(mPath);
@@ -187,15 +187,15 @@ public class FileChooserActivity extends ListActivity {
 		}		
 		
 		if (dirs == null && files == null) {
-			if (mLogging) Log.d(TAG, "Directory is empty");
+			if (DEBUG) Log.d(TAG, "Directory is empty");
 		}
 		
 		// Assign the File list items as our adapter items
-		this.mAdapter.setListItems(mList);
+		((FileListAdapter) getListAdapter()).setListItems(mList);
 		// Update the ListView
-		this.mAdapter.notifyDataSetChanged();
+		((FileListAdapter) getListAdapter()).notifyDataSetChanged();
 		// Jump to the top of the list
-		getListView().setSelection(0);
+		getListView().setSelection(position);
 	}
 	
 	/**
@@ -219,7 +219,7 @@ public class FileChooserActivity extends ListActivity {
 					this.mPath = this.mBreadcrumb.get(size - 2);
 					
 					// Display the new directory contents
-					fillList();
+					fillList(0);
 				}
 			}
 		}
@@ -252,7 +252,8 @@ public class FileChooserActivity extends ListActivity {
 		filter.addAction(Intent.ACTION_MEDIA_REMOVED);
 		registerReceiver(this.mExternalStorageReceiver, filter);
 		
-		updateExternalStorageState();
+		if (isIntentGetContent())
+			updateExternalStorageState();
 	}
 
 	/**
@@ -269,37 +270,18 @@ public class FileChooserActivity extends ListActivity {
 	 */
 	private void handleExternalStorageState(boolean available, boolean writeable) {
 		if (!available && isIntentGetContent()) {
-			if (mLogging) Log.d(TAG, "External Storage was disconnected");
+			if (DEBUG) Log.d(TAG, "External Storage was disconnected");
 			onFileDisconnect();
 			finish();
 		}
 	}
 	
 	/**
-	 * If the activity was interrupted, restore the previous path and breadcrumb
-	 * @param savedInstanceState
-	 */
-	private void restoreMe(Bundle savedInstanceState) {
-		if (savedInstanceState != null) {
-			if (savedInstanceState.containsKey(PATH)) {
-				// Restore the previous path. Defaults to base external storage dir
-				this.mPath = savedInstanceState.getString(PATH, 
-						Environment.getExternalStorageDirectory().getAbsolutePath());
-			}
-			if (savedInstanceState.containsKey(PATH)) {
-				// Restore the previous breadcrumb
-				this.mBreadcrumb = 
-					savedInstanceState.getStringArrayList(BREADCRUMB);
-			}
-		}
-	}
-
-	/**
 	 * Called when a file is successfully selected by the user.
 	 * @param file The file selected.
 	 */
 	protected void onFileSelect(File file){
-		if (mLogging) Log.d(TAG, "File selected: "+file.getAbsolutePath());
+		if (DEBUG) Log.d(TAG, "File selected: "+file.getAbsolutePath());
 	}
 
 	/**
@@ -307,24 +289,23 @@ public class FileChooserActivity extends ListActivity {
 	 * @param e The error encountered during file selection.
 	 */
 	protected void onFileError(Exception e){
-		if (mLogging) Log.e(TAG, "Error selecting file", e);
+		if (DEBUG) Log.e(TAG, "Error selecting file", e);
 	}
 
 	/**
 	 * Called when the user backs out of the file selection process.
 	 */
 	protected void onFileSelectCancel(){
-		if (mLogging) Log.d(TAG, "File selection canceled");
+		if (DEBUG) Log.d(TAG, "File selection canceled");
 	}
 
 	/**
 	 * Called when the external storage (SD) is disconnected.
 	 */
 	protected void onFileDisconnect(){
-		if (mLogging) Log.d(TAG, "External storage disconnected");
+		if (DEBUG) Log.d(TAG, "External storage disconnected");
 	}
 	
-	/* *************************** Overrides **************************** */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -333,38 +314,38 @@ public class FileChooserActivity extends ListActivity {
 		// Get the external storage directory.
 		this.mExternalDir = Environment.getExternalStorageDirectory();
 
-		// Set the external storage directory as the current path
-		this.mPath = this.mExternalDir.getAbsolutePath();	
-		// Add the current path to the breadcrumb
-		updateBreadcrumb(true);
-
-		this.mAdapter = new FileListAdapter(this);
-		// Assign the list adapter to the ListView
-		setListAdapter(this.mAdapter);
+		if (getListAdapter() == null) {
+			// Assign the list adapter to the ListView
+			setListAdapter(new FileListAdapter(this));
+		}
 		
 		if (savedInstanceState != null)	{
-        		restoreMe(savedInstanceState);
-        }
+			restoreMe(savedInstanceState);
+		} else {        	
+			// Set the external storage directory as the current path
+			this.mPath = this.mExternalDir.getAbsolutePath();	
+			// Add the current path to the breadcrumb
+			updateBreadcrumb(true);
+			
+			if (isIntentGetContent()) {
+				setContentView(R.layout.explorer);
+				fillList(0);
+			}
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		if (isIntentGetContent()) {
-			startWatchingExternalStorage();
-			setContentView(R.layout.explorer);
-			fillList();
-		}
+		// Set the Broadcast Receiver to listen for storage mount changes
+		startWatchingExternalStorage();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
-		if (isIntentGetContent()) {
-			stopWatchingExternalStorage();
-		} 
+		// Remove the Broadcast Receiver listening for storage mount changes		
+		stopWatchingExternalStorage();
 	}
 	
 	@Override
@@ -380,15 +361,13 @@ public class FileChooserActivity extends ListActivity {
 		File file = this.mList.get(position);
 		// Save the path as our current member variable
 		this.mPath = file.getAbsolutePath();
-		if (mLogging) Log.d(TAG, "Selected file: "+this.mPath);
+		if (DEBUG) Log.d(TAG, "Selected file: "+this.mPath);
 
 		if (file != null) {
-			setTitle(this.mPath);
-			
 			if (file.isDirectory()) {
 				// If the selected item is a folder, update UI
 				updateBreadcrumb(true);
-				fillList();
+				fillList(0);
 			} else {
 				// Otherwise, return the URI of the selected file
 				final Intent data = new Intent();
@@ -429,5 +408,18 @@ public class FileChooserActivity extends ListActivity {
       	// Save the current path and breadcrumb when the activity is interrupted.
       	outState.putString(PATH, mPath);
       	outState.putStringArrayList(BREADCRUMB, mBreadcrumb);
-    } 
+      	outState.putInt(POSTIION, getListView().getFirstVisiblePosition());
+    }
+
+	/**
+	 * If the activity was interrupted, restore the previous path and breadcrumb
+	 * @param savedInstanceState
+	 */
+	private void restoreMe(Bundle state) {
+		// Restore the previous path. Defaults to base external storage dir
+		this.mPath = state.getString(PATH, mExternalDir.getAbsolutePath());
+		// Restore the previous breadcrumb
+		this.mBreadcrumb = state.getStringArrayList(BREADCRUMB);
+		fillList(state.getInt(POSTIION));
+	}
 }

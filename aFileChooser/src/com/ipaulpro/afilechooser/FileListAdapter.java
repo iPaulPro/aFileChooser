@@ -34,16 +34,15 @@ import android.widget.TextView;
  * @author paulburke (ipaulpro)
  */
 public class FileListAdapter extends BaseAdapter {
-	ArrayList<File> mFiles = new ArrayList<File>();
-	private Context mContext;
-	private Drawable mFolderDrawable;
-	private Drawable mFileDrawable;
 
+	private final static int ICON_FOLDER = R.drawable.ic_folder;
+	private final static int ICON_FILE = R.drawable.ic_file;
+	
+	private ArrayList<File> mFiles = new ArrayList<File>();
+	private LayoutInflater mInflater;
+	
 	public FileListAdapter(Context context) {
-		mContext = context;
-		Resources res = mContext.getResources();
-		mFolderDrawable = res.getDrawable(R.drawable.ic_folder);
-		mFileDrawable = res.getDrawable(R.drawable.ic_file);
+		mInflater = LayoutInflater.from(context);
 	}
 
 	public void setListItems(ArrayList<File> files) {
@@ -71,55 +70,38 @@ public class FileListAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
+		View row = convertView;
+		ViewHolder holder = null;
 
-		if (convertView == null) { 
-			final LayoutInflater inflater = LayoutInflater.from(mContext);
-			convertView = inflater.inflate(R.layout.file, parent, false);
-			
-			holder = new ViewHolder();
-			holder.layoutView = (LinearLayout) convertView.findViewById(R.id.folder_layout);
-			holder.nameView = (TextView) convertView.findViewById(R.id.folder_name);
-			holder.iconView = (ImageView) convertView.findViewById(R.id.folder_icon);
-			
-			convertView.setTag(holder);
+		if (row == null) { 
+			row = mInflater.inflate(R.layout.file, parent, false);
+			holder = new ViewHolder(row);
+			row.setTag(holder);
 		} else {
 			// Reduce, reuse, recycle!
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) row.getTag();
 		}
 
 		// Get the file at the current position
-		final File file = mFiles.get(position);
-		Drawable drawable = null;
+		final File file = (File) getItem(position);
+		
 		// Set the TextView as the file name
 		holder.nameView.setText(file.getName());
 
-		if (file.isDirectory()) {
-			// If the item is a directory, use the folder icon
-			drawable = mFolderDrawable;
-		} else {
-			// Otherwise, use the file icon
-			drawable = mFileDrawable;
-		}
-		// Set the icon as the ImageView
-		holder.iconView.setBackgroundDrawable(drawable);
+		// If the item is not a directory, use the file icon
+		holder.iconView.setImageResource(file.isDirectory() ? ICON_FOLDER
+						: ICON_FILE);
 
-		final int white = R.drawable.list_selector_background;
-		final int off_white = R.drawable.list_selector_background_gray;
-		if (position % 2 == 0) {
-			// If the row is even, use the gray background selector
-			holder.layoutView.setBackgroundResource(off_white);
-		} else {
-			// Otherwise, use the white background selector
-			holder.layoutView.setBackgroundResource(white);
-		}
-
-		return convertView;
+		return row;
 	}
 
 	static class ViewHolder {
-		LinearLayout layoutView;
 		TextView nameView;
 		ImageView iconView;
+		
+		ViewHolder(View row) {
+			nameView = (TextView) row.findViewById(R.id.file_name);
+			iconView = (ImageView) row.findViewById(R.id.file_icon);	
+		}
 	}
 }
