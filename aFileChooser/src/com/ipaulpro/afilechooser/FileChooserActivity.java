@@ -417,7 +417,8 @@ public class FileChooserActivity extends ListActivity {
 	 */
 	private void restoreMe(Bundle state) {
 		// Restore the previous path. Defaults to base external storage dir
-		this.mPath = state.getString(PATH, mExternalDir.getAbsolutePath());
+		this.mPath = (state.containsKey(PATH)) ? 
+				state.getString(PATH) : mExternalDir.getAbsolutePath();
 		// Restore the previous breadcrumb
 		this.mBreadcrumb = state.getStringArrayList(BREADCRUMB);
 		fillList(state.getInt(POSTIION));
