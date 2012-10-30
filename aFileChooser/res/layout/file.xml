@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 20011 Paul Burke
+ * Copyright (C) 2012 Paul Burke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <ImageView
         android:id="@+id/file_icon"
-        style="@style/fileIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp" />
+        style="@style/fileChooserIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/file_name"
-        style="@style/fileName"
+        style="@style/fileChooserName"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2011 Paul Burke
+ * Copyright (C) 2012 Paul Burke
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -12,41 +12,49 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
- */ 
+ */
 
 package com.ipaulpro.afilechooser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
+ * List adapter for Files.
+ * 
+ * @version 2012-10-28
+ * 
  * @author paulburke (ipaulpro)
+ * 
  */
 public class FileListAdapter extends BaseAdapter {
 
 	private final static int ICON_FOLDER = R.drawable.ic_folder;
 	private final static int ICON_FILE = R.drawable.ic_file;
-	
-	private ArrayList<File> mFiles = new ArrayList<File>();
+
+	private List<File> mFiles = new ArrayList<File>();
 	private LayoutInflater mInflater;
-	
+
 	public FileListAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
 	}
 
-	public void setListItems(ArrayList<File> files) {
+	public ArrayList<File> getListItems() {
+		return (ArrayList<File>) mFiles;
+	}
+
+	public void setListItems(List<File> files) {
 		this.mFiles = files;
+		notifyDataSetChanged();
 	}
 
 	public int getCount() {
@@ -73,7 +81,7 @@ public class FileListAdapter extends BaseAdapter {
 		View row = convertView;
 		ViewHolder holder = null;
 
-		if (row == null) { 
+		if (row == null) {
 			row = mInflater.inflate(R.layout.file, parent, false);
 			holder = new ViewHolder(row);
 			row.setTag(holder);
@@ -84,13 +92,13 @@ public class FileListAdapter extends BaseAdapter {
 
 		// Get the file at the current position
 		final File file = (File) getItem(position);
-		
+
 		// Set the TextView as the file name
 		holder.nameView.setText(file.getName());
 
 		// If the item is not a directory, use the file icon
 		holder.iconView.setImageResource(file.isDirectory() ? ICON_FOLDER
-						: ICON_FILE);
+				: ICON_FILE);
 
 		return row;
 	}
@@ -98,10 +106,10 @@ public class FileListAdapter extends BaseAdapter {
 	static class ViewHolder {
 		TextView nameView;
 		ImageView iconView;
-		
+
 		ViewHolder(View row) {
 			nameView = (TextView) row.findViewById(R.id.file_name);
-			iconView = (ImageView) row.findViewById(R.id.file_icon);	
+			iconView = (ImageView) row.findViewById(R.id.file_icon);
 		}
 	}
 }

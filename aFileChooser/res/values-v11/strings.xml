@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
- * Copyright (C) 2011 Paul Burke
+ * Copyright (C) 2012 Paul Burke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
- <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ipaulpro.afilechooser">
-
-    <uses-sdk android:minSdkVersion="7" />
-
-</manifest>
+<resources>
+    <string name="empty_directory">Empty Directory</string>
+    <string name="storage_removed">Storage was removed or unmounted.</string>
+    <string name="choose_file">Choose a file</string>    
+</resources>

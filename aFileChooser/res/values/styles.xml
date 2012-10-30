@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2012 Paul Burke
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="fileName" parent="android:Widget.TextView">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:freezesText">true</item>
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:layout_marginRight">12dp</item>
-        <item name="android:marqueeRepeatLimit">marquee_forever</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:singleLine">true</item>
+    <style name="fileChooserName">
+        <item name="android:layout_marginLeft">@dimen/list_item_padding</item>
+        <item name="android:layout_marginRight">@dimen/list_item_padding</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="fileIcon">
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">12dp</item>
+    <style name="fileChooserIcon">
+        <item name="android:layout_marginLeft">@dimen/list_item_padding</item>
 	</style>
 </resources>
