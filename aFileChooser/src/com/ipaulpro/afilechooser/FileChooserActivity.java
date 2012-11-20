@@ -44,6 +44,7 @@ public class FileChooserActivity extends FragmentActivity implements
 		OnBackStackChangedListener {
 
 	public static final String PATH = "path";
+	public static final String TYPE = "type";
 	public static final String EXTERNAL_BASE_PATH = Environment
 			.getExternalStorageDirectory().getAbsolutePath();
 
@@ -116,7 +117,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * @param path The absolute path of the file (directory) to display.
 	 */
 	private void addFragment(String path) {
-		FileListFragment explorerFragment = FileListFragment.newInstance(mPath);
+		FileListFragment explorerFragment = FileListFragment.newInstance(mPath, getIntent().getType());
 		mFragmentManager.beginTransaction()
 				.add(R.id.explorer_fragment, explorerFragment).commit();
 	}
@@ -128,7 +129,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * @param path The absolute path of the file (directory) to display.
 	 */
 	private void replaceFragment(String path) {
-		FileListFragment explorerFragment = FileListFragment.newInstance(path);
+		FileListFragment explorerFragment = FileListFragment.newInstance(path, getIntent().getType());
 		mFragmentManager.beginTransaction()
 				.replace(R.id.explorer_fragment, explorerFragment)
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
