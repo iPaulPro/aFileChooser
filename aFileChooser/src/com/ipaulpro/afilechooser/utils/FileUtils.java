@@ -25,14 +25,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.Build;
 import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Video;
 import android.util.Log;
@@ -364,37 +363,11 @@ public class FileUtils {
 			return null;
 		}
 
-		Bitmap bm = null;
-		if (uri != null) {
-			final ContentResolver resolver = context.getContentResolver();
-			Cursor cursor = null;
-			try {
-				cursor = resolver.query(uri, null, null, null, null);
-				if (cursor.moveToFirst()) {
-					final int id = cursor.getInt(0);
-					if (DEBUG)
-						Log.d(TAG, "Got thumb ID: " + id);
-
-					if (mimeType.contains("video")) {
-						bm = MediaStore.Video.Thumbnails
-								.getThumbnail(resolver, id,
-										MediaStore.Video.Thumbnails.MINI_KIND,
-										null);
-					} else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
-						bm = MediaStore.Images.Thumbnails.getThumbnail(
-								resolver, id,
-								MediaStore.Images.Thumbnails.MINI_KIND, null);
-					}
-				}
-			} catch (Exception e) {
-				if (DEBUG)
-					Log.e(TAG, "getThumbnail", e);
-			} finally {
-				if (cursor != null)
-					cursor.close();
-			}
+		if (Build.VERSION.SDK_INT > 4) {
+			return ThumbnailUtil.getThumbnail(context, uri, mimeType);
+		} else {
+			return null;
 		}
-		return bm;
 	}
 
 	private static final String HIDDEN_PREFIX = ".";
