@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
- */ 
+ */
 
 package com.ipaulpro.afilechooser;
 
@@ -46,13 +46,15 @@ public class FileListFragment extends ListFragment implements
 	/**
 	 * Create a new instance with the given file path.
 	 * 
-	 * @param path The absolute path of the file (directory) to display.
-	 * @return A new Fragment with the given file path. 
+	 * @param path
+	 *            The absolute path of the file (directory) to display.
+	 * @return A new Fragment with the given file path.
 	 */
-	public static FileListFragment newInstance(String path) {
+	public static FileListFragment newInstance(String path, String type) {
 		FileListFragment fragment = new FileListFragment();
 		Bundle args = new Bundle();
 		args.putString(FileChooserActivity.PATH, path);
+		args.putString(FileChooserActivity.TYPE, type);
 		fragment.setArguments(args);
 
 		return fragment;
@@ -74,8 +76,8 @@ public class FileListFragment extends ListFragment implements
 		setListAdapter(mAdapter);
 		setListShown(false);
 
-		getLoaderManager().initLoader(LOADER_ID, null, this);
-		
+		getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -91,7 +93,7 @@ public class FileListFragment extends ListFragment implements
 
 	@Override
 	public Loader<List<File>> onCreateLoader(int id, Bundle args) {
-		return new FileLoader(getActivity(), mPath);
+		return new FileLoader(getActivity(), mPath, args.getString(FileChooserActivity.TYPE));
 	}
 
 	@Override
