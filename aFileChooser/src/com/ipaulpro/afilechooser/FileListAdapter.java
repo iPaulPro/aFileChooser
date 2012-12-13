@@ -57,7 +57,8 @@ public class FileListAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	public int getCount() {
+	@Override
+    public int getCount() {
 		return mFiles.size();
 	}
 
@@ -69,15 +70,18 @@ public class FileListAdapter extends BaseAdapter {
 		mFiles.clear();
 	}
 
-	public Object getItem(int position) {
+	@Override
+    public Object getItem(int position) {
 		return mFiles.get(position);
 	}
 
-	public long getItemId(int position) {
+	@Override
+    public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	@Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		ViewHolder holder = null;
 
