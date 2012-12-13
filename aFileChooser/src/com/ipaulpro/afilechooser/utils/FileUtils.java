@@ -55,6 +55,8 @@ public class FileUtils {
 	public static final String MIME_TYPE_IMAGE = "image/*"; 
 	public static final String MIME_TYPE_VIDEO = "video/*"; 
 	public static final String MIME_TYPE_APP = "application/*";
+	
+	private static MimeTypes sMimeTypeSingleton = null;
 
 	/**
 	 * Whether the filename is a video file.
@@ -281,15 +283,19 @@ public class FileUtils {
 	 * @return
 	 */
 	private static MimeTypes getMimeTypes(Context context) {
-		MimeTypes mimeTypes = null;
-		final MimeTypeParser mtp = new MimeTypeParser();
-		final XmlResourceParser in = context.getResources().getXml(R.xml.mimetypes);
+	    MimeTypes mimeTypes = sMimeTypeSingleton;
+	    
+	    if (mimeTypes == null) {
+	        final MimeTypeParser mtp = new MimeTypeParser();
+	        final XmlResourceParser in = context.getResources().getXml(R.xml.mimetypes);
 
-		try {
-			mimeTypes = mtp.fromXmlResource(in);
-		} catch (Exception e) {
-			if(DEBUG) Log.e(TAG, "getMimeTypes", e);
-		}
+	        try {
+	            mimeTypes = mtp.fromXmlResource(in);
+	        } catch (Exception e) {
+	            if(DEBUG) Log.e(TAG, "getMimeTypes", e);
+	        }
+	    }
+
 		return mimeTypes;
 	} 
 
@@ -306,7 +312,41 @@ public class FileUtils {
 		if (file != null) mimeType = mimeTypes.getMimeType(file.getName());
 		return mimeType;
 	}
+	
+	/**
+     * Determines if child is a subset of parent. <br>
+     * e.g.: foo/bar is a subset of * / *, foo/*, or * / bar
+     * 
+     * @param parent
+     * @param childCandidate
+     * @return <code>True</code> if the child is contained within the parent
+     */
+    public static boolean isMimeTypeSubsetOfMimeType(String parent, String childCandidate) {
+        if (parent == null || childCandidate == null) {
+            throw new IllegalArgumentException("Cannot compare null MIME types");
+        }
 
+        String[] parentMimeParts = parent.split("/");
+        String[] childMimeParts = childCandidate.split("/");
+
+        if (parentMimeParts.length != 2 || childMimeParts.length != 2) {
+            throw new IllegalArgumentException("Illegal MIME type formats: Parent: " + parent
+                + " Child: " + childCandidate);
+        }
+
+        boolean containedInFirstPart = parentMimeParts[0].equals("*");
+        if (!containedInFirstPart) {
+            containedInFirstPart = parentMimeParts[0].equalsIgnoreCase(childMimeParts[0]);
+        }
+
+        boolean containedInSecondPart = parentMimeParts[1].equals("*");
+        if (!containedInSecondPart) {
+            containedInSecondPart = parentMimeParts[1].equalsIgnoreCase(childMimeParts[1]);
+        }
+
+        return containedInFirstPart && containedInSecondPart;
+    }
+    
 	/**
 	 * Attempt to retrieve the thumbnail of given File from the MediaStore.
 	 * 
@@ -409,18 +449,28 @@ public class FileUtils {
 	};
 	
 	/**
-	 * File (not directories) filter.
-	 * 
-	 * @author paulburke
+	 * Filters out directories, hidden files, and files that do not
+	 * match the MIME type.
 	 */
-	private static FileFilter mFileFilter = new FileFilter() {
-		@Override
+	private static class MimeFileFilter implements FileFilter {
+
+	    private String mMimeType;
+	    private Context mContext;
+
+	    public MimeFileFilter(Context context, String mimeType) {
+	        mMimeType = mimeType;
+	        mContext = context;
+	    }
+	    
+        @Override
         public boolean accept(File file) {
-			final String fileName = file.getName();
-			// Return files only (not directories) and skip hidden files
-			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
-		}
-	};
+            final String fileName = file.getName();
+            // Return files only (not directories), skip hidden files, and has a valid MIME type
+            return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX)
+                && isMimeTypeSubsetOfMimeType(mMimeType, getMimeType(mContext, file));
+        }
+	    
+	}
 	
 	/**
 	 * Folder (directories) filter.
@@ -439,12 +489,14 @@ public class FileUtils {
 	/**
 	 * Get a list of Files in the give path
 	 * 
+	 * @param context
 	 * @param path
+	 * @param mimeType The MIME type to filter the file list.
 	 * @return Collection of files in give directory
 
 	 * @author paulburke
 	 */
-	public static List<File> getFileList(String path) {
+	public static List<File> getFileList(Context context, String path, String mimeType) {
 		ArrayList<File> list = new ArrayList<File>();
 
 		// Current directory File instance
@@ -460,7 +512,7 @@ public class FileUtils {
 		}
 
 		// List file in this directory with the file filter
-		final File[] files = pathDir.listFiles(mFileFilter);
+		final File[] files = pathDir.listFiles(new MimeFileFilter(context, mimeType));
 		if (files != null) {
 			// Sort the files alphabetically
 			Arrays.sort(files, mComparator);

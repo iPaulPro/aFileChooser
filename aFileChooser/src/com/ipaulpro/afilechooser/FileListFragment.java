@@ -19,6 +19,8 @@ package com.ipaulpro.afilechooser;
 import java.io.File;
 import java.util.List;
 
+import com.ipaulpro.afilechooser.utils.MimeTypes;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ListFragment;
@@ -39,20 +41,24 @@ public class FileListFragment extends ListFragment implements
 		LoaderManager.LoaderCallbacks<List<File>> {
 
 	private static final int LOADER_ID = 0;
+	private static final String MIME_TYPE = "mime_type";
 
 	private FileListAdapter mAdapter;
 	private String mPath;
+	private String mMimeType;
 
 	/**
 	 * Create a new instance with the given file path.
 	 * 
 	 * @param path The absolute path of the file (directory) to display.
+	 * @param mimeType The MIME type of the files to display.
 	 * @return A new Fragment with the given file path. 
 	 */
-	public static FileListFragment newInstance(String path) {
+	public static FileListFragment newInstance(String path, String mimeType) {
 		FileListFragment fragment = new FileListFragment();
 		Bundle args = new Bundle();
 		args.putString(FileChooserActivity.PATH, path);
+		args.putString(MIME_TYPE, mimeType);
 		fragment.setArguments(args);
 
 		return fragment;
@@ -66,6 +72,8 @@ public class FileListFragment extends ListFragment implements
 		mPath = getArguments() != null ? getArguments().getString(
 				FileChooserActivity.PATH) : Environment
 				.getExternalStorageDirectory().getAbsolutePath();
+		mMimeType = getArguments() != null ? getArguments().getString(
+            MIME_TYPE) : MimeTypes.DEFAULT_MIME_TYPE;
 	}
 
 	@Override
@@ -91,7 +99,7 @@ public class FileListFragment extends ListFragment implements
 
 	@Override
 	public Loader<List<File>> onCreateLoader(int id, Bundle args) {
-		return new FileLoader(getActivity(), mPath);
+		return new FileLoader(getActivity(), mPath, mMimeType);
 	}
 
 	@Override

@@ -18,6 +18,8 @@ package com.ipaulpro.afilechooser;
 
 import java.io.File;
 
+import com.ipaulpro.afilechooser.utils.MimeTypes;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -61,6 +63,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	};
 	
 	private String mPath;
+	private String mMimeType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +71,16 @@ public class FileChooserActivity extends FragmentActivity implements
 
 		setContentView(R.layout.chooser);
 
+		Intent i = getIntent();
+		mMimeType = (i != null && i.getType() != null) ? 
+		    i.getType() : MimeTypes.DEFAULT_MIME_TYPE;
+
 		mFragmentManager = getSupportFragmentManager();
 		mFragmentManager.addOnBackStackChangedListener(this);
 
 		if (savedInstanceState == null) {
 			mPath = EXTERNAL_BASE_PATH;
-			addFragment(mPath);
+			addFragment(mPath, mMimeType);
 		} else {
 			mPath = savedInstanceState.getString(PATH);
 		}
@@ -141,8 +148,8 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * 
 	 * @param path The absolute path of the file (directory) to display.
 	 */
-	private void addFragment(String path) {
-		FileListFragment explorerFragment = FileListFragment.newInstance(mPath);
+	private void addFragment(String path, String mimeType) {
+		FileListFragment explorerFragment = FileListFragment.newInstance(path, mimeType);
 		mFragmentManager.beginTransaction()
 				.add(R.id.explorer_fragment, explorerFragment).commit();
 	}
@@ -153,8 +160,8 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * 
 	 * @param path The absolute path of the file (directory) to display.
 	 */
-	private void replaceFragment(String path) {
-		FileListFragment explorerFragment = FileListFragment.newInstance(path);
+	private void replaceFragment(String path, String mimeType) {
+		FileListFragment explorerFragment = FileListFragment.newInstance(path, mimeType);
 		mFragmentManager.beginTransaction()
 				.replace(R.id.explorer_fragment, explorerFragment)
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -187,7 +194,7 @@ public class FileChooserActivity extends FragmentActivity implements
 			mPath = file.getAbsolutePath();
 			
 			if (file.isDirectory()) {
-				replaceFragment(mPath);
+				replaceFragment(mPath, mMimeType);
 			} else {
 				finishWithResult(file);	
 			}
