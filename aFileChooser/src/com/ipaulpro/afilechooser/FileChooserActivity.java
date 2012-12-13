@@ -18,11 +18,14 @@ package com.ipaulpro.afilechooser;
 
 import java.io.File;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +33,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 /**
@@ -107,7 +111,29 @@ public class FileChooserActivity extends FragmentActivity implements
 			mPath = fragment.getName();
 		}
 		
+		supportSetDisplayHomeAsUpEnabled(!EXTERNAL_BASE_PATH.equals(mPath));
+
 		setTitle(mPath);
+	}
+
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void supportSetDisplayHomeAsUpEnabled(boolean showHomeAsUp) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+            ActionBar ab = getActionBar();
+            if (ab != null) {
+                ab.setDisplayHomeAsUpEnabled(showHomeAsUp);
+            }
+        }
 	}
 
 	/**
