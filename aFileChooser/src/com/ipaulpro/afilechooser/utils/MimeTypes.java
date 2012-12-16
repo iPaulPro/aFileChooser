@@ -24,6 +24,8 @@ import android.webkit.MimeTypeMap;
 
 public class MimeTypes {
 
+    public static final String DEFAULT_MIME_TYPE = "*/*";
+    
 	private Map<String, String> mMimeTypes;
 
 	public MimeTypes() {
@@ -57,7 +59,7 @@ public class MimeTypes {
 		
 		String mimetype = mMimeTypes.get(extension);
 		
-		if(mimetype==null) mimetype = "*/*";
+		if(mimetype==null) mimetype = DEFAULT_MIME_TYPE;
 		
 		return mimetype;
 	}

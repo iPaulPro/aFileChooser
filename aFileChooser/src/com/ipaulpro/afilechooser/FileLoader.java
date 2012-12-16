@@ -44,15 +44,17 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	
 	private List<File> mData;
 	private String mPath;
+	private String mMimeType;
 
-	public FileLoader(Context context, String path) {
+	public FileLoader(Context context, String path, String mimeType) {
 		super(context);
 		this.mPath = path;
+		this.mMimeType = mimeType;
 	}
 
 	@Override
 	public List<File> loadInBackground() {
-		return FileUtils.getFileList(mPath);
+		return FileUtils.getFileList(getContext(), mPath, mMimeType);
 	}
 
 	@Override
