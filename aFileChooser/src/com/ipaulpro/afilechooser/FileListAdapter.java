@@ -42,7 +42,7 @@ public class FileListAdapter extends BaseAdapter {
 	private final static int ICON_FILE = R.drawable.ic_file;
 
 	private List<File> mFiles = new ArrayList<File>();
-	private LayoutInflater mInflater;
+	private final LayoutInflater mInflater;
 
 	public FileListAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
@@ -63,10 +63,12 @@ public class FileListAdapter extends BaseAdapter {
 
 	public void add(File file) {
 		mFiles.add(file);
+		notifyDataSetChanged();
 	}
 
 	public void clear() {
 		mFiles.clear();
+		notifyDataSetChanged();
 	}
 
 	public Object getItem(int position) {
