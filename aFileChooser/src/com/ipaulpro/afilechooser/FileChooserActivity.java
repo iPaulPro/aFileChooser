@@ -1,5 +1,6 @@
 /* 
  * Copyright (C) 2011 Paul Burke
+ * (Modified by Zhuowei Zhang for the PocketInvEditor project)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -70,7 +71,8 @@ public class FileChooserActivity extends ListActivity {
 		public boolean accept(File file) {
 			final String fileName = file.getName();
 			// Return files only (not directories) and skip hidden files
-			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
+			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) && 
+				FileUtils.getMimeType(FileChooserActivity.this, file).equals(getIntent().getType());
 		}
 	};
 	
