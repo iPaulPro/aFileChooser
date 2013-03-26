@@ -1,0 +1,5 @@
+libs\*
+res\*
+src\*
+AndroidManifest.xml
+project.properties
