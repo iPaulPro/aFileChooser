@@ -7,4 +7,10 @@
         android:orderInCategory="10"
         android:showAsAction="collapseActionView" />
 	
+	<item android:id="@+id/go_home"
+        android:title="@string/go_home_title"
+        android:titleCondensed="@string/go_home_title"
+        android:orderInCategory="20"
+        android:showAsAction="collapseActionView" />
+	
 </menu>

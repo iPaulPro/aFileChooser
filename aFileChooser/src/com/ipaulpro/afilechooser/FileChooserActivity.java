@@ -18,6 +18,7 @@ package com.ipaulpro.afilechooser;
 
 import java.io.File;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -95,6 +96,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	getMenuInflater().inflate(R.menu.chooser, menu);
+    	menu.findItem(R.id.go_root).setIcon(android.R.drawable.btn_plus);
         return true;
     }
     
@@ -105,7 +107,10 @@ public class FileChooserActivity extends FragmentActivity implements
 		if (itemId == R.id.go_root) {
 			replaceFragment(ROOT_PATH);
 			return true;
-		} else { // else if con sdcard standard
+		} else if (itemId == R.id.go_home) {
+			replaceFragment(EXTERNAL_BASE_PATH);
+			return true;
+		} else {
 			return super.onOptionsItemSelected(item);
 		}
     }

@@ -19,5 +19,6 @@
     <string name="storage_removed">Storage was removed or unmounted.</string>
     <string name="choose_file">Select a file</string>
     <string name="error_selecting_file">Error selecting File</string>
-    <string name="go_root_title">Open root directory</string>
+    <string name="go_root_title">Open ROOT dir</string>
+    <string name="go_home_title">Open HOME dir</string>
 </resources>
