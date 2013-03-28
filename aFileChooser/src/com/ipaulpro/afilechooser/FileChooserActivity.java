@@ -30,6 +30,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 /**
@@ -46,6 +48,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	public static final String PATH = "path";
 	public static final String EXTERNAL_BASE_PATH = Environment
 			.getExternalStorageDirectory().getAbsolutePath();
+	public static final String ROOT_PATH = "/";
 
 	private FragmentManager mFragmentManager;
 	private BroadcastReceiver mStorageListener = new BroadcastReceiver() {
@@ -88,6 +91,24 @@ public class FileChooserActivity extends FragmentActivity implements
 		super.onResume();
 		registerStorageListener();
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	getMenuInflater().inflate(R.menu.chooser, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+		if (itemId == R.id.go_root) {
+			replaceFragment(ROOT_PATH);
+			return true;
+		} else { // else if con sdcard standard
+			return super.onOptionsItemSelected(item);
+		}
+    }
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
