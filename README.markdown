@@ -1,3 +1,6 @@
+# fork addition:
+        - menu to open Root and Home directories
+
 # aFileChooser - Android File Chooser
 
 *(Complete rewrite 10/30/2012)*
