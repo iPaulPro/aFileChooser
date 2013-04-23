@@ -63,6 +63,7 @@ public class FileListAdapter extends BaseAdapter {
 
 	public void add(File file) {
 		mFiles.add(file);
+		notifyDataSetChanged();
 	}
 
 	public void clear() {
