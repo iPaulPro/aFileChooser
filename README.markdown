@@ -1,85 +1,80 @@
 # aFileChooser - Android File Chooser
 
-*(Complete rewrite 10/30/2012)*
+aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser.
 
-Android developers often desire a way to present a user with a method of selecting a file from "external" storage. Android's `Intent` system gives developers the ability to implicitly hook into other app's components, but if the user doesn't have a file explorer installed, the developer must instruct them to install one, or build one, themselves. 
-
-aFileChooser is an __Android Library Project__ that simplifies this process.
+Intents provide the ability to hook into third-party app components for content selection. This works well for media files, but if you want users to be able to select *any* file, they must have an existing File Explorer app installed. Because many Android devices don't have stock File Explorers, the developer must often instruct the user to install one, or build one, themselves. aFileChooser solves this issue.
 
 ### Features:
 
- * Provides a built-in file explorer
- * Streamlines the `Intent.ACTION_GET_CONTENT` Intent calling process
- * Easily convert a URI into s java `File` object
+ * Full file explorer
+ * Simplify `GET_CONTENT` Intent creation
+ * Easily convert a `Uri` into a `File`
  * Determine MIME data types
- * Follows Android conventions (Fragments, Loaders) and is extremely simple to implement
+ * Follows Android conventions (Fragments, Loaders, Intents, etc.) 
 
 ![screenshot-1](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-1.png) ![screenshot-2](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-2.png)
 
 ## Installation
 
-Add aFileChooser to your project as an Android Library Project. If you are unfamiliar with Android Library Projects, refer to the official documentation [here](http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject).
+Add aFileChooser to your project as an [Android Library Project](http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject).
 
-Add FileChooserActivity to your project's AndroidManifest.xml file. The `android:label` and `android:icon` are displayed in the Action Chooser Dialog.
+Add `FileChooserActivity` to your project's AndroidManifest.xml file with a fully-qualified `name`. The `label` and `icon` set here will be shown in the "Intent Chooser" dialog.
 
-__Important__ It must have the `intent-filter` set as seen bellow:
+__Important__ `FileChooserActivity` must have the `<intent-filter>` set as follows:
 
     <activity
         android:name="com.ipaulpro.afilechooser.FileChooserActivity"
         android:icon="@drawable/ic_chooser"
-        android:label="@string/choose_file" >
-            <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT" />
+        android:label="@string/chooser_label" >
+        <intent-filter>
+            <action android:name="android.intent.action.GET_CONTENT" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.OPENABLE" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.OPENABLE" />
 
-                <data android:mimeType="*/*" />
-            </intent-filter>
-        </activity>
+            <data android:mimeType="*/*" />
+        </intent-filter>
+    </activity>
 
 ## Usage
 
-aFileChooser uses `startActivityForResult` to return the Uri of the file selected. The `FileUtils` class provides a helper method to construct an `ACTION_GET_CONTENT` Intent that can be used to create the Action Chooser Dialog. 
+Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog (shown below), or `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`.
 
-    private static final int REQUEST_CODE = 1234;
-    private static final String CHOOSER_TITLE = "Select a file";
+    private static final int REQUEST_CHOOSER = 1234;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent target = FileUtils.createGetContentIntent();
-        Intent intent = Intent.createChooser(target, CHOOSER_TITLE);
-        try {
-            startActivityForResult(intent, REQUEST_CODE);
-        } catch (ActivityNotFoundException e) {
-            // The reason for the existence of aFileChooser
-        }
+        Intent getContentIntent = FileUtils.createGetContentIntent();
+        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+        startActivityForResult(intent, REQUEST_CHOOSER);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        case REQUEST_CODE:	
-            if (resultCode == RESULT_OK) {	
-                // The URI of the selected file	
-                final Uri uri = data.getData();
-                // Create a File from this Uri
-                File file = FileUtils.getFile(uri);
-            }
+        	case REQUEST_CHOOSER:	
+            	if (resultCode == RESULT_OK) {	
+                	final Uri uri = data.getData();
+                	File file = FileUtils.getFile(uri);
+            	}
         }
     }
 
 A more robust example can be found in the aFileChooserExample folder.
 
-## Developed By
+__Note__ The `FileUtils` class provides a helper method to construct an `ACTION_GET_CONTENT` Intent (`FileUtils.createGetContentIntent()`). It also contains a method to convert a `Uri` into a `File` (`FileUtils.getFile(Uri)`).
 
-Paul Burke [paulburke.co](http://paulburke.co/)
+## Credits
+
+Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
+
+Translations by Thomas Taschauer (TomTasche) - [tomtasche.at](http://tomtasche.at)
 
 ## License
 
-    Copyright (C) 2011 - 2012 Paul Burke
+    Copyright (C) 2011 - 2013 Paul Burke
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
