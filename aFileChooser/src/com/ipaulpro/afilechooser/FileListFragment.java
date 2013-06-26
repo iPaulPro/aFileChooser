@@ -63,6 +63,7 @@ public class FileListFragment extends ListFragment implements
 		super.onCreate(savedInstanceState);
 
 		mAdapter = new FileListAdapter(getActivity());
+
 		mPath = getArguments() != null ? getArguments().getString(
 				FileChooserActivity.PATH) : Environment
 				.getExternalStorageDirectory().getAbsolutePath();

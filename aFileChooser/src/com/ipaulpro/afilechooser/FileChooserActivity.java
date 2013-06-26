@@ -50,6 +50,7 @@ public class FileChooserActivity extends FragmentActivity implements
     public static final String PATH = "path";
 	public static final String EXTERNAL_BASE_PATH = Environment
 			.getExternalStorageDirectory().getAbsolutePath();
+	public static final String ROOT_PATH = "/";
 
 	private static final boolean HAS_ACTIONBAR = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 
@@ -96,6 +97,27 @@ public class FileChooserActivity extends FragmentActivity implements
 		
 		registerStorageListener();
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	getMenuInflater().inflate(R.menu.chooser, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+		if (itemId == R.id.go_root) {
+			replaceFragment(ROOT_PATH);
+			return true;
+		} else if (itemId == R.id.go_home) {
+			replaceFragment(EXTERNAL_BASE_PATH);
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
+    }
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {

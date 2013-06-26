@@ -1,3 +1,6 @@
+# fork addition:
+        - menu to open Root and Home directories
+
 # aFileChooser - Android File Chooser
 
 aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser.
