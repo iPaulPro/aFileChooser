@@ -16,17 +16,18 @@
 
 package com.ipaulpro.afilechooser;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * List adapter for Files.
@@ -43,9 +44,11 @@ public class FileListAdapter extends BaseAdapter {
 
 	private List<File> mFiles = new ArrayList<File>();
 	private final LayoutInflater mInflater;
+	private final Resources mResources;
 
 	public FileListAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
+		mResources = context.getResources();
 	}
 
 	public ArrayList<File> getListItems() {
@@ -58,7 +61,7 @@ public class FileListAdapter extends BaseAdapter {
 	}
 
 	@Override
-    public int getCount() {
+	public int getCount() {
 		return mFiles.size();
 	}
 
@@ -73,49 +76,33 @@ public class FileListAdapter extends BaseAdapter {
 	}
 
 	@Override
-    public Object getItem(int position) {
+	public File getItem(int position) {
 		return mFiles.get(position);
 	}
 
 	@Override
-    public long getItemId(int position) {
+	public long getItemId(int position) {
 		return position;
 	}
 
 	@Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-		View row = convertView;
-		ViewHolder holder = null;
-
-		if (row == null) {
-			row = mInflater.inflate(R.layout.file, parent, false);
-			holder = new ViewHolder(row);
-			row.setTag(holder);
-		} else {
-			// Reduce, reuse, recycle!
-			holder = (ViewHolder) row.getTag();
-		}
-
+	public View getView(int position, View convertView, ViewGroup parent) {
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.file, parent, false);
+		} 
+		final TextView nameView = (TextView) convertView;
 		// Get the file at the current position
-		final File file = (File) getItem(position);
+		final File file = getItem(position);
 
 		// Set the TextView as the file name
-		holder.nameView.setText(file.getName());
+		nameView.setText(file.getName());
 
 		// If the item is not a directory, use the file icon
-		holder.iconView.setImageResource(file.isDirectory() ? ICON_FOLDER
+		Drawable img = mResources.getDrawable(file.isDirectory() ? ICON_FOLDER
 				: ICON_FILE);
+		nameView.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null );
 
-		return row;
+		return convertView;
 	}
 
-	static class ViewHolder {
-		TextView nameView;
-		ImageView iconView;
-
-		ViewHolder(View row) {
-			nameView = (TextView) row.findViewById(R.id.file_name);
-			iconView = (ImageView) row.findViewById(R.id.file_icon);
-		}
-	}
 }

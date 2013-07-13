@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="empty_directory">Empty Directory</string>
     <string name="storage_removed">Storage was removed or unmounted.</string>
-    <string name="choose_file">Select a file</string>
+    <string name="choose_file" tools:ignore="UnusedResources">Select a file</string>
     <string name="error_selecting_file">Error selecting File</string>    
 </resources>
