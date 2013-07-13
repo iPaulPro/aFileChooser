@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -402,8 +403,8 @@ public class FileUtils {
 	private static Comparator<File> mComparator = new Comparator<File>() {
 		public int compare(File f1, File f2) {
 			// Sort alphabetically by lower case, which is much cleaner
-			return f1.getName().toLowerCase().compareTo(
-					f2.getName().toLowerCase());
+			return f1.getName().toLowerCase(Locale.getDefault()).compareTo(
+					f2.getName().toLowerCase(Locale.getDefault()));
 		}
 	};
 	
