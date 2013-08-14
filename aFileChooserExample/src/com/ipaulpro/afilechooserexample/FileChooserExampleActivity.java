@@ -17,6 +17,7 @@
 package com.ipaulpro.afilechooserexample;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -29,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 /**
@@ -37,6 +39,11 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 public class FileChooserExampleActivity extends Activity {
 
 	private static final int REQUEST_CODE = 6384; // onActivityResult request code
+	private static final ArrayList<String> INCLUDE_EXTENSIONS_LIST = new ArrayList<String>();
+	static{
+		INCLUDE_EXTENSIONS_LIST.add(".apk");
+		INCLUDE_EXTENSIONS_LIST.add(".bin");
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,8 @@ public class FileChooserExampleActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Display the file chooser dialog
-				showChooser();
+				//showChooser();
+				startFileChooserActivity();
 			}
 		});
 		
@@ -67,6 +75,14 @@ public class FileChooserExampleActivity extends Activity {
 		} catch (ActivityNotFoundException e) {
 			// The reason for the existence of aFileChooser
 		}				
+	}
+	
+	private void startFileChooserActivity(){
+		startActivityForResult(
+				new Intent(this, FileChooserActivity.class).putStringArrayListExtra(
+						FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS, INCLUDE_EXTENSIONS_LIST), 
+						REQUEST_CODE);
+						
 	}
 	
 	@Override

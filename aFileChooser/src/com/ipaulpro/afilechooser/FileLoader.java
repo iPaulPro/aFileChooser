@@ -17,6 +17,7 @@
 package com.ipaulpro.afilechooser;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -44,15 +45,17 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	
 	private List<File> mData;
 	private String mPath;
+	private ArrayList<String> mFilterIncludeExtensions;
 
-	public FileLoader(Context context, String path) {
+	public FileLoader(Context context, String path, ArrayList<String> filterIncludeExtensions) {
 		super(context);
 		this.mPath = path;
+		this.mFilterIncludeExtensions = filterIncludeExtensions;
 	}
 
 	@Override
 	public List<File> loadInBackground() {
-		return FileUtils.getFileList(mPath);
+		return FileUtils.getFileList(mPath, mFilterIncludeExtensions);
 	}
 
 	@Override
