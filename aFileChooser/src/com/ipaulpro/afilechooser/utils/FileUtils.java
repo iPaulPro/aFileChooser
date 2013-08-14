@@ -408,6 +408,31 @@ public class FileUtils {
 	};
 	
 	/**
+	 * File Filter that includes only files with the specified extensions to pass
+	 * @author Kiran Rao
+	 *
+	 */
+	private static class FileExtensionFilter implements FileFilter{
+		private ArrayList<String> mFilterIncludeExtensions;
+		
+		public FileExtensionFilter(ArrayList<String> filterIncludeExtensions){
+			this.mFilterIncludeExtensions = filterIncludeExtensions;
+		}
+
+		@Override
+		public boolean accept(File file) {
+			final String fileName = file.getName();
+			boolean passesExtensionsFilter =  mFilterIncludeExtensions.isEmpty()
+					? true: mFilterIncludeExtensions.contains(getExtension(Uri
+					.fromFile(file).toString()));
+			// Return files only (not directories) and skip hidden files
+			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) && 
+					passesExtensionsFilter;
+		}
+		
+	}
+	
+	/**
 	 * File (not directories) filter.
 	 * 
 	 * @author paulburke
@@ -441,7 +466,7 @@ public class FileUtils {
 
 	 * @author paulburke
 	 */
-	public static List<File> getFileList(String path) {
+	public static List<File> getFileList(String path, ArrayList<String> filterIncludeExtensions) {
 		ArrayList<File> list = new ArrayList<File>();
 
 		// Current directory File instance
@@ -457,7 +482,7 @@ public class FileUtils {
 		}
 
 		// List file in this directory with the file filter
-		final File[] files = pathDir.listFiles(mFileFilter);
+		final File[] files = pathDir.listFiles(new FileExtensionFilter(filterIncludeExtensions));
 		if (files != null) {
 			// Sort the files alphabetically
 			Arrays.sort(files, mComparator);

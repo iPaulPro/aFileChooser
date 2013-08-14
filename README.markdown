@@ -66,6 +66,29 @@ A more robust example can be found in the aFileChooserExample folder.
 
 __Note__ The `FileUtils` class provides a helper method to construct an `ACTION_GET_CONTENT` Intent (`FileUtils.createGetContentIntent()`). It also contains a method to convert a `Uri` into a `File` (`FileUtils.getFile(Uri)`).
 
+###Filtering by file extension
+
+Provide an extra `EXTRA_FILTER_INCLUDE_EXTENSIONS` which is an `ArrayList<String>` containing all the extensions that must be included. Note that the extentions must begin with a dot character. The behavior of this extra is specified as follows:
+
+  - If this extra is specified, then **only** files with the supplied extensions will be shown. All other files will be hidden.
+  - If this extra is not specified, or it is an empty `ArrayList`, then no filtering is performed.
+
+Example:
+
+```
+	private static final ArrayList<String> INCLUDE_EXTENSIONS_LIST = new ArrayList<String>();
+	static{
+		INCLUDE_EXTENSIONS_LIST.add(".apk");
+		INCLUDE_EXTENSIONS_LIST.add(".bin");
+	}
+	//...
+	//...
+	Intent intent = new Intent(this, FileChooserActivity.class);
+	intent.putStringArrayListExtra(FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS, INCLUDE_EXTENSIONS_LIST);
+	//Use this intent in startActivityForResult()
+	
+```
+
 ## Credits
 
 Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
