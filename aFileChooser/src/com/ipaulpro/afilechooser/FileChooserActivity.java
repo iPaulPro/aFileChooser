@@ -45,7 +45,7 @@ import java.io.File;
  * 
  */
 public class FileChooserActivity extends FragmentActivity implements
-		OnBackStackChangedListener {
+		OnBackStackChangedListener, FileListFragment.OnFileSelectedListener {
 
     public static final String PATH = "path";
 	public static final String EXTERNAL_BASE_PATH = Environment
@@ -189,7 +189,8 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * 
 	 * @param file The file that was selected
 	 */
-	protected void onFileSelected(File file) {
+	@Override
+	public void onFileSelected(File file) {
 		if (file != null) {
 			if (file.isDirectory()) {
 				replaceFragment(file);

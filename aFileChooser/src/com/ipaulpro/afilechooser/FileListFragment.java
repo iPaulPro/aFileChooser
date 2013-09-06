@@ -85,7 +85,9 @@ public class FileListFragment extends ListFragment implements
 		if (adapter != null) {
 			File file = (File) adapter.getItem(position);
 			mPath = file.getAbsolutePath();
-			((FileChooserActivity) getActivity()).onFileSelected(file);
+			if (getActivity() instanceof OnFileSelectedListener) {
+				((FileChooserActivity) getActivity()).onFileSelected(file);
+			}
 		}
 	}
 
@@ -108,4 +110,16 @@ public class FileListFragment extends ListFragment implements
 	public void onLoaderReset(Loader<List<File>> loader) {
 		mAdapter.clear();
 	}
+
+    /**
+     * File selected handler.
+     */
+    public interface OnFileSelectedListener {
+        /**
+         * Called when the user selects a File.
+         * @param file The file that was selected
+         */
+        void onFileSelected(File file);
+    }
+
 }
