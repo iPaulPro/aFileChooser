@@ -46,8 +46,14 @@ Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent getContentIntent = FileUtils.createGetContentIntent();
-        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+        Intent intent = new Intent(this, FileChooserActivity.class);
+        
+        //Add the following statement only if you want to set a custom root path for the chooser:
+        intent.putExtra(FileChooserActivity.PATH, "/your/custom/path");
+        
+        //Add the following statement only if you want to enable the user to select only a single file type
+        intent.putExtra(FileChooserActivity.ALLOWED_FILE_EXTENSION, "pdf")
+
         startActivityForResult(intent, REQUEST_CHOOSER);
     }
 
