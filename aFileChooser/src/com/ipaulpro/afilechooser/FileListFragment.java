@@ -1,20 +1,23 @@
-/* 
+/*
  * Copyright (C) 2012 Paul Burke
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
- */ 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.ipaulpro.afilechooser;
+
+import java.io.File;
+import java.util.List;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,16 +27,13 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
-import java.io.File;
-import java.util.List;
-
 /**
  * Fragment that displays a list of Files in a given path.
- * 
+ *
  * @version 2012-10-28
- * 
+ *
  * @author paulburke (ipaulpro)
- * 
+ *
  */
 public class FileListFragment extends ListFragment implements
 		LoaderManager.LoaderCallbacks<List<File>> {
@@ -42,17 +42,19 @@ public class FileListFragment extends ListFragment implements
 
 	private FileListAdapter mAdapter;
 	private String mPath;
+	private String mAllowedFileExtension;
 
 	/**
 	 * Create a new instance with the given file path.
-	 * 
+	 *
 	 * @param path The absolute path of the file (directory) to display.
-	 * @return A new Fragment with the given file path. 
+	 * @return A new Fragment with the given file path.
 	 */
-	public static FileListFragment newInstance(String path) {
+	public static FileListFragment newInstance(String path, String allowedFiles) {
 		FileListFragment fragment = new FileListFragment();
 		Bundle args = new Bundle();
 		args.putString(FileChooserActivity.PATH, path);
+		args.putString(FileChooserActivity.ALLOWED_FILE_EXTENSION, allowedFiles);
 		fragment.setArguments(args);
 
 		return fragment;
@@ -66,6 +68,9 @@ public class FileListFragment extends ListFragment implements
 		mPath = getArguments() != null ? getArguments().getString(
 				FileChooserActivity.PATH) : Environment
 				.getExternalStorageDirectory().getAbsolutePath();
+
+		mAllowedFileExtension = getArguments() != null ? getArguments().getString(
+                        FileChooserActivity.ALLOWED_FILE_EXTENSION) : "";
 	}
 
 	@Override
@@ -75,7 +80,7 @@ public class FileListFragment extends ListFragment implements
 		setListShown(false);
 
 		getLoaderManager().initLoader(LOADER_ID, null, this);
-		
+
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -91,7 +96,7 @@ public class FileListFragment extends ListFragment implements
 
 	@Override
 	public Loader<List<File>> onCreateLoader(int id, Bundle args) {
-		return new FileLoader(getActivity(), mPath);
+		return new FileLoader(getActivity(), mPath, mAllowedFileExtension);
 	}
 
 	@Override

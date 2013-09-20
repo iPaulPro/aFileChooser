@@ -43,13 +43,14 @@ import android.widget.Toast;
  * @version 2013-06-25
  *
  * @author paulburke (ipaulpro)
- *
+ * @author alexbbb
  */
 @SuppressLint("NewApi")
 public class FileChooserActivity extends FragmentActivity implements
 		OnBackStackChangedListener {
 
     public static final String PATH = "path";
+    public static final String ALLOWED_FILE_EXTENSION = "allowedFileExtension";
 	public static final String EXTERNAL_BASE_PATH = Environment
 			.getExternalStorageDirectory().getAbsolutePath();
 
@@ -65,6 +66,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	};
 
 	private String mPath;
+	private String mAllowedExtension;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,11 @@ public class FileChooserActivity extends FragmentActivity implements
 		    if (customPath != null && !customPath.equals("")) {
 		        mPath = customPath;
 		    }
+
+		    final String allowedExtension = intent.getStringExtra(ALLOWED_FILE_EXTENSION);
+		    if (allowedExtension != null) {
+		        mAllowedExtension = allowedExtension;
+		    }
 		}
 
 		if (mPath == null) {
@@ -90,6 +97,14 @@ public class FileChooserActivity extends FragmentActivity implements
     		} else {
     			mPath = savedInstanceState.getString(PATH);
     		}
+		}
+
+		if (mAllowedExtension == null) {
+		    if (savedInstanceState == null) {
+		        mAllowedExtension = "";
+		    } else {
+		        mAllowedExtension = savedInstanceState.getString(ALLOWED_FILE_EXTENSION);
+		    }
 		}
 
 		setTitle(mPath);
@@ -114,6 +129,7 @@ public class FileChooserActivity extends FragmentActivity implements
 		super.onSaveInstanceState(outState);
 
 		outState.putString(PATH, mPath);
+		outState.putString(ALLOWED_FILE_EXTENSION, mAllowedExtension);
 	}
 
 	@Override
@@ -159,7 +175,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	 * Add the initial Fragment with given path.
 	 */
 	private void addFragment() {
-		FileListFragment fragment = FileListFragment.newInstance(mPath);
+		FileListFragment fragment = FileListFragment.newInstance(mPath, mAllowedExtension);
 		mFragmentManager.beginTransaction()
 				.add(R.id.explorer_fragment, fragment).commit();
 	}
@@ -173,7 +189,7 @@ public class FileChooserActivity extends FragmentActivity implements
 	private void replaceFragment(File file) {
         mPath = file.getAbsolutePath();
 
-        FileListFragment fragment = FileListFragment.newInstance(mPath);
+        FileListFragment fragment = FileListFragment.newInstance(mPath, mAllowedExtension);
 		mFragmentManager.beginTransaction()
 				.replace(R.id.explorer_fragment, fragment)
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

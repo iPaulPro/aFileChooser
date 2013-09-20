@@ -440,11 +440,12 @@ public class FileUtils {
 	 * Get a list of Files in the give path
 	 *
 	 * @param path
+	 * @param allowedExtension
 	 * @return Collection of files in give directory
 
 	 * @author paulburke
 	 */
-	public static List<File> getFileList(String path) {
+	public static List<File> getFileList(String path, final String allowedExtension) {
 		ArrayList<File> list = new ArrayList<File>();
 
 		File parent = new File(path).getParentFile();
@@ -465,7 +466,24 @@ public class FileUtils {
 		}
 
 		// List file in this directory with the file filter
-		final File[] files = pathDir.listFiles(mFileFilter);
+		final File[] files;
+
+		if (allowedExtension != null && !allowedExtension.equals("")) {
+		    files = pathDir.listFiles(new FileFilter() {
+
+                @Override
+                public boolean accept(File file) {
+                    final String fileName = file.getName();
+                    // Return files only (not directories) and skip hidden files
+                    return file.isFile()
+                           && !fileName.startsWith(HIDDEN_PREFIX)
+                           && fileName.endsWith(allowedExtension);
+                }
+            });
+		} else {
+		    files = pathDir.listFiles(mFileFilter);
+		}
+
 		if (files != null) {
 			// Sort the files alphabetically
 			Arrays.sort(files, mComparator);

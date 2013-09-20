@@ -1,18 +1,18 @@
-/* 
+/*
  * Copyright (C) 2012 Paul Burke
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
- */ 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.ipaulpro.afilechooser;
 
@@ -27,11 +27,11 @@ import com.ipaulpro.afilechooser.utils.FileUtils;
 
 /**
  * Loader that returns a list of Files in a given file path.
- * 
+ *
  * @version 2012-10-28
- * 
+ *
  * @author paulburke (ipaulpro)
- * 
+ *
  */
 public class FileLoader extends AsyncTaskLoader<List<File>> {
 
@@ -39,20 +39,22 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 			| FileObserver.DELETE | FileObserver.DELETE_SELF
 			| FileObserver.MOVED_FROM | FileObserver.MOVED_TO
 			| FileObserver.MODIFY | FileObserver.MOVE_SELF;
-	
-	private FileObserver mFileObserver;
-	
-	private List<File> mData;
-	private String mPath;
 
-	public FileLoader(Context context, String path) {
+	private FileObserver mFileObserver;
+
+	private List<File> mData;
+	private final String mPath;
+	private final String mAllowedExtension;
+
+	public FileLoader(Context context, String path, String allowedExtension) {
 		super(context);
 		this.mPath = path;
+		this.mAllowedExtension = allowedExtension;
 	}
 
 	@Override
 	public List<File> loadInBackground() {
-		return FileUtils.getFileList(mPath);
+		return FileUtils.getFileList(mPath, mAllowedExtension);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 
 		List<File> oldData = mData;
 		mData = data;
-		
+
 		if (isStarted())
 			super.deliverResult(data);
 
@@ -81,12 +83,12 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 			mFileObserver = new FileObserver(mPath, FILE_OBSERVER_MASK) {
 				@Override
 				public void onEvent(int event, String path) {
-					onContentChanged();	
+					onContentChanged();
 				}
 			};
 		}
 		mFileObserver.startWatching();
-		
+
 		if (takeContentChanged() || mData == null)
 			forceLoad();
 	}
@@ -114,7 +116,7 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	}
 
 	protected void onReleaseResources(List<File> data) {
-		
+
 		if (mFileObserver != null) {
 			mFileObserver.stopWatching();
 			mFileObserver = null;
