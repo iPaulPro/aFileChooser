@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2007-2008 OpenIntents.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,7 +41,7 @@ import com.ipaulpro.afilechooser.R;
 
 /**
  * @version 2009-07-03
- * 
+ *
  * @author Peli
  *
  */
@@ -50,15 +50,15 @@ public class FileUtils {
 	static final String TAG = "FileUtils";
 	private static final boolean DEBUG = false; // Set to true to enable logging
 
-	public static final String MIME_TYPE_AUDIO = "audio/*"; 
-	public static final String MIME_TYPE_TEXT = "text/*"; 
-	public static final String MIME_TYPE_IMAGE = "image/*"; 
-	public static final String MIME_TYPE_VIDEO = "video/*"; 
+	public static final String MIME_TYPE_AUDIO = "audio/*";
+	public static final String MIME_TYPE_TEXT = "text/*";
+	public static final String MIME_TYPE_IMAGE = "image/*";
+	public static final String MIME_TYPE_VIDEO = "video/*";
 	public static final String MIME_TYPE_APP = "application/*";
 
 	/**
 	 * Whether the filename is a video file.
-	 * 
+	 *
 	 * @param filename
 	 * @return
 	 *//*
@@ -73,7 +73,7 @@ public class FileUtils {
 
 	/**
 	 * Whether the URI is a local one.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -86,7 +86,7 @@ public class FileUtils {
 
 	/**
 	 * Gets the extension of a file name, like ".png" or ".jpg".
-	 * 
+	 *
 	 * @param uri
 	 * @return Extension including the dot("."); "" if there is no extension;
 	 *         null if uri was null.
@@ -107,7 +107,7 @@ public class FileUtils {
 
 	/**
 	 * Returns true if uri is a media uri.
-	 * 
+	 *
 	 * @param uri
 	 * @return
 	 */
@@ -177,7 +177,7 @@ public class FileUtils {
 
 	/**
 	 * Constructs a file from a path and file name.
-	 * 
+	 *
 	 * @param curdir
 	 * @param file
 	 * @return
@@ -199,19 +199,19 @@ public class FileUtils {
 
 	/**
 	 * Get a file path from a Uri.
-	 * 
+	 *
 	 * @param context
 	 * @param uri
 	 * @return
 	 * @throws URISyntaxException
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static String getPath(Context context, Uri uri) throws URISyntaxException {
 
-		if(DEBUG) Log.d(TAG+" File -", 
-				"Authority: " + uri.getAuthority() + 
-				", Fragment: " + uri.getFragment() + 
+		if(DEBUG) Log.d(TAG+" File -",
+				"Authority: " + uri.getAuthority() +
+				", Fragment: " + uri.getFragment() +
 				", Port: " + uri.getPort() +
 				", Query: " + uri.getQuery() +
 				", Scheme: " + uri.getScheme() +
@@ -244,10 +244,10 @@ public class FileUtils {
 
 	/**
 	 * Get the file size in a human-readable string.
-	 * 
+	 *
 	 * @param size
 	 * @return
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static String getReadableFileSize(int size) {
@@ -276,7 +276,7 @@ public class FileUtils {
 
 	/**
 	 * Load MIME types from XML
-	 * 
+	 *
 	 * @param context
 	 * @return
 	 */
@@ -291,11 +291,11 @@ public class FileUtils {
 			if(DEBUG) Log.e(TAG, "getMimeTypes", e);
 		}
 		return mimeTypes;
-	} 
+	}
 
 	/**
 	 * Get the file MIME type
-	 * 
+	 *
 	 * @param context
 	 * @param file
 	 * @return
@@ -309,79 +309,79 @@ public class FileUtils {
 
 	/**
 	 * Attempt to retrieve the thumbnail of given File from the MediaStore.
-	 * 
+	 *
 	 * This should not be called on the UI thread.
-	 * 
+	 *
 	 * @param context
 	 * @param file
 	 * @return
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static Bitmap getThumbnail(Context context, File file) {
 		return getThumbnail(context, getUri(file), getMimeType(context, file));
 	}
-	
+
 	/**
 	 * Attempt to retrieve the thumbnail of given Uri from the MediaStore.
-	 * 
+	 *
 	 * This should not be called on the UI thread.
-	 * 
+	 *
 	 * @param context
 	 * @param uri
 	 * @return
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static Bitmap getThumbnail(Context context, Uri uri) {
 		return getThumbnail(context, uri, getMimeType(context, getFile(uri)));
 	}
-	
+
 	/**
 	 * Attempt to retrieve the thumbnail of given Uri from the MediaStore.
-	 * 
+	 *
 	 * This should not be called on the UI thread.
-	 * 
+	 *
 	 * @param context
 	 * @param uri
 	 * @param mimeType
 	 * @return
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
 		if(DEBUG) Log.d(TAG, "Attempting to get thumbnail");
-		
+
 		if (isMediaUri(uri)) {
 			Log.e(TAG, "You can only retrieve thumbnails for images and videos.");
 			return null;
 		}
-		
+
 		Bitmap bm = null;
 		if (uri != null) {
 			final ContentResolver resolver = context.getContentResolver();
-			Cursor cursor = null; 				
+			Cursor cursor = null;
 			try {
-				cursor = resolver.query(uri, null, null,null, null); 
+				cursor = resolver.query(uri, null, null,null, null);
 				if (cursor.moveToFirst()) {
 					final int id = cursor.getInt(0);
-					if(DEBUG) Log.d(TAG, "Got thumb ID: "+id);					
+					if(DEBUG) Log.d(TAG, "Got thumb ID: "+id);
 
 					if (mimeType.contains("video")) {
 						bm = MediaStore.Video.Thumbnails.getThumbnail(
-								resolver, 
-								id, 
-								MediaStore.Video.Thumbnails.MINI_KIND, 
-								null);
-					} 
-					else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
-						bm = MediaStore.Images.Thumbnails.getThumbnail(
-								resolver, 
-								id, 
-								MediaStore.Images.Thumbnails.MINI_KIND, 
+								resolver,
+								id,
+								MediaStore.Video.Thumbnails.MINI_KIND,
 								null);
 					}
-				}	
+					else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
+						bm = MediaStore.Images.Thumbnails.getThumbnail(
+								resolver,
+								id,
+								MediaStore.Images.Thumbnails.MINI_KIND,
+								null);
+					}
+				}
 			} catch (Exception e) {
 				if(DEBUG) Log.e(TAG, "getThumbnail", e);
 			} finally {
@@ -390,63 +390,72 @@ public class FileUtils {
 		}
 		return bm;
 	}
-	
+
 	private static final String HIDDEN_PREFIX = ".";
 
 	/**
 	 * File and folder comparator.
-	 * TODO Expose sorting option method 
-	 * 
+	 * TODO Expose sorting option method
+	 *
 	 * @author paulburke
 	 */
 	private static Comparator<File> mComparator = new Comparator<File>() {
-		public int compare(File f1, File f2) {
+		@Override
+        public int compare(File f1, File f2) {
 			// Sort alphabetically by lower case, which is much cleaner
 			return f1.getName().toLowerCase().compareTo(
 					f2.getName().toLowerCase());
 		}
 	};
-	
+
 	/**
 	 * File (not directories) filter.
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	private static FileFilter mFileFilter = new FileFilter() {
-		public boolean accept(File file) {
+		@Override
+        public boolean accept(File file) {
 			final String fileName = file.getName();
 			// Return files only (not directories) and skip hidden files
 			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
 		}
 	};
-	
+
 	/**
 	 * Folder (directories) filter.
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	private static FileFilter mDirFilter = new FileFilter() {
-		public boolean accept(File file) {
+		@Override
+        public boolean accept(File file) {
 			final String fileName = file.getName();
 			// Return directories only and skip hidden directories
 			return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
 		}
 	};
-	
+
 	/**
 	 * Get a list of Files in the give path
-	 * 
+	 *
 	 * @param path
+	 * @param allowedExtension
 	 * @return Collection of files in give directory
 
 	 * @author paulburke
 	 */
-	public static List<File> getFileList(String path) {
+	public static List<File> getFileList(String path, final String allowedExtension) {
 		ArrayList<File> list = new ArrayList<File>();
+
+		File parent = new File(path).getParentFile();
+		if (parent != null) {
+		    list.add(parent);
+		}
 
 		// Current directory File instance
 		final File pathDir = new File(path);
-		
+
 		// List file in this directory with the directory filter
 		final File[] dirs = pathDir.listFiles(mDirFilter);
 		if (dirs != null) {
@@ -457,29 +466,46 @@ public class FileUtils {
 		}
 
 		// List file in this directory with the file filter
-		final File[] files = pathDir.listFiles(mFileFilter);
+		final File[] files;
+
+		if (allowedExtension != null && !allowedExtension.equals("")) {
+		    files = pathDir.listFiles(new FileFilter() {
+
+                @Override
+                public boolean accept(File file) {
+                    final String fileName = file.getName();
+                    // Return files only (not directories) and skip hidden files
+                    return file.isFile()
+                           && !fileName.startsWith(HIDDEN_PREFIX)
+                           && fileName.endsWith(allowedExtension);
+                }
+            });
+		} else {
+		    files = pathDir.listFiles(mFileFilter);
+		}
+
 		if (files != null) {
 			// Sort the files alphabetically
 			Arrays.sort(files, mComparator);
 			// Add each file to the File list for the list adapter
 			for (File file : files) list.add(file);
-		}		
-		
+		}
+
 		return list;
 	}
 
 	/**
 	 * Get the Intent for selecting content to be used in an Intent Chooser.
-	 * 
+	 *
 	 * @return The intent for opening a file with Intent.createChooser()
-	 * 
+	 *
 	 * @author paulburke
 	 */
 	public static Intent createGetContentIntent() {
 		// Implicitly allow the user to select a particular kind of data
-		final Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
+		final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		// The MIME data type filter
-		intent.setType("*/*"); 
+		intent.setType("*/*");
 		// Only return URIs that can be opened with ContentResolver
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
 		return intent;
