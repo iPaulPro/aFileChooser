@@ -1,16 +1,16 @@
 # aFileChooser - Android File Chooser
 
-aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser.
+aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser on Android 2.1+.
 
-Intents provide the ability to hook into third-party app components for content selection. This works well for media files, but if you want users to be able to select *any* file, they must have an existing File Explorer app installed. Because many Android devices don't have stock File Explorers, the developer must often instruct the user to install one, or build one, themselves. aFileChooser solves this issue.
+Intents provide the ability to hook into third-party app components for content selection. This works well for media files, but if you want users to be able to select *any* file, they must have an existing "file explorer" app installed. Because many Android devices don't have stock File Explorers, the developer must often instruct the user to install one, or build one, themselves. aFileChooser solves this issue.
 
 ### Features:
 
  * Full file explorer
  * Simplify `GET_CONTENT` Intent creation
- * Easily convert a `Uri` into a `File`
  * Determine MIME data types
- * Follows Android conventions (Fragments, Loaders, Intents, etc.) 
+ * Follows Android conventions (Fragments, Loaders, Intents, etc.)
+ * Supports API 7+
 
 ![screenshot-1](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-1.png) ![screenshot-2](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-2.png)
 
@@ -20,11 +20,12 @@ Add aFileChooser to your project as an [Android Library Project](http://develope
 
 Add `FileChooserActivity` to your project's AndroidManifest.xml file with a fully-qualified `name`. The `label` and `icon` set here will be shown in the "Intent Chooser" dialog.
 
-__Important__ `FileChooserActivity` must have the `<intent-filter>` set as follows:
+__Important__ `FileChooserActivity` must have `android:exported="true"` and have the `<intent-filter>` set as follows:
 
     <activity
         android:name="com.ipaulpro.afilechooser.FileChooserActivity"
         android:icon="@drawable/ic_chooser"
+		android:exported="true"
         android:label="@string/chooser_label" >
         <intent-filter>
             <action android:name="android.intent.action.GET_CONTENT" />
@@ -88,9 +89,7 @@ Translations by Thomas Taschauer (TomTasche) - [tomtasche.at](http://tomtasche.a
     See the License for the specific language governing permissions and
     limitations under the License.
 
-    ---
-
-    FileUtils.java, MimeTypeParser.java and MimeTypes.java:
+Portions of FileUtils.java:
 
     Copyright (C) 2007-2008 OpenIntents.org
  

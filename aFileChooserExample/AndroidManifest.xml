@@ -25,7 +25,7 @@
         </activity>
         <activity
             android:name="com.ipaulpro.afilechooser.FileChooserActivity"
-            android:exported="false"
+            android:exported="true"
             android:icon="@drawable/ic_chooser"
             android:label="@string/choose_file"
             android:theme="@style/ChooserTheme" >
