@@ -25,7 +25,7 @@ __Important__ `FileChooserActivity` must have `android:exported="true"` and have
     <activity
         android:name="com.ipaulpro.afilechooser.FileChooserActivity"
         android:icon="@drawable/ic_chooser"
-		android:exported="true"
+        android:exported="true"
         android:label="@string/chooser_label" >
         <intent-filter>
             <action android:name="android.intent.action.GET_CONTENT" />
@@ -56,10 +56,11 @@ Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
         	case REQUEST_CHOOSER:	
-            	if (resultCode == RESULT_OK) {	
+            	if (resultCode == RESULT_OK) {
                 	final Uri uri = data.getData();
-                	File file = FileUtils.getFile(uri);
+                	String path = FileUtils.getPath(this, uri);
             	}
+				break;
         }
     }
 
