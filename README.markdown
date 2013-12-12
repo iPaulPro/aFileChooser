@@ -8,13 +8,14 @@ Intents provide the ability to hook into third-party app components for content 
 
  * Full file explorer
  * Simplify `GET_CONTENT` Intent creation
+ * Hooks into Storage Acces Framework
  * Determine MIME data types
  * Follows Android conventions (Fragments, Loaders, Intents, etc.)
  * Supports API 7+
 
 ![screenshot-1](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-1.png) ![screenshot-2](https://raw.github.com/iPaulPro/aFileChooser/master/screenshot-2.png)
 
-## Installation
+## Setup
 
 Add aFileChooser to your project as an [Android Library Project](http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject).
 
@@ -56,7 +57,7 @@ Using `FileChooserActivity` and `LocalStorageProvider` together are redundant. T
 
 ## Usage
 
-Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`. Alternatively, you can use the helper method `FileUtils.createGetContentIntent()` to construct an `ACTION_GET_CONTENT` Intent that will show an "Intent Chooser" dialog on pre Kit-Kat devices, and the "Documents UI otherwise. E.g.:
+Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`. Alternatively, you can use the helper method `FileUtils.createGetContentIntent()` to construct an `ACTION_GET_CONTENT` Intent that will show an "Intent Chooser" dialog on pre Kit-Kat devices, and the "Documents UI" otherwise. E.g.:
 
     private static final int REQUEST_CHOOSER = 1234;
 
@@ -94,11 +95,11 @@ __Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getP
 
 Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
 
-Translations by Thomas Taschauer (TomTasche) - [tomtasche.at](http://tomtasche.at)
+Translations by [TomTasche](https://github.com/TomTasche), [booknara](https://github.com/booknara), [brenouchoa](https://github.com/brenouchoa)
 
-Folder (ic_provider.png) by [Sergio Calcara](http://thenounproject.com/fallacyaccount) from The Noun Project
+Folder by [Sergio Calcara](http://thenounproject.com/fallacyaccount) from The Noun Project (ic_provider.png)
 
-Document (ic_file.png) by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Project
+Document by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Project (ic_file.png)
 
 ## Licenses
 
