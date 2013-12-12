@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Paul Burke
+ * Copyright (C) 2013 Paul Burke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ import java.util.List;
 
 /**
  * Fragment that displays a list of Files in a given path.
- *
- * @version 2012-10-28
+ * 
+ * @version 2013-12-11
  * @author paulburke (ipaulpro)
  */
 public class FileListFragment extends ListFragment implements

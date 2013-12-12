@@ -66,8 +66,6 @@ public class FileChooserActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.chooser);
-
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener(this);
 
@@ -148,7 +146,7 @@ public class FileChooserActivity extends FragmentActivity implements
     private void addFragment() {
         FileListFragment fragment = FileListFragment.newInstance(mPath);
         mFragmentManager.beginTransaction()
-                .add(R.id.explorer_fragment, fragment).commit();
+                .add(android.R.id.content, fragment).commit();
     }
 
     /**
@@ -162,7 +160,7 @@ public class FileChooserActivity extends FragmentActivity implements
 
         FileListFragment fragment = FileListFragment.newInstance(mPath);
         mFragmentManager.beginTransaction()
-                .replace(R.id.explorer_fragment, fragment)
+                .replace(android.R.id.content, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(mPath).commit();
     }

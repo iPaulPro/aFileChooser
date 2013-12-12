@@ -25,6 +25,7 @@ __Important__ `FileChooserActivity` must have `android:exported="true"` and have
     <activity
         android:name="com.ipaulpro.afilechooser.FileChooserActivity"
         android:icon="@drawable/ic_chooser"
+		android:enabled="@bool/use_activity"
         android:exported="true"
         android:label="@string/chooser_label" >
         <intent-filter>
@@ -37,9 +38,25 @@ __Important__ `FileChooserActivity` must have `android:exported="true"` and have
         </intent-filter>
     </activity>
 
+If you want to use the Storage Access Framework (API 19+), include [Ian Lake](https://github.com/ianhanniballake/)'s `LocalStorageProvider` (included in this library) in your `<application>`:
+
+	<provider
+        android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
+        android:authorities="com.ianhanniballake.localstorage.documents"
+		android:enabled="@bool/use_provider"
+        android:exported="true"
+        android:grantUriPermissions="true"
+        android:permission="android.permission.MANAGE_DOCUMENTS" >
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+    </provider>
+
+Using `FileChooserActivity` and `LocalStorageProvider` together are redundant. Therefore, you should enable/disable based on the API level (above: `@bool/use_provider` and `@bool/use_activity`). See the aFileChooserExample project for their values.
+
 ## Usage
 
-Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog (shown below), or `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`.
+Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`. Alternatively, you can use the helper method `FileUtils.createGetContentIntent()` to construct an `ACTION_GET_CONTENT` Intent that will show an "Intent Chooser" dialog on pre Kit-Kat devices, and the "Documents UI otherwise. E.g.:
 
     private static final int REQUEST_CHOOSER = 1234;
 
@@ -47,7 +64,9 @@ Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Create the ACTION_GET_CONTENT Intent
         Intent getContentIntent = FileUtils.createGetContentIntent();
+		
         Intent intent = Intent.createChooser(getContentIntent, "Select a file");
         startActivityForResult(intent, REQUEST_CHOOSER);
     }
@@ -57,16 +76,19 @@ Use `startActivityForResult(Intent, int)` to launch the "Intent Chooser" dialog 
         switch (requestCode) {
         	case REQUEST_CHOOSER:	
             	if (resultCode == RESULT_OK) {
+					
                 	final Uri uri = data.getData();
+					
+					// Get the File path from the Uri
                 	String path = FileUtils.getPath(this, uri);
             	}
 				break;
         }
     }
 
-A more robust example can be found in the aFileChooserExample folder.
+A more robust example can be found in the aFileChooserExample project.
 
-__Note__ The `FileUtils` class provides a helper method to construct an `ACTION_GET_CONTENT` Intent (`FileUtils.createGetContentIntent()`). It also contains a method to convert a `Uri` into a `File` (`FileUtils.getFile(Uri)`).
+__Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getPath(Context, Uri)`). This works for `File`, `MediaStore`, and `DocumentProvider` `Uri`s.
 
 ## Credits
 
@@ -74,7 +96,11 @@ Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
 
 Translations by Thomas Taschauer (TomTasche) - [tomtasche.at](http://tomtasche.at)
 
-## License
+Folder (ic_provider.png) by [Sergio Calcara](http://thenounproject.com/fallacyaccount) from The Noun Project
+
+Document (ic_file.png) by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Project
+
+## Licenses
 
     Copyright (C) 2011 - 2013 Paul Burke
 
@@ -104,3 +130,16 @@ Portions of FileUtils.java:
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+LocalStorageProvider.java:
+
+	Copyright (c) 2013, Ian Lake
+	All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+	- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+	- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+	- Neither the name of the <ORGANIZATION> nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.	

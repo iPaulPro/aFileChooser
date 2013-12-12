@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 
- * Copyright (C) 2011 Paul Burke
+ * Copyright (C) 2013 Paul Burke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,6 @@
  <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Holo.Light" /> 
-    <style name="ChooserTheme" parent="android:Theme.Holo.Light" />
+    <style name="ChooserTheme" parent="android:Theme.Holo.Light.DialogWhenLarge" />
     
 </resources>

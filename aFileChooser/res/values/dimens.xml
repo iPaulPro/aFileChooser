@@ -16,5 +16,5 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 	<dimen name="list_padding">0dp</dimen>
-	<dimen name="list_item_padding">6dp</dimen>
+	<dimen name="list_item_padding">16dp</dimen>
 </resources>
