@@ -8,7 +8,7 @@ Intents provide the ability to hook into third-party app components for content 
 
  * Full file explorer
  * Simplify `GET_CONTENT` Intent creation
- * Hooks into Storage Acces Framework
+ * Hooks into Storage Access Framework
  * Determine MIME data types
  * Follows Android conventions (Fragments, Loaders, Intents, etc.)
  * Supports API 7+
