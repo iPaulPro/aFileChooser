@@ -79,6 +79,16 @@ public class FileUtils {
     }
 
     /**
+     * @return Whether the URI is a local one.
+     */
+    public static boolean isLocal(String url) {
+        if (url != null && !url.startsWith("http://") && !url.startsWith("https://")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return True if Uri is a MediaStore Uri.
      * @author paulburke
      */
@@ -95,24 +105,6 @@ public class FileUtils {
     public static Uri getUri(File file) {
         if (file != null) {
             return Uri.fromFile(file);
-        }
-        return null;
-    }
-
-    /**
-     * Convert Uri into File.
-     *
-     * @param uri
-     * @return file
-     * @deprecated Use {@link #getPath(Context, Uri)}
-     */
-    @Deprecated
-    public static File getFile(Context context, Uri uri) {
-        if (uri != null) {
-            String filepath = getPath(context, uri);
-            if (filepath != null) {
-                return new File(filepath);
-            }
         }
         return null;
     }
@@ -202,6 +194,14 @@ public class FileUtils {
     }
 
     /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    /**
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
@@ -241,10 +241,15 @@ public class FileUtils {
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
-     * other file-based ContentProviders.
-     *
+     * other file-based ContentProviders.<br>
+     * <br>
+     * Callers should check whether the path is local before assuming it
+     * represents a local file.
+     * 
      * @param context The context.
      * @param uri The Uri to query.
+     * @see #isLocal(String)
+     * @see #getFile(Context, Uri)
      * @author paulburke
      */
     public static String getPath(final Context context, final Uri uri) {
@@ -315,6 +320,11 @@ public class FileUtils {
         }
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
             return getDataColumn(context, uri, null, null);
         }
         // File
@@ -322,6 +332,24 @@ public class FileUtils {
             return uri.getPath();
         }
 
+        return null;
+    }
+
+    /**
+     * Convert Uri into File, if possible.
+     *
+     * @return file A local file that the Uri was pointing to, or null if the
+     *         Uri is unsupported or pointed to a remote resource.
+     * @see #getPath(Context, Uri)
+     * @author paulburke
+     */
+    public static File getFile(Context context, Uri uri) {
+        if (uri != null) {
+            String path = getPath(context, uri);
+            if (path != null && isLocal(path)) {
+                return new File(path);
+            }
+        }
         return null;
     }
 

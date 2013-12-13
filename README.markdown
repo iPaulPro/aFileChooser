@@ -53,7 +53,9 @@ If you want to use the Storage Access Framework (API 19+), include [Ian Lake](ht
             </intent-filter>
     </provider>
 
-Using `FileChooserActivity` and `LocalStorageProvider` together are redundant. Therefore, you should enable/disable based on the API level (above: `@bool/use_provider` and `@bool/use_activity`). See the aFileChooserExample project for their values.
+__Note__ that like a `ContentProvider`, the `DocumentProvider` `authority` must be unique. You should change `com.ianhanniballake.localstorage.documents` in your Manifest, as well as the `LocalStorageProvider.AUTHORITY` field.
+
+Using `FileChooserActivity` and `LocalStorageProvider` together are redundant if you're only trying to insure your user has access to local storage. If this is the case, you should enable/disable based on the API level (above: `@bool/use_provider` and `@bool/use_activity`). See the aFileChooserExample project for their values.
 
 ## Usage
 
@@ -82,6 +84,11 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
 					
 					// Get the File path from the Uri
                 	String path = FileUtils.getPath(this, uri);
+					
+					// Alternatively, use FileUtils.getFile(Context, Uri)
+					if (path != null && FileUtils.isLocal(path)) {
+						File file = new File(path);
+					}
             	}
 				break;
         }
@@ -89,7 +96,7 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
 
 A more robust example can be found in the aFileChooserExample project.
 
-__Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getPath(Context, Uri)`). This works for `File`, `MediaStore`, and `DocumentProvider` `Uri`s.
+__Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getPath(Context, Uri)`). This works for `File`, `MediaStore`, and `DocumentProvider` `Uris`.
 
 ## Credits
 

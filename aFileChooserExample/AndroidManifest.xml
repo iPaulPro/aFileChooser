@@ -40,6 +40,7 @@
         </activity>
         <activity
             android:name="com.ipaulpro.afilechooser.FileChooserActivity"
+            android:enabled="@bool/use_activity"
             android:exported="true"
             android:icon="@drawable/ic_chooser"
             android:label="@string/choose_file"
