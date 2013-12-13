@@ -45,6 +45,8 @@ import java.util.Comparator;
  * @author paulburke (ipaulpro)
  */
 public class FileUtils {
+    private FileUtils() {} //private constructor to enforce Singleton pattern
+    
     /** TAG for log messages. */
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
