@@ -70,20 +70,20 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Dependencies –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <dependencies>
-      <dependency>
-        <groupId>android.support</groupId>
-        <artifactId>compatibility-v4</artifactId>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>android</groupId>
-        <artifactId>android</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>com.ipaulpro</groupId>
-        <artifactId>afilechooser-library</artifactId>
-        <type>apklib</type>
-      </dependency>
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v4</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>android</groupId>
+      <artifactId>android</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ipaulpro</groupId>
+      <artifactId>afilechooser-library</artifactId>
+      <type>apklib</type>
+    </dependency>
   </dependencies>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
@@ -91,7 +91,7 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Build ––––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <build>
-    <sourceDirectory>src</sourceDirectory> 
+    <sourceDirectory>src</sourceDirectory>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
 <!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->

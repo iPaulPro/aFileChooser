@@ -70,14 +70,14 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Dependencies –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <dependencies>
-      <dependency>
-        <groupId>android.support</groupId>
-        <artifactId>compatibility-v4</artifactId>
-      </dependency>
-      <dependency>
-        <groupId>android</groupId>
-        <artifactId>android</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v4</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>android</groupId>
+      <artifactId>android</artifactId>
+    </dependency>
   </dependencies>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
@@ -85,7 +85,7 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Build ––––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <build>
-    <sourceDirectory>src</sourceDirectory> 
+    <sourceDirectory>src</sourceDirectory>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
 <!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->

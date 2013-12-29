@@ -54,7 +54,6 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-
         <provider
             android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
             android:authorities="com.ianhanniballake.localstorage.documents"

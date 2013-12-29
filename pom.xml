@@ -64,18 +64,18 @@
   </scm>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Distribution Management ––––––––––––––––––––––––––––––– {{{1 –––––– -->
-    <distributionManagement>
-        <repository>
-            <id>${repo.id}</id>
-            <name>${repo.name}</name>
-            <url>${repo.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${repo.id}</id>
-            <name>${repo.name}</name>
-            <url>${repo.url}</url>
-        </snapshotRepository>
-    </distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>${repo.id}</id>
+      <name>${repo.name}</name>
+      <url>${repo.url}</url>
+    </repository>
+    <snapshotRepository>
+      <id>${repo.id}</id>
+      <name>${repo.name}</name>
+      <url>${repo.url}</url>
+    </snapshotRepository>
+  </distributionManagement>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Dependencies –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <dependencyManagement>
@@ -138,7 +138,7 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Build ––––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
   <build>
-    <sourceDirectory>src</sourceDirectory> 
+    <sourceDirectory>src</sourceDirectory>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
 <!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
@@ -503,10 +503,10 @@
   </properties>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Modules ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
-<modules>
-  <module>aFileChooser</module>
-  <module>aFileChooserExample</module>
-</modules>
+  <modules>
+    <module>aFileChooser</module>
+    <module>aFileChooserExample</module>
+  </modules>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 </project>
 <!-- vim: set nowrap tabstop=8 shiftwidth=2 softtabstop=2 expandtab : -->
