@@ -52,3 +52,4 @@ Thumbs.db
 
 # backup files
 *.bak
+.backups

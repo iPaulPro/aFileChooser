@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– {{{1  –––––––––
+ –  Copyright © 2007 … 2013  Martin Krischik
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ –  This program is free software: you can redistribute it and/or modify
+ –  it under the terms of the GNU General Public License as published by
+ –  the Free Software Foundation, either version 3 of the License, or
+ –  (at your option) any later version.
+ –
+ –  This program is distributed in the hope that it will be useful,
+ –  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ –  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ –  GNU General Public License for more details.
+ –
+ –  You should have received a copy of the GNU General Public License
+ –  along with this program.  If not, see «http://www.gnu.org/licenses/».
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ –  $Author: krischik $
+ –  $Revision: 6359 $
+ –  $Date: 2013-12-29 13:06:36 +0100 (So, 29. Dez 2013) $
+ –  $Id: pom.xml 6359 2013-12-29 12:06:36Z krischik $
+ –  $HeadURL: svn+ssh://krischik@svn.code.sf.net/p/uiq3/code/trunk/Java/pom.xml $
+ ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––––-->
+<!--suppress CheckTagEmptyBody -->
+<project
+  xmlns='http://maven.apache.org/POM/4.0.0'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd'
+>
+<!-- Project ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ipaulpro</groupId>
+  <artifactId>afilechooser</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0</version>
+  <name>aFileChooser</name>
+  <description>aFileChooser is an Android Library Project that simplifies the process of presenting a file chooser on Android 2.1+.</description>
+  <url>https://github.com/krischik/aFileChooser3</url>
+  <developers>
+    <developer>
+      <email>krischik@users.sourceforge.net</email>
+      <id>krischik</id>
+      <name>Martin Krischik</name>
+      <organization>UIQ3 open-source software and tools</organization>
+      <organizationUrl>https://sourceforge.net/projects/uiq3/</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>GMT+1</timezone>
+      <url>https://sourceforge.net/users/krischik</url>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>pache License, Version 2.0</name>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:https://github.com/krischik/aFileChooser3</connection>
+    <developerConnection>scm:git:https://github.com/krischik/aFileChooser3</developerConnection>
+    <tag>main</tag>
+    <url>scm:git:https://github.com/krischik/aFileChooser3</url>
+  </scm>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Distribution Management ––––––––––––––––––––––––––––––– {{{1 –––––– -->
+    <distributionManagement>
+        <repository>
+            <id>${repo.id}</id>
+            <name>${repo.name}</name>
+            <url>${repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${repo.id}</id>
+            <name>${repo.name}</name>
+            <url>${repo.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Dependencies –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>android.support</groupId>
+        <artifactId>compatibility-v4</artifactId>
+        <version>${android.support.version}</version>
+        <scope>provided</scope>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>android</groupId>
+        <artifactId>android</artifactId>
+        <version>${android.version}</version>
+        <scope>provided</scope>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>com.ipaulpro</groupId>
+        <artifactId>afilechooser-library</artifactId>
+        <version>1.0</version>
+        <scope>compile</scope>
+        <type>apklib</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Repositories –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <repositories>
+    <repository>
+      <id>UIQ3-Library</id>
+      <name>UIQ3-Library</name>
+      <url>http://uiq3.sourceforge.net/Repository</url>
+    </repository>
+    <repository>
+      <id>codehaus.org</id>
+      <name>Codehaus repository</name>
+      <url>http://repository.codehaus.org/</url>
+    </repository>
+    <repository>
+      <id>sonatype.org</id>
+      <name>Sonatype repository</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>codehaus.org</id>
+      <url>http://repository.codehaus.org</url>
+      <name>Codehaus repository</name>
+    </pluginRepository>
+    <pluginRepository>
+      <id>sonatype.org</id>
+      <name>Sonatype repository</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+    </pluginRepository>
+  </pluginRepositories>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Build ––––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <build>
+    <sourceDirectory>src</sourceDirectory> 
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Plugin Management ––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9</version>
+          <configuration>
+            <dependencySourceIncludes>
+              <dependencySourceInclude>com.ipaulpro:*</dependencySourceInclude>
+            </dependencySourceIncludes>
+            <detectLinks>true</detectLinks>
+            <docencoding>UTF-8</docencoding>
+            <encoding>UTF-8</encoding>
+            <failOnError>false</failOnError>
+            <includeDependencySources>true</includeDependencySources>
+            <nohelp>true</nohelp>
+            <show>private</show>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <compilerArguments>
+              <Xlint:all></Xlint:all>
+              <Xmaxerrs>10</Xmaxerrs>
+              <Xmaxwarns>10</Xmaxwarns>
+              <Xprefer:newer></Xprefer:newer>
+            </compilerArguments>
+            <debug>true</debug>
+            <debuglevel>lines,vars,source</debuglevel>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <excludes>
+              <exclude>**/._*</exclude>
+              <exclude>**/.backups/*</exclude>
+              <exclude>**/.backups</exclude>
+              <exclude>**/.DS_Store</exclude>
+            </excludes>
+            <fork>true</fork>
+            <maxmem>256m</maxmem>
+            <meminitial>128m</meminitial>
+            <optimize>false</optimize>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.2.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <excludes>
+              <exclude>**/.DS_Store</exclude>
+              <exclude>**/*Suite.class</exclude>
+              <exclude>**/*Test.class</exclude>
+              <exclude>**/._*</exclude>
+              <exclude>**/.backups/*</exclude>
+              <exclude>**/.backups</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.10</version>
+          <configuration>
+            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+            <configLocation>checkstyle-allman.xml</configLocation>
+            <failsOnError>false</failsOnError>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.noser</groupId>
+              <artifactId>Calculator-Checkstyle</artifactId>
+              <version>${CALCULATOR_VERSION}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+          <artifactId>android-maven-plugin</artifactId>
+          <version>3.7.0</version>
+          <configuration>
+            <deleteConflictingFiles>true</deleteConflictingFiles>
+            <sdk>
+              <path>${env.ANDROID_HOME}</path>
+              <platform>${android.platform}</platform>
+            </sdk>
+            <sign>
+              <debug>false</debug>
+            </sign>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.5</version>
+          <configuration>
+            <filesets>
+              <fileset>
+                <directory>obj</directory>
+              </fileset>
+              <fileset>
+                <directory>gen</directory>
+              </fileset>
+              <fileset>
+                <directory>bin</directory>
+              </fileset>
+              <fileset>
+                <directory>gen-external-apklibs</directory>
+              </fileset>
+            </filesets>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.8.1</version>
+          <configuration>
+            <connectionType>developerConnection</connectionType>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.15</version>
+          <configuration>
+            <skipTests>true</skipTests>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>dashboard-maven-plugin</artifactId>
+          <version>1.0.0-beta-1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                  <pluginExecutionFilter>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <goals>
+                      <goal>run</goal>
+                    </goals>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <versionRange>[1.7,)</versionRange>
+                  </pluginExecutionFilter>
+                </pluginExecution>
+                <pluginExecution>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                  <pluginExecutionFilter>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <goals>
+                      <goal>add-source</goal>
+                      <goal>add-test-source</goal>
+                    </goals>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <versionRange>[1.7,)</versionRange>
+                  </pluginExecutionFilter>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Plugins ––––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <defaultGoal>install</defaultGoal>
+<!-- Extensions  ––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <extensions>
+      <extension>
+        <artifactId>wagon-ssh</artifactId>
+        <groupId>org.apache.maven.wagon</groupId>
+        <version>2.4</version>
+      </extension>
+      <extension>
+        <artifactId>wagon-scm</artifactId>
+        <groupId>org.apache.maven.wagon</groupId>
+        <version>2.4</version>
+      </extension>
+      <extension>
+        <artifactId>maven-scm-manager-plexus</artifactId>
+        <groupId>org.apache.maven.scm</groupId>
+        <version>1.8.1</version>
+      </extension>
+      <extension>
+        <artifactId>maven-scm-provider-svnexe</artifactId>
+        <groupId>org.apache.maven.scm</groupId>
+        <version>1.8.1</version>
+      </extension>
+    </extensions>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+  </build>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Profiles –––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <profiles>
+<!-- Release ––––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                  <goal>test-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-documentation</id>
+                <goals>
+                  <goal>jar</goal>
+                  <goal>test-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <configuration>
+              <show>private</show>
+              <nohelp>true</nohelp>
+              <encoding>UTF-8</encoding>
+              <docencoding>UTF-8</docencoding>
+              <detectLinks>true</detectLinks>
+              <failOnError>false</failOnError>
+              <reportPlugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-javadoc-plugin</artifactId>
+                  <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <includeDependencySources>true</includeDependencySources>
+                    <dependencySourceIncludes>
+                      <dependencySourceInclude>com.noser:*</dependencySourceInclude>
+                    </dependencySourceIncludes>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <detectLinks>true</detectLinks>
+                    <failOnError>false</failOnError>
+                  </configuration>
+                </plugin>
+                <plugin>
+                  <groupId>net.alchim31.maven</groupId>
+                  <artifactId>scala-maven-plugin</artifactId>
+                  <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                  </configuration>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+                </plugin>
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>dashboard-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                </plugin>
+                <plugin>
+                  <groupId>org.scalatest</groupId>
+                  <artifactId>scalatest-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-checkstyle-plugin</artifactId>
+                </plugin>
+              </reportPlugins>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+  </profiles>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Properties –––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <properties>
+    <android.platform>19</android.platform>
+    <android.support.version>19</android.support.version>
+    <android.version>4.4_r1</android.version>
+    <java.version>1.6</java.version>
+    <maven.compile.encoding>UTF-8</maven.compile.encoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Modules ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+<modules>
+  <module>aFileChooser</module>
+  <module>aFileChooserExample</module>
+</modules>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+</project>
+<!-- vim: set nowrap tabstop=8 shiftwidth=2 softtabstop=2 expandtab : -->
+<!-- vim: set textwidth=96 filetype=xml foldmethod=marker spell spelllang=en_gb : -->
