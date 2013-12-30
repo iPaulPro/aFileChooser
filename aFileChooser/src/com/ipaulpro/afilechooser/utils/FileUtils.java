@@ -36,6 +36,7 @@ import com.ianhanniballake.localstorage.LocalStorageProvider;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -44,9 +45,10 @@ import java.util.Comparator;
  * @version 2013-12-11
  * @author paulburke (ipaulpro)
  */
+@SuppressWarnings ("HardcodedFileSeparator")
 public class FileUtils {
     private FileUtils() {} //private constructor to enforce Singleton pattern
-    
+
     /** TAG for log messages. */
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
@@ -58,6 +60,32 @@ public class FileUtils {
     public static final String MIME_TYPE_APP = "application/*";
 
     public static final String HIDDEN_PREFIX = ".";
+
+   /**
+    * File Filter that includes only files with the specified extensions to pass
+    * @author Kiran Rao
+    *
+    */
+    public static class FileExtensionFilter implements FileFilter{
+     private final ArrayList<String> mFilterIncludeExtensions;
+
+     public FileExtensionFilter (final ArrayList<String> filterIncludeExtensions){
+       this.mFilterIncludeExtensions = filterIncludeExtensions;
+     }
+
+     @Override
+     public boolean accept(final File file) {
+       final String fileName = file.getName();
+        final android.net.Uri uri = android.net.Uri.fromFile (file);
+        final boolean passesExtensionsFilter =
+           mFilterIncludeExtensions.isEmpty () || mFilterIncludeExtensions.contains (
+              getExtension (uri.toString ()));
+       // Return files only (not directories) and skip hidden files
+       return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) &&
+           passesExtensionsFilter;
+     }
+
+   }
 
     /**
      * Gets the extension of a file name, like ".png" or ".jpg".
@@ -247,13 +275,14 @@ public class FileUtils {
      * <br>
      * Callers should check whether the path is local before assuming it
      * represents a local file.
-     * 
+     *
      * @param context The context.
      * @param uri The Uri to query.
      * @see #isLocal(String)
      * @see #getFile(Context, Uri)
      * @author paulburke
      */
+    @android.annotation.SuppressLint ("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
     public static String getPath(final Context context, final Uri uri) {
 
         if (DEBUG)
@@ -482,19 +511,6 @@ public class FileUtils {
         }
     };
 
-    /**
-     * File (not directories) filter.
-     *
-     * @author paulburke
-     */
-    public static FileFilter sFileFilter = new FileFilter() {
-        @Override
-        public boolean accept(File file) {
-            final String fileName = file.getName();
-            // Return files only (not directories) and skip hidden files
-            return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
-        }
-    };
 
     /**
      * Folder (directories) filter.

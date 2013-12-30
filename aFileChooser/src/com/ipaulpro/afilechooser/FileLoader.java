@@ -26,10 +26,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Loader that returns a list of Files in a given file path.
- * 
+ *
  * @version 2013-12-11
  * @author paulburke (ipaulpro)
  */
@@ -43,17 +44,22 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	private FileObserver mFileObserver;
 
 	private List<File> mData;
-	private String mPath;
+	private final String mPath;
+        private ArrayList<String> mFilterIncludeExtensions;
 
-	public FileLoader(Context context, String path) {
+	public FileLoader(
+           Context context,
+           String path,
+           ArrayList<String> filterIncludeExtensions) {
 		super(context);
 		this.mPath = path;
+                this.mFilterIncludeExtensions = filterIncludeExtensions;
 	}
 
 	@Override
 	public List<File> loadInBackground() {
 
-        ArrayList<File> list = new ArrayList<File>();
+        final ArrayList<File> list = new ArrayList<File>();
 
         // Current directory File instance
         final File pathDir = new File(mPath);
@@ -64,18 +70,17 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
             // Sort the folders alphabetically
             Arrays.sort(dirs, FileUtils.sComparator);
             // Add each folder to the File list for the list adapter
-            for (File dir : dirs)
-                list.add(dir);
+           java.util.Collections.addAll (list, dirs);
         }
 
         // List file in this directory with the file filter
-        final File[] files = pathDir.listFiles(FileUtils.sFileFilter);
+        final File[] files = pathDir.listFiles(
+           new FileUtils.FileExtensionFilter (mFilterIncludeExtensions));
         if (files != null) {
             // Sort the files alphabetically
             Arrays.sort(files, FileUtils.sComparator);
             // Add each file to the File list for the list adapter
-            for (File file : files)
-                list.add(file);
+           java.util.Collections.addAll (list, files);
         }
 
         return list;

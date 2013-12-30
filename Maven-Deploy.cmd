@@ -23,7 +23,7 @@ GOTO :eof
 ::!#
 
 import scala.sys.process._
-import com.noser.Maven._
+import net.sourceforge.uiq3.Maven._
 
 val Maven_Deploy = System.getenv ("MAVEN_DEPLOY")
 val Project_Name = System.getenv ("PROJECT_NAME")

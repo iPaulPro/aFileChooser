@@ -23,15 +23,18 @@
 #  $HeadURL: https://uiq3.svn.sourceforge.net/svnroot/uiq3/trunk/Java/Utilities/Start-Vim.command $
 ########################################################### }}}1 ###########
 
-local Download_Server="krischik,uiq3@shell.sourceforge.net";
+local Download_Server="krischik,uiq3@shell.sourceforge.net"
+local Scala_Library="${WORK}/Repositories/Local/net/sourceforge/uiq3/Calculator-Script/6.2.0/Calculator-Script-6.2.0.jar"
 
-mvn									    \
-    --define repo.id=UIQ3						    \
-    --define repo.url=file:///Work/HomePage/uiq3/htdocs/Repository	    \
-    deploy
+ssh-add					\
+    /Users/martin/.ssh/id_rsa		\
+    /Users/martin/.ssh/id_dsa		\
+    /Users/martin/.ssh/Martin_Krischik_SF
+
+#scala -classpath ${Scala_Library} -save Maven-Deploy.cmd
 
 pushd "/Work/HomePage/uiq3/htdocs"
-    sshpass -p ${KEY_SF} ssh ${Download_Server} create;
+    #sshpass -p ${KEY_SF} ssh ${Download_Server} create;
 
     rsync						\
 	--archive					\
@@ -41,7 +44,7 @@ pushd "/Work/HomePage/uiq3/htdocs"
 	"Repository"					\
 	"krischik,uiq3@web.sourceforge.net:htdocs"
 
-    sshpass -p ${KEY_SF} ssh ${Download_Server} shutdown
+    #sshpass -p Martin_Krischik_SF ssh ${Download_Server} shutdown
 popd
 # vim: set wrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=zsh foldmethod=marker nospell :

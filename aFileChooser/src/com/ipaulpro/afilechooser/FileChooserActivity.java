@@ -131,12 +131,13 @@ public class FileChooserActivity extends FragmentActivity implements
             invalidateOptionsMenu();
     }
 
+    @SuppressLint("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (HAS_ACTIONBAR) {
-            boolean hasBackStack = mFragmentManager.getBackStackEntryCount() > 0;
+            final boolean hasBackStack = mFragmentManager.getBackStackEntryCount() > 0;
+            final ActionBar actionBar = getActionBar();
 
-            ActionBar actionBar = getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(hasBackStack);
             actionBar.setHomeButtonEnabled(hasBackStack);
         }
