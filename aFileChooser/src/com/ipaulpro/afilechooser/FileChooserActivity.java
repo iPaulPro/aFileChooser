@@ -35,6 +35,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,6 +51,11 @@ import java.util.List;
 public class FileChooserActivity extends FragmentActivity implements
         OnBackStackChangedListener, FileListFragment.Callbacks {
 
+    /**
+     * TAG for log messages.
+     * */
+    static final String TAG = FileChooserActivity.class.getName ();
+
     public static final String PATH = "path";
     public static final String EXTRA_FILTER_INCLUDE_EXTENSIONS =
        "com.ipaulpro.afilechooser.EXTRA_FILTER_INCLUDE_EXTENSIONS";
@@ -59,9 +66,9 @@ public class FileChooserActivity extends FragmentActivity implements
     private static final boolean HAS_ACTIONBAR = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 
     private FragmentManager mFragmentManager;
-    private BroadcastReceiver mStorageListener = new BroadcastReceiver() {
+    @NotNull private BroadcastReceiver mStorageListener = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, final Intent intent) {
             Toast.makeText(context, R.string.storage_removed, Toast.LENGTH_LONG).show();
             finishWithResult(null);
         }
@@ -70,11 +77,23 @@ public class FileChooserActivity extends FragmentActivity implements
     private String mPath;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        android.util.Log.d (TAG, "+ onCreate");
+        android.util.Log.v (TAG, "> savedInstanceState       = " + savedInstanceState);
+
         super.onCreate(savedInstanceState);
+        final Intent intent = getIntent();
+
+        android.util.Log.v (TAG, "> intent                   = " + intent);
+
+        if(intent != null){
+            mFilterIncludeExtensions = intent.getStringArrayListExtra (
+                EXTRA_FILTER_INCLUDE_EXTENSIONS);
+            android.util.Log.v (TAG, "> mFilterIncludeExtensions = " + mFilterIncludeExtensions);
+        }
 
         mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.addOnBackStackChangedListener(this);
+        mFragmentManager.addOnBackStackChangedListener (this);
 
         if (savedInstanceState == null) {
             mPath = EXTERNAL_BASE_PATH;
@@ -83,14 +102,9 @@ public class FileChooserActivity extends FragmentActivity implements
             mPath = savedInstanceState.getString(PATH);
         }
 
-        final Intent intent = getIntent();
+       setTitle(mPath);
 
-        if(intent != null){
-            mFilterIncludeExtensions = intent.getStringArrayListExtra (
-               EXTRA_FILTER_INCLUDE_EXTENSIONS);
-        }
-
-        setTitle(mPath);
+       android.util.Log.d (TAG, "- onCreate");
     }
 
     @Override
@@ -108,7 +122,7 @@ public class FileChooserActivity extends FragmentActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull final Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putString(PATH, mPath);
@@ -118,9 +132,9 @@ public class FileChooserActivity extends FragmentActivity implements
     @Override
     public void onBackStackChanged() {
 
-        int count = mFragmentManager.getBackStackEntryCount();
+        final int count = mFragmentManager.getBackStackEntryCount();
         if (count > 0) {
-            BackStackEntry fragment = mFragmentManager.getBackStackEntryAt(count - 1);
+            final BackStackEntry fragment = mFragmentManager.getBackStackEntryAt(count - 1);
             mPath = fragment.getName();
         } else {
             mPath = EXTERNAL_BASE_PATH;
@@ -133,7 +147,7 @@ public class FileChooserActivity extends FragmentActivity implements
 
     @SuppressLint("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         if (HAS_ACTIONBAR) {
             final boolean hasBackStack = mFragmentManager.getBackStackEntryCount() > 0;
             final ActionBar actionBar = getActionBar();
@@ -146,7 +160,7 @@ public class FileChooserActivity extends FragmentActivity implements
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mFragmentManager.popBackStack();
@@ -173,7 +187,7 @@ public class FileChooserActivity extends FragmentActivity implements
      *
      * @param file The file (directory) to display.
      */
-    private void replaceFragment(File file) {
+    private void replaceFragment(@NotNull final File file) {
         mPath = file.getAbsolutePath();
 
         final FileListFragment fragment = FileListFragment.newInstance(
@@ -190,9 +204,9 @@ public class FileChooserActivity extends FragmentActivity implements
      *
      * @param file The file selected.
      */
-    private void finishWithResult(File file) {
+    private void finishWithResult(@Nullable final File file) {
         if (file != null) {
-            Uri uri = Uri.fromFile(file);
+            final Uri uri = Uri.fromFile(file);
             setResult(RESULT_OK, new Intent().setData(uri));
             finish();
         } else {
@@ -207,7 +221,7 @@ public class FileChooserActivity extends FragmentActivity implements
      * @param file The file that was selected
      */
     @Override
-    public void onFileSelected(File file) {
+    public void onFileSelected(@Nullable final File file) {
         if (file != null) {
             if (file.isDirectory()) {
                 replaceFragment(file);
@@ -224,7 +238,7 @@ public class FileChooserActivity extends FragmentActivity implements
      * Register the external storage BroadcastReceiver.
      */
     private void registerStorageListener() {
-        IntentFilter filter = new IntentFilter();
+        final IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_REMOVED);
         registerReceiver(mStorageListener, filter);
     }

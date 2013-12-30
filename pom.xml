@@ -109,15 +109,20 @@
         <type>jar</type>
       </dependency>
       <dependency>
-        <groupId>org.androidannotations</groupId>
+        <groupId>com.googlecode.androidannotations</groupId>
         <artifactId>androidannotations</artifactId>
         <version>${androidannotations.version}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.androidannotations</groupId>
+        <groupId>com.googlecode.androidannotations</groupId>
         <artifactId>androidannotations-api</artifactId>
         <version>${androidannotations.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.intellij</groupId>
+        <artifactId>annotations</artifactId>
+        <version>12.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -518,7 +523,7 @@
     <maven.compile.encoding>UTF-8</maven.compile.encoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <androidannotations.version>3.0</androidannotations.version>
+    <androidannotations.version>2.7.1</androidannotations.version>
   </properties>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
 <!-- Modules ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->

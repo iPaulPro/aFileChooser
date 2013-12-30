@@ -84,15 +84,19 @@
       <artifactId>afilechooser-library</artifactId>
       <type>apklib</type>
     </dependency>
-      <dependency>
-        <groupId>org.androidannotations</groupId>
-        <artifactId>androidannotations</artifactId>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.androidannotations</groupId>
-        <artifactId>androidannotations-api</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>com.googlecode.androidannotations</groupId>
+      <artifactId>androidannotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.androidannotations</groupId>
+      <artifactId>androidannotations-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
   </dependencies>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->

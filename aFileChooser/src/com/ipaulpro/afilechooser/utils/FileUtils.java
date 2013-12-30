@@ -32,6 +32,8 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.ianhanniballake.localstorage.LocalStorageProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -49,8 +51,10 @@ import java.util.Comparator;
 public class FileUtils {
     private FileUtils() {} //private constructor to enforce Singleton pattern
 
-    /** TAG for log messages. */
-    static final String TAG = "FileUtils";
+    /**
+     * TAG for log messages.
+     * */
+    static final String TAG = FileUtils.class.getName ();
     private static final boolean DEBUG = false; // Set to true to enable logging
 
     public static final String MIME_TYPE_AUDIO = "audio/*";
@@ -67,22 +71,37 @@ public class FileUtils {
     *
     */
     public static class FileExtensionFilter implements FileFilter{
-     private final ArrayList<String> mFilterIncludeExtensions;
+      /**
+       * <p>file extension filter</p>
+       */
+     @Nullable private final ArrayList<String> mFilterIncludeExtensions;
 
-     public FileExtensionFilter (final ArrayList<String> filterIncludeExtensions){
-       this.mFilterIncludeExtensions = filterIncludeExtensions;
+     public FileExtensionFilter (@Nullable final ArrayList<String> filterIncludeExtensions){
+        android.util.Log.d (TAG, "+ FileExtensionFilter");
+        android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
+
+        this.mFilterIncludeExtensions = filterIncludeExtensions;
+
+        android.util.Log.d (TAG, "+ FileExtensionFilter");
      }
 
      @Override
-     public boolean accept(final File file) {
+     public boolean accept(@NotNull final File file) {
+        android.util.Log.d (TAG, "+ accept");
+        android.util.Log.v (TAG, "> file   = " + file);
+
        final String fileName = file.getName();
         final android.net.Uri uri = android.net.Uri.fromFile (file);
-        final boolean passesExtensionsFilter =
+        final boolean passesExtensionsFilter = mFilterIncludeExtensions == null ||
            mFilterIncludeExtensions.isEmpty () || mFilterIncludeExtensions.contains (
               getExtension (uri.toString ()));
        // Return files only (not directories) and skip hidden files
-       return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) &&
+       final boolean retval = file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) &&
            passesExtensionsFilter;
+
+        android.util.Log.v (TAG, "> retval = " + retval);
+        android.util.Log.d (TAG, "- accept");
+        return retval;
      }
 
    }
@@ -94,12 +113,13 @@ public class FileUtils {
      * @return Extension including the dot("."); "" if there is no extension;
      *         null if uri was null.
      */
-    public static String getExtension(String uri) {
+    @Nullable
+    public static String getExtension(@Nullable final String uri) {
         if (uri == null) {
             return null;
         }
 
-        int dot = uri.lastIndexOf(".");
+        final int dot = uri.lastIndexOf(".");
         if (dot >= 0) {
             return uri.substring(dot);
         } else {
@@ -111,7 +131,7 @@ public class FileUtils {
     /**
      * @return Whether the URI is a local one.
      */
-    public static boolean isLocal(String url) {
+    public static boolean isLocal(@Nullable final String url) {
         if (url != null && !url.startsWith("http://") && !url.startsWith("https://")) {
             return true;
         }
@@ -122,7 +142,7 @@ public class FileUtils {
      * @return True if Uri is a MediaStore Uri.
      * @author paulburke
      */
-    public static boolean isMediaUri(Uri uri) {
+    public static boolean isMediaUri(@NotNull final Uri uri) {
         return "media".equalsIgnoreCase(uri.getAuthority());
     }
 
@@ -132,7 +152,8 @@ public class FileUtils {
      * @param file
      * @return uri
      */
-    public static Uri getUri(File file) {
+    @Nullable
+    public static Uri getUri(@Nullable final File file) {
         if (file != null) {
             return Uri.fromFile(file);
         }
@@ -145,14 +166,15 @@ public class FileUtils {
      * @param file
      * @return
      */
-    public static File getPathWithoutFilename(File file) {
+    @Nullable
+    public static File getPathWithoutFilename(@Nullable final File file) {
         if (file != null) {
             if (file.isDirectory()) {
                 // no file to be split off. Return everything
                 return file;
             } else {
-                String filename = file.getName();
-                String filepath = file.getAbsolutePath();
+                final String filename = file.getName();
+                final String filepath = file.getAbsolutePath();
 
                 // Construct path without file name.
                 String pathwithoutname = filepath.substring(0,
@@ -169,9 +191,9 @@ public class FileUtils {
     /**
      * @return The MIME type for the given file.
      */
-    public static String getMimeType(File file) {
+    public static String getMimeType(@NotNull final File file) {
 
-        String extension = getExtension(file.getName());
+        final String extension = getExtension(file.getName());
 
         if (extension.length() > 0)
             return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.substring(1));
@@ -182,8 +204,10 @@ public class FileUtils {
     /**
      * @return The MIME type for the give Uri.
      */
-    public static String getMimeType(Context context, Uri uri) {
-        File file = new File(getPath(context, uri));
+    public static String getMimeType(
+       @NotNull final Context context, @NotNull final
+    Uri uri) {
+        final File file = new File(getPath(context, uri));
         return getMimeType(file);
     }
 
@@ -192,7 +216,7 @@ public class FileUtils {
      * @return Whether the Uri authority is {@link LocalStorageProvider}.
      * @author paulburke
      */
-    public static boolean isLocalStorageDocument(Uri uri) {
+    public static boolean isLocalStorageDocument(@NotNull final Uri uri) {
         return LocalStorageProvider.AUTHORITY.equals(uri.getAuthority());
     }
 
@@ -201,7 +225,7 @@ public class FileUtils {
      * @return Whether the Uri authority is ExternalStorageProvider.
      * @author paulburke
      */
-    public static boolean isExternalStorageDocument(Uri uri) {
+    public static boolean isExternalStorageDocument(@NotNull final Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -210,7 +234,7 @@ public class FileUtils {
      * @return Whether the Uri authority is DownloadsProvider.
      * @author paulburke
      */
-    public static boolean isDownloadsDocument(Uri uri) {
+    public static boolean isDownloadsDocument(@NotNull final Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -219,7 +243,7 @@ public class FileUtils {
      * @return Whether the Uri authority is MediaProvider.
      * @author paulburke
      */
-    public static boolean isMediaDocument(Uri uri) {
+    public static boolean isMediaDocument(@NotNull final Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
@@ -227,7 +251,7 @@ public class FileUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    public static boolean isGooglePhotosUri(Uri uri) {
+    public static boolean isGooglePhotosUri(@NotNull final Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
@@ -242,8 +266,11 @@ public class FileUtils {
      * @return The value of the _data column, which is typically a file path.
      * @author paulburke
      */
-    public static String getDataColumn(Context context, Uri uri, String selection,
-            String[] selectionArgs) {
+    @Nullable public static String getDataColumn(
+       @NotNull final Context context,
+       final Uri uri,
+       final String selection,
+            final String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -282,8 +309,10 @@ public class FileUtils {
      * @see #getFile(Context, Uri)
      * @author paulburke
      */
-    @android.annotation.SuppressLint ("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
-    public static String getPath(final Context context, final Uri uri) {
+    @Nullable @android.annotation.SuppressLint ("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
+    public static String getPath(
+       @NotNull final Context context, @NotNull
+    final Uri uri) {
 
         if (DEBUG)
             Log.d(TAG + " File -",
@@ -374,9 +403,13 @@ public class FileUtils {
      * @see #getPath(Context, Uri)
      * @author paulburke
      */
-    public static File getFile(Context context, Uri uri) {
+    @Nullable
+    public static File getFile(
+       @NotNull final Context context,
+       @Nullable final
+    Uri uri) {
         if (uri != null) {
-            String path = getPath(context, uri);
+            final String path = getPath(context, uri);
             if (path != null && isLocal(path)) {
                 return new File(path);
             }
@@ -391,7 +424,7 @@ public class FileUtils {
      * @return
      * @author paulburke
      */
-    public static String getReadableFileSize(int size) {
+    public static String getReadableFileSize(final int size) {
         final int BYTES_IN_KILOBYTES = 1024;
         final DecimalFormat dec = new DecimalFormat("###.#");
         final String KILOBYTES = " KB";
@@ -424,7 +457,10 @@ public class FileUtils {
      * @return
      * @author paulburke
      */
-    public static Bitmap getThumbnail(Context context, File file) {
+    @Nullable
+    public static Bitmap getThumbnail(
+       @NotNull final Context context,
+       @NotNull final File file) {
         return getThumbnail(context, getUri(file), getMimeType(file));
     }
 
@@ -437,7 +473,10 @@ public class FileUtils {
      * @return
      * @author paulburke
      */
-    public static Bitmap getThumbnail(Context context, Uri uri) {
+    @Nullable
+    public static Bitmap getThumbnail(
+       @NotNull final Context context,
+       @NotNull final Uri uri) {
         return getThumbnail(context, uri, getMimeType(context, uri));
     }
 
@@ -451,7 +490,10 @@ public class FileUtils {
      * @return
      * @author paulburke
      */
-    public static Bitmap getThumbnail(Context context, Uri uri, String mimeType) {
+    @Nullable
+    public static Bitmap getThumbnail(
+       @NotNull final Context context, @NotNull final
+    Uri uri, @NotNull final String mimeType) {
         if (DEBUG)
             Log.d(TAG, "Attempting to get thumbnail");
 
@@ -486,7 +528,7 @@ public class FileUtils {
                                 null);
                     }
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 if (DEBUG)
                     Log.e(TAG, "getThumbnail", e);
             } finally {
@@ -502,9 +544,11 @@ public class FileUtils {
      *
      * @author paulburke
      */
-    public static Comparator<File> sComparator = new Comparator<File>() {
+    @NotNull public static Comparator<File> sComparator = new Comparator<File>() {
         @Override
-        public int compare(File f1, File f2) {
+        public int compare(
+           @NotNull final File f1, @NotNull final
+        File f2) {
             // Sort alphabetically by lower case, which is much cleaner
             return f1.getName().toLowerCase().compareTo(
                     f2.getName().toLowerCase());
@@ -517,9 +561,9 @@ public class FileUtils {
      *
      * @author paulburke
      */
-    public static FileFilter sDirFilter = new FileFilter() {
+    @NotNull public static FileFilter sDirFilter = new FileFilter() {
         @Override
-        public boolean accept(File file) {
+        public boolean accept(@NotNull final File file) {
             final String fileName = file.getName();
             // Return directories only and skip hidden directories
             return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
@@ -532,7 +576,7 @@ public class FileUtils {
      * @return The intent for opening a file with Intent.createChooser()
      * @author paulburke
      */
-    public static Intent createGetContentIntent() {
+    @NotNull public static Intent createGetContentIntent() {
         // Implicitly allow the user to select a particular kind of data
         final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         // The MIME data type filter

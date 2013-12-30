@@ -21,12 +21,13 @@ import android.os.FileObserver;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Loader that returns a list of Files in a given file path.
@@ -41,22 +42,22 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 			| FileObserver.MOVED_FROM | FileObserver.MOVED_TO
 			| FileObserver.MODIFY | FileObserver.MOVE_SELF;
 
-	private FileObserver mFileObserver;
+	@Nullable private FileObserver mFileObserver;
 
-	private List<File> mData;
+	@Nullable private List<File> mData;
 	private final String mPath;
-        private ArrayList<String> mFilterIncludeExtensions;
+        @Nullable private final ArrayList<String> mFilterIncludeExtensions;
 
 	public FileLoader(
-           Context context,
-           String path,
-           ArrayList<String> filterIncludeExtensions) {
+           @NotNull final Context context,
+           final String path,
+           @Nullable final ArrayList<String> filterIncludeExtensions) {
 		super(context);
 		this.mPath = path;
                 this.mFilterIncludeExtensions = filterIncludeExtensions;
 	}
 
-	@Override
+	@NotNull @Override
 	public List<File> loadInBackground() {
 
         final ArrayList<File> list = new ArrayList<File>();
@@ -87,13 +88,13 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	}
 
 	@Override
-	public void deliverResult(List<File> data) {
+	public void deliverResult(final List<File> data) {
 		if (isReset()) {
 			onReleaseResources(data);
 			return;
 		}
 
-		List<File> oldData = mData;
+		final List<File> oldData = mData;
 		mData = data;
 
 		if (isStarted())
@@ -105,21 +106,23 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 
 	@Override
 	protected void onStartLoading() {
-		if (mData != null)
-			deliverResult(mData);
+		if (mData != null) {
+                   deliverResult (mData);
+                }
 
 		if (mFileObserver == null) {
 			mFileObserver = new FileObserver(mPath, FILE_OBSERVER_MASK) {
 				@Override
-				public void onEvent(int event, String path) {
+				public void onEvent(final int event, final String path) {
 					onContentChanged();
 				}
 			};
 		}
 		mFileObserver.startWatching();
 
-		if (takeContentChanged() || mData == null)
-			forceLoad();
+		if (takeContentChanged() || mData == null) {
+                   forceLoad ();
+                }
 	}
 
 	@Override
@@ -138,13 +141,13 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 	}
 
 	@Override
-	public void onCanceled(List<File> data) {
+	public void onCanceled(final List<File> data) {
 		super.onCanceled(data);
 
 		onReleaseResources(data);
 	}
 
-	protected void onReleaseResources(List<File> data) {
+	protected void onReleaseResources(final List<File> data) {
 
 		if (mFileObserver != null) {
 			mFileObserver.stopWatching();

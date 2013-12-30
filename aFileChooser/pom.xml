@@ -78,6 +78,10 @@
       <groupId>android</groupId>
       <artifactId>android</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
   </dependencies>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->

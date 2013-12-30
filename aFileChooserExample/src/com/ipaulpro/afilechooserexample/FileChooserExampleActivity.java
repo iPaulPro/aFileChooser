@@ -23,22 +23,25 @@ import android.net.Uri;
 import android.util.Log;
 import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
 /**
  * @author paulburke (ipaulpro)
  */
-@org.androidannotations.annotations.EActivity (R.layout.example)
+@SuppressWarnings ("CollectionDeclaredAsConcreteClass")
+@com.googlecode.androidannotations.annotations.EActivity (R.layout.example)
 public class FileChooserExampleActivity extends Activity {
 
-    private static final String TAG = FileChooserExampleActivity.class.getSimpleName ();
+    private static final String TAG = FileChooserExampleActivity.class.getName ();
    /**
     * <p>onActivityResult request code</p>
     */
     private static final int REQUEST_CODE = 6384;
-    private static final ArrayList<String> PDF_Files;
-    private static final ArrayList<String> Calculator_Files;
+    @NotNull private static final ArrayList<String> PDF_Files;
+    @NotNull private static final ArrayList<String> Calculator_Files;
 
     static
     {
@@ -50,64 +53,74 @@ public class FileChooserExampleActivity extends Activity {
         Calculator_Files.add (".pf");
     }
 
-    @org.androidannotations.annotations.Click (R.id.All_Files)
+    @com.googlecode.androidannotations.annotations.res.StringRes (R.string.chooser_title)
+    String chooser_title;
+
+    @com.googlecode.androidannotations.annotations.Click (R.id.All_Files)
     void appFiles() {
+        android.util.Log.d (TAG, "+ All_Files");
+
         // Use the GET_CONTENT intent from the utility class
         final Intent target = FileUtils.createGetContentIntent();
         // Create the chooser Intent
-        final Intent intent = Intent.createChooser(
-                target, getString(R.string.chooser_title));
+        final Intent intent = Intent.createChooser(target, chooser_title);
         try {
             startActivityForResult(intent, REQUEST_CODE);
-        } catch (final ActivityNotFoundException e) {
+        } catch (@NotNull final ActivityNotFoundException e) {
            // The reason for the existence of aFileChooser
            android.util.Log.e (TAG, "LOG02230:", e);
         }
+
+        android.util.Log.d (TAG, "+ All_Files");
     }
-   @org.androidannotations.annotations.Click (R.id.PDF_Files)
-   void pdfFiles() {
-      // Use the GET_CONTENT intent from the utility class
-      final Intent target = FileUtils.createGetContentIntent();
-      // Create the chooser Intent
-      final Intent intent = Intent.createChooser(
-         target, getString(R.string.chooser_title));
+    @com.googlecode.androidannotations.annotations.Click (R.id.PDF_Files)
+    void pdfFiles() {
+       android.util.Log.d (TAG, "+ pdfFiles");
 
-      intent.putStringArrayListExtra(
-         FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
-         PDF_Files);
+       final Intent intent = new Intent (this,FileChooserActivity.class);
 
-      try {
-         startActivityForResult(intent, REQUEST_CODE);
-      } catch (final ActivityNotFoundException e) {
-         // The reason for the existence of aFileChooser
-         android.util.Log.e (TAG, "LOG02230:", e);
-      }
+       intent.putStringArrayListExtra (
+           FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
+           PDF_Files);
+
+       android.util.Log.v (TAG, "> intent             = " + intent);
+
+       try {
+          startActivityForResult(intent, REQUEST_CODE);
+       } catch (@NotNull final ActivityNotFoundException e) {
+          // The reason for the existence of aFileChooser
+          android.util.Log.e (TAG, "LOG02230:", e);
+       }
+
+       android.util.Log.d (TAG, "- pdfFiles");
    }
-   @org.androidannotations.annotations.Click (R.id.Calculator_Files)
-   void calculatorFiles() {
-      // Use the GET_CONTENT intent from the utility class
-      final Intent target = FileUtils.createGetContentIntent();
-      // Create the chooser Intent
-      final Intent intent = Intent.createChooser(
-         target, getString(R.string.chooser_title));
+    @com.googlecode.androidannotations.annotations.Click (R.id.Calculator_Files)
+    void calculatorFiles() {
+       android.util.Log.d (TAG, "+ calculatorFiles");
 
-      intent.putStringArrayListExtra(
-         FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
-         Calculator_Files);
+       final Intent intent = new Intent (this,FileChooserActivity.class);
 
-      try {
-         startActivityForResult(intent, REQUEST_CODE);
-      } catch (final ActivityNotFoundException e) {
-         // The reason for the existence of aFileChooser
-         android.util.Log.e (TAG, "LOG02230:", e);
-      }
+       intent.putStringArrayListExtra (
+          FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
+          Calculator_Files);
+
+       android.util.Log.v (TAG, "> intent             = " + intent);
+
+       try {
+          startActivityForResult(intent, REQUEST_CODE);
+       } catch (@NotNull final ActivityNotFoundException e) {
+          // The reason for the existence of aFileChooser
+          android.util.Log.e (TAG, "LOG02230:", e);
+       }
+
+       android.util.Log.d (TAG, "- calculatorFiles");
    }
 
     @Override
     protected void onActivityResult(
        final int requestCode,
        final int resultCode,
-       final Intent data) {
+       @Nullable final Intent data) {
         switch (requestCode) {
             case REQUEST_CODE:
                 // If the file selection was successful
@@ -123,7 +136,7 @@ public class FileChooserExampleActivity extends Activity {
                               com.ipaulpro.afilechooserexample.FileChooserExampleActivity.this,
                               "File Selected: " + path, android.widget.Toast.LENGTH_LONG);
                            toast.show ();
-                        } catch (final Exception e) {
+                        } catch (@NotNull final Exception e) {
                             Log.e(TAG, "File select error", e);
                         }
                     }
@@ -132,4 +145,15 @@ public class FileChooserExampleActivity extends Activity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+   @Override public String toString ()
+   {
+      return TAG +
+         "{super=" +
+         super.toString () +
+         ", chooser_title=“" +
+         chooser_title +
+         '”' +
+         '}';
+   }
 }
