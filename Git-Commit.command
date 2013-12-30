@@ -23,7 +23,7 @@
 #  $HeadURL: https://uiq3.svn.sourceforge.net/svnroot/uiq3/trunk/Java/Utilities/Start-Vim.command $
 ########################################################### }}}1 ###########
 
-scala -save Git-Commit.cmd
+scala -save Git-Commit.cmd ${0}
 
 # vim: set wrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=zsh foldmethod=marker nospell :

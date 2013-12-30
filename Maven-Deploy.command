@@ -31,11 +31,9 @@ ssh-add					\
     /Users/martin/.ssh/id_dsa		\
     /Users/martin/.ssh/Martin_Krischik_SF
 
-#scala -classpath ${Scala_Library} -save Maven-Deploy.cmd
+scala -classpath ${Scala_Library} -save Maven-Deploy.cmd
 
 pushd "/Work/HomePage/uiq3/htdocs"
-    #sshpass -p ${KEY_SF} ssh ${Download_Server} create;
-
     rsync						\
 	--archive					\
 	--delete					\
@@ -43,8 +41,6 @@ pushd "/Work/HomePage/uiq3/htdocs"
 	--keep-dirlinks					\
 	"Repository"					\
 	"krischik,uiq3@web.sourceforge.net:htdocs"
-
-    #sshpass -p Martin_Krischik_SF ssh ${Download_Server} shutdown
 popd
 # vim: set wrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
 # vim: set textwidth=0 filetype=zsh foldmethod=marker nospell :

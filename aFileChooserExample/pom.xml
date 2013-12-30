@@ -37,7 +37,7 @@
   <parent>
     <groupId>com.ipaulpro</groupId>
     <artifactId>afilechooser</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
   </parent>
   <url>https://github.com/krischik/aFileChooser3</url>
   <developers>
@@ -84,6 +84,15 @@
       <artifactId>afilechooser-library</artifactId>
       <type>apklib</type>
     </dependency>
+      <dependency>
+        <groupId>org.androidannotations</groupId>
+        <artifactId>androidannotations</artifactId>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.androidannotations</groupId>
+        <artifactId>androidannotations-api</artifactId>
+      </dependency>
   </dependencies>
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
@@ -121,7 +130,7 @@
               <jvmArgument>-Xms256m</jvmArgument>
               <jvmArgument>-Xmx512m</jvmArgument>
             </jvmArguments>
-            <skip>false</skip>
+            <skip>true</skip>
           </proguard>
           <sign>
             <debug>true</debug>

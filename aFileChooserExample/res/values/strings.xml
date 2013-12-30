@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
  * Copyright (C) 2011 Paul Burke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,9 @@
  * limitations under the License.
  -->
 <resources>
-
-    <string name="app_name">aFileChooserExample</string>
-    <string name="chooser_title">Lorem ipsum</string>
+  <string name="app_name">aFileChooserExample</string>
+  <string name="chooser_title">Lorem ipsum</string>
+  <string name = "All_Files">Choose from all files…</string>
+  <string name = "PDF_Files">Choose pdf files…</string>
+  <string name = "Calculator_Files">Choose calculator files…</string>
 </resources>
