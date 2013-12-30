@@ -97,8 +97,6 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
 <!-- Plugin Management ––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
-<!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
-<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
 <!-- Plugins ––––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
     <plugins>
       <plugin>
@@ -163,10 +161,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
       </plugin>
     </plugins>
     <defaultGoal>install</defaultGoal>
