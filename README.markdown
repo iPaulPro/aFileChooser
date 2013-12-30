@@ -69,7 +69,7 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
 
         // Create the ACTION_GET_CONTENT Intent
         Intent getContentIntent = FileUtils.createGetContentIntent();
-		
+
         Intent intent = Intent.createChooser(getContentIntent, "Select a file");
         startActivityForResult(intent, REQUEST_CHOOSER);
     }
@@ -77,14 +77,14 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        	case REQUEST_CHOOSER:	
+        	case REQUEST_CHOOSER:
             	if (resultCode == RESULT_OK) {
-					
+
                 	final Uri uri = data.getData();
-					
+
 					// Get the File path from the Uri
                 	String path = FileUtils.getPath(this, uri);
-					
+
 					// Alternatively, use FileUtils.getFile(Context, Uri)
 					if (path != null && FileUtils.isLocal(path)) {
 						File file = new File(path);
@@ -98,15 +98,42 @@ A more robust example can be found in the aFileChooserExample project.
 
 __Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getPath(Context, Uri)`). This works for `File`, `MediaStore`, and `DocumentProvider` `Uris`.
 
+###Filtering by file extension
+
+Provide an extra `EXTRA_FILTER_INCLUDE_EXTENSIONS` which is an `ArrayList<String>` containing all the extensions that must be included. Note that the extentions must begin with a dot character. The behavior of this extra is specified as follows:
+
+  - If this extra is specified, then **only** files with the supplied extensions will be shown. All other files will be hidden.
+  - If this extra is not specified, or it is an empty `ArrayList`, then no filtering is performed.
+
+Example:
+
+```
+  private static final ArrayList<String> INCLUDE_EXTENSIONS_LIST = new ArrayList<String>();
+  static{
+    INCLUDE_EXTENSIONS_LIST.add(".apk");
+    INCLUDE_EXTENSIONS_LIST.add(".bin");
+  }
+  //...
+  //...
+  Intent intent = new Intent(this, FileChooserActivity.class);
+  intent.putStringArrayListExtra(FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS, INCLUDE_EXTENSIONS_LIST);
+  //Use this intent in startActivityForResult()
+
+```
+
 ## Credits
 
 Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
+
+Filtering by file extension: [curioustechizen] (https://github.com/curioustechizen)
 
 Translations by [TomTasche](https://github.com/TomTasche), [booknara](https://github.com/booknara), [brenouchoa](https://github.com/brenouchoa)
 
 Folder by [Sergio Calcara](http://thenounproject.com/fallacyaccount) from The Noun Project (ic_provider.png)
 
 Document by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Project (ic_file.png)
+
+Maven Deployment by [krischik](https://github.com/krischik)
 
 ## Licenses
 
@@ -127,7 +154,7 @@ Document by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Pro
 Portions of FileUtils.java:
 
     Copyright (C) 2007-2008 OpenIntents.org
- 
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
@@ -150,4 +177,4 @@ LocalStorageProvider.java:
 	- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 	- Neither the name of the <ORGANIZATION> nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
