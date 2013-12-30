@@ -40,7 +40,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Main Activity that handles the FileListFragments
@@ -48,6 +47,7 @@ import java.util.List;
  * @version 2013-06-25
  * @author paulburke (ipaulpro)
  */
+@SuppressWarnings ("CollectionDeclaredAsConcreteClass")
 public class FileChooserActivity extends FragmentActivity implements
         OnBackStackChangedListener, FileListFragment.Callbacks {
 
@@ -56,25 +56,106 @@ public class FileChooserActivity extends FragmentActivity implements
      * */
     static final String TAG = FileChooserActivity.class.getName ();
 
-    public static final String PATH = "path";
+    public static final String SAVE_INSTANCE_PATH = "path";
     public static final String EXTRA_FILTER_INCLUDE_EXTENSIONS =
        "com.ipaulpro.afilechooser.EXTRA_FILTER_INCLUDE_EXTENSIONS";
-    private ArrayList<String> mFilterIncludeExtensions = new ArrayList<String> ();
+   public static final String EXTRA_FILTER_BASE_PATH =
+      "com.ipaulpro.afilechooser.EXTRA_FILTER_BASE_PATH";
     public static final String EXTERNAL_BASE_PATH = Environment
             .getExternalStorageDirectory().getAbsolutePath();
 
     private static final boolean HAS_ACTIONBAR = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+   /**
+    * <p>start activity</p>
+    *
+    * @param callingActivity activity opening the chooser
+    * @param requestCode request code used to identiefy the result
+    * @param filterIncludeExtensions file extensions to display
+    */
+   public static void startActivity (
+      final android.app.Activity callingActivity,
+      final int requestCode,
+      final java.util.ArrayList<String> filterIncludeExtensions) {
+      android.util.Log.d (TAG, "+ startActivity");
+      android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
+      android.util.Log.v (TAG, "> requestCode             = " + requestCode);
+      android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
 
+      final Intent intent = new Intent (callingActivity, FileChooserActivity.class);
+
+      intent.putStringArrayListExtra (
+          FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
+          filterIncludeExtensions);
+
+      android.util.Log.v (TAG, "> intent                  = " + intent);
+
+      try {
+         callingActivity.startActivityForResult (intent, requestCode);
+      } catch (@NotNull final android.content.ActivityNotFoundException e) {
+         // The reason for the existence of aFileChooser
+         android.util.Log.e (TAG, "LOG02230:", e);
+      }
+
+      android.util.Log.d (TAG, "- startActivity");
+      return;
+   } // startActivity
+
+   /**
+    * <p>start activity</p>
+    *
+    * @param callingActivity activity opening the chooser
+    * @param requestCode request code used to identify the result
+    * @param baseDirectory base directory to show
+    * @param filterIncludeExtensions file extensions to display
+    */
+   public static void startActivity (
+      final android.app.Activity callingActivity,
+      final int requestCode,
+      final String baseDirectory,
+      final java.util.ArrayList<String> filterIncludeExtensions) {
+      android.util.Log.d (TAG, "+ startActivity");
+      android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
+      android.util.Log.v (TAG, "> requestCode             = " + requestCode);
+      android.util.Log.v (TAG, "> baseDirectory           = " + baseDirectory);
+      android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
+
+      final Intent intent = new Intent (callingActivity, FileChooserActivity.class);
+
+      intent.putExtra (
+         FileChooserActivity.EXTRA_FILTER_BASE_PATH,
+         baseDirectory);
+      intent.putStringArrayListExtra (
+         FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
+         filterIncludeExtensions);
+
+      android.util.Log.v (TAG, "> intent             = " + intent);
+
+      try {
+         callingActivity.startActivityForResult (intent, requestCode);
+      } catch (@NotNull final android.content.ActivityNotFoundException e) {
+         // The reason for the existence of aFileChooser
+         android.util.Log.e (TAG, "LOG02230:", e);
+      }
+
+      android.util.Log.d (TAG, "- startActivity");
+      return;
+   } // startActivity
     private FragmentManager mFragmentManager;
-    @NotNull private BroadcastReceiver mStorageListener = new BroadcastReceiver() {
+    @NotNull private final BroadcastReceiver mStorageListener = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             Toast.makeText(context, R.string.storage_removed, Toast.LENGTH_LONG).show();
             finishWithResult(null);
         }
     };
-
+   /**
+    * <p>path to open first</p>
+    */
     private String mPath;
+   /**
+    * <p>extenstion to display</p>
+    */
+    private ArrayList<String> mFilterIncludeExtensions = new ArrayList<String> ();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -89,17 +170,22 @@ public class FileChooserActivity extends FragmentActivity implements
         if(intent != null){
             mFilterIncludeExtensions = intent.getStringArrayListExtra (
                 EXTRA_FILTER_INCLUDE_EXTENSIONS);
+            mPath = intent.getStringExtra (
+              EXTRA_FILTER_BASE_PATH);
             android.util.Log.v (TAG, "> mFilterIncludeExtensions = " + mFilterIncludeExtensions);
+            android.util.Log.v (TAG, "> mPath                    = " + mPath);
         }
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener (this);
 
         if (savedInstanceState == null) {
-            mPath = EXTERNAL_BASE_PATH;
+            if (mPath == null) {
+               mPath = EXTERNAL_BASE_PATH;
+            } // if
             addFragment();
         } else {
-            mPath = savedInstanceState.getString(PATH);
+            mPath = savedInstanceState.getString(SAVE_INSTANCE_PATH);
         }
 
        setTitle(mPath);
@@ -125,7 +211,7 @@ public class FileChooserActivity extends FragmentActivity implements
     protected void onSaveInstanceState(@NotNull final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(PATH, mPath);
+        outState.putString(SAVE_INSTANCE_PATH, mPath);
     }
 
     @SuppressLint("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks

@@ -87,7 +87,7 @@ public class FileListFragment extends ListFragment implements
         final FileListFragment fragment = new FileListFragment();
         final Bundle args = new Bundle();
 
-        args.putString(FileChooserActivity.PATH, path);
+        args.putString(FileChooserActivity.SAVE_INSTANCE_PATH, path);
         args.putStringArrayList (
            FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
            filterIncludeExtensions);
@@ -126,7 +126,7 @@ public class FileListFragment extends ListFragment implements
         android.util.Log.v (TAG, "> arguments          = " + arguments);
 
         mPath = arguments != null
-           ? arguments.getString (FileChooserActivity.PATH)
+           ? arguments.getString (FileChooserActivity.SAVE_INSTANCE_PATH)
            : Environment.getExternalStorageDirectory().getAbsolutePath();
         if(arguments != null){
              mFilterIncludeExtensions = arguments.getStringArrayList (

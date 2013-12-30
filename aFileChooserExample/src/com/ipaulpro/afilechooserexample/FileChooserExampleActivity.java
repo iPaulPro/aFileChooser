@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * @author paulburke (ipaulpro)
  */
-@SuppressWarnings ("CollectionDeclaredAsConcreteClass")
+@SuppressWarnings ({"CollectionDeclaredAsConcreteClass", "HardcodedFileSeparator"})
 @com.googlecode.androidannotations.annotations.EActivity (R.layout.example)
 public class FileChooserExampleActivity extends Activity {
 
@@ -42,6 +42,7 @@ public class FileChooserExampleActivity extends Activity {
     private static final int REQUEST_CODE = 6384;
     @NotNull private static final ArrayList<String> PDF_Files;
     @NotNull private static final ArrayList<String> Calculator_Files;
+    @NotNull  private static final String Calculator_Dir;
 
     static
     {
@@ -51,6 +52,7 @@ public class FileChooserExampleActivity extends Activity {
         Calculator_Files.add (".af");
         Calculator_Files.add (".df");
         Calculator_Files.add (".pf");
+        Calculator_Dir = FileChooserActivity.EXTERNAL_BASE_PATH + "/Android/FX-602P";
     }
 
     @com.googlecode.androidannotations.annotations.res.StringRes (R.string.chooser_title)
@@ -77,20 +79,10 @@ public class FileChooserExampleActivity extends Activity {
     void pdfFiles() {
        android.util.Log.d (TAG, "+ pdfFiles");
 
-       final Intent intent = new Intent (this,FileChooserActivity.class);
-
-       intent.putStringArrayListExtra (
-           FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
-           PDF_Files);
-
-       android.util.Log.v (TAG, "> intent             = " + intent);
-
-       try {
-          startActivityForResult(intent, REQUEST_CODE);
-       } catch (@NotNull final ActivityNotFoundException e) {
-          // The reason for the existence of aFileChooser
-          android.util.Log.e (TAG, "LOG02230:", e);
-       }
+       FileChooserActivity.startActivity (
+        /* callingActivity         => */ this,
+        /* requestCode             => */ REQUEST_CODE,
+        /* filterIncludeExtensions => */ PDF_Files);
 
        android.util.Log.d (TAG, "- pdfFiles");
    }
@@ -98,20 +90,11 @@ public class FileChooserExampleActivity extends Activity {
     void calculatorFiles() {
        android.util.Log.d (TAG, "+ calculatorFiles");
 
-       final Intent intent = new Intent (this,FileChooserActivity.class);
-
-       intent.putStringArrayListExtra (
-          FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
-          Calculator_Files);
-
-       android.util.Log.v (TAG, "> intent             = " + intent);
-
-       try {
-          startActivityForResult(intent, REQUEST_CODE);
-       } catch (@NotNull final ActivityNotFoundException e) {
-          // The reason for the existence of aFileChooser
-          android.util.Log.e (TAG, "LOG02230:", e);
-       }
+       FileChooserActivity.startActivity (
+        /* callingActivity         => */ this,
+        /* requestCode             => */ REQUEST_CODE,
+        /* baseDirectory           => */ Calculator_Dir,
+        /* filterIncludeExtensions => */ Calculator_Files);
 
        android.util.Log.d (TAG, "- calculatorFiles");
    }

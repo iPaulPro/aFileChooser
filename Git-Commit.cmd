@@ -24,7 +24,7 @@ import scala.sys.process._
 
 ("git" :: "add"  :: "." :: Nil).!
 ("git" :: "commit" :: "--message" :: argv (0) :: Nil).!
-("git" :: "push" :: "-u" :: "origin" :: "2.0" ::  Nil).!
+("git" :: "push" :: "-u" :: "origin" :: "dev" ::  Nil).!
 
 // vim: set wrap tabstop=8 shiftwidth=4 softtabstop=4 noexpandtab :
 // vim: set textwidth=0 filetype=scala foldmethod=marker nospell :
