@@ -41,7 +41,18 @@ public class FileChooserExampleActivity extends Activity {
     */
     private static final int REQUEST_CODE = 6384;
     @NotNull private static final ArrayList<String> PDF_Files;
+   /**
+    * <p>File types for my calculator app. Replace it with whatever you want to test.</p>
+    *
+    * @author Martin Krischik" <krischik@users.sourceforge.net>
+    */
     @NotNull private static final ArrayList<String> Calculator_Files;
+   /**
+    * <p>Directory why the unit tests of my calculator app stores there files. The
+    * real app uses </p>
+    *
+    * @author Martin Krischik" <krischik@users.sourceforge.net>
+    */
     @NotNull  private static final String Calculator_Dir;
 
     static

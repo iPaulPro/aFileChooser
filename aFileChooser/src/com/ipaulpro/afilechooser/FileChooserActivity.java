@@ -171,7 +171,7 @@ public class FileChooserActivity extends FragmentActivity implements
             mFilterIncludeExtensions = intent.getStringArrayListExtra (
                 EXTRA_FILTER_INCLUDE_EXTENSIONS);
             mPath = intent.getStringExtra (
-              EXTRA_FILTER_BASE_PATH);
+               EXTRA_FILTER_BASE_PATH);
             android.util.Log.v (TAG, "> mFilterIncludeExtensions = " + mFilterIncludeExtensions);
             android.util.Log.v (TAG, "> mPath                    = " + mPath);
         }
@@ -227,8 +227,9 @@ public class FileChooserActivity extends FragmentActivity implements
         }
 
         setTitle(mPath);
-        if (HAS_ACTIONBAR)
-            invalidateOptionsMenu();
+        if (HAS_ACTIONBAR) {
+           invalidateOptionsMenu ();
+        }
     }
 
     @SuppressLint("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks

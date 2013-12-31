@@ -309,10 +309,11 @@ public class FileUtils {
      * @see #getFile(Context, Uri)
      * @author paulburke
      */
-    @Nullable @android.annotation.SuppressLint ("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
+    @Nullable
+    @android.annotation.SuppressLint ("NewApi") // Usages of New APIs are surrounded by sufficient conditional checks
     public static String getPath(
-       @NotNull final Context context, @NotNull
-    final Uri uri) {
+       @NotNull final Context context,
+       @NotNull final Uri uri) {
 
         if (DEBUG)
             Log.d(TAG + " File -",
@@ -406,8 +407,7 @@ public class FileUtils {
     @Nullable
     public static File getFile(
        @NotNull final Context context,
-       @Nullable final
-    Uri uri) {
+       @Nullable final Uri uri) {
         if (uri != null) {
             final String path = getPath(context, uri);
             if (path != null && isLocal(path)) {
@@ -492,8 +492,9 @@ public class FileUtils {
      */
     @Nullable
     public static Bitmap getThumbnail(
-       @NotNull final Context context, @NotNull final
-    Uri uri, @NotNull final String mimeType) {
+       @NotNull final Context context,
+       @NotNull final Uri uri,
+       @NotNull final String mimeType) {
         if (DEBUG)
             Log.d(TAG, "Attempting to get thumbnail");
 
