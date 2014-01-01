@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * @author paulburke (ipaulpro)
  */
 @SuppressWarnings ({"CollectionDeclaredAsConcreteClass", "HardcodedFileSeparator"})
-@com.googlecode.androidannotations.annotations.EActivity (R.layout.example)
+@org.androidannotations.annotations.EActivity (R.layout.example)
 public class FileChooserExampleActivity extends Activity {
 
     private static final String TAG = FileChooserExampleActivity.class.getName ();
@@ -44,14 +44,14 @@ public class FileChooserExampleActivity extends Activity {
    /**
     * <p>File types for my calculator app. Replace it with whatever you want to test.</p>
     *
-    * @author Martin Krischik" <krischik@users.sourceforge.net>
+    * author Martin Krischik" <krischik@users.sourceforge.net>
     */
     @NotNull private static final ArrayList<String> Calculator_Files;
    /**
     * <p>Directory why the unit tests of my calculator app stores there files. The
-    * real app uses </p>
+    * real app uses {@link android.content.Context.getExternalFilesDir(java.lang.String)} </p>
     *
-    * @author Martin Krischik" <krischik@users.sourceforge.net>
+    * author Martin Krischik" <krischik@users.sourceforge.net>
     */
     @NotNull  private static final String Calculator_Dir;
 
@@ -66,10 +66,10 @@ public class FileChooserExampleActivity extends Activity {
         Calculator_Dir = FileChooserActivity.EXTERNAL_BASE_PATH + "/Android/FX-602P";
     }
 
-    @com.googlecode.androidannotations.annotations.res.StringRes (R.string.chooser_title)
+    @org.androidannotations.annotations.res.StringRes (R.string.chooser_title)
     String chooser_title;
 
-    @com.googlecode.androidannotations.annotations.Click (R.id.All_Files)
+    @org.androidannotations.annotations.Click (R.id.All_Files)
     void appFiles() {
         android.util.Log.d (TAG, "+ All_Files");
 
@@ -86,7 +86,7 @@ public class FileChooserExampleActivity extends Activity {
 
         android.util.Log.d (TAG, "+ All_Files");
     }
-    @com.googlecode.androidannotations.annotations.Click (R.id.PDF_Files)
+    @org.androidannotations.annotations.Click (R.id.PDF_Files)
     void pdfFiles() {
        android.util.Log.d (TAG, "+ pdfFiles");
 
@@ -97,7 +97,7 @@ public class FileChooserExampleActivity extends Activity {
 
        android.util.Log.d (TAG, "- pdfFiles");
    }
-    @com.googlecode.androidannotations.annotations.Click (R.id.Calculator_Files)
+    @org.androidannotations.annotations.Click (R.id.Calculator_Files)
     void calculatorFiles() {
        android.util.Log.d (TAG, "+ calculatorFiles");
 

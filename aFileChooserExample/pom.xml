@@ -37,7 +37,7 @@
   <parent>
     <groupId>com.ipaulpro</groupId>
     <artifactId>afilechooser</artifactId>
-    <version>2.1</version>
+    <version>2.2</version>
   </parent>
   <url>https://github.com/krischik/aFileChooser3</url>
   <developers>
@@ -85,12 +85,12 @@
       <type>apklib</type>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.androidannotations</groupId>
+      <groupId>org.androidannotations</groupId>
       <artifactId>androidannotations</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.androidannotations</groupId>
+      <groupId>org.androidannotations</groupId>
       <artifactId>androidannotations-api</artifactId>
     </dependency>
     <dependency>
@@ -176,10 +176,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
