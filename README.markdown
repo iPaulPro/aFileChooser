@@ -23,10 +23,11 @@ Add `FileChooserActivity` to your project's AndroidManifest.xml file with a full
 
 __Important__ `FileChooserActivity` must have `android:exported="true"` and have the `<intent-filter>` set as follows:
 
+```xml
     <activity
         android:name="com.ipaulpro.afilechooser.FileChooserActivity"
         android:icon="@drawable/ic_chooser"
-		android:enabled="@bool/use_activity"
+                android:enabled="@bool/use_activity"
         android:exported="true"
         android:label="@string/chooser_label" >
         <intent-filter>
@@ -38,13 +39,15 @@ __Important__ `FileChooserActivity` must have `android:exported="true"` and have
             <data android:mimeType="*/*" />
         </intent-filter>
     </activity>
+```
 
 If you want to use the Storage Access Framework (API 19+), include [Ian Lake](https://github.com/ianhanniballake/)'s `LocalStorageProvider` (included in this library) in your `<application>`:
 
-	<provider
+```xml
+    <provider
         android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
         android:authorities="com.ianhanniballake.localstorage.documents"
-		android:enabled="@bool/use_provider"
+                android:enabled="@bool/use_provider"
         android:exported="true"
         android:grantUriPermissions="true"
         android:permission="android.permission.MANAGE_DOCUMENTS" >
@@ -52,6 +55,7 @@ If you want to use the Storage Access Framework (API 19+), include [Ian Lake](ht
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
     </provider>
+```
 
 __Note__ that like a `ContentProvider`, the `DocumentProvider` `authority` must be unique. You should change `com.ianhanniballake.localstorage.documents` in your Manifest, as well as the `LocalStorageProvider.AUTHORITY` field.
 
@@ -61,6 +65,7 @@ Using `FileChooserActivity` and `LocalStorageProvider` together are redundant if
 
 Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`. Alternatively, you can use the helper method `FileUtils.createGetContentIntent()` to construct an `ACTION_GET_CONTENT` Intent that will show an "Intent Chooser" dialog on pre Kit-Kat devices, and the "Documents UI" otherwise. E.g.:
 
+```java
     private static final int REQUEST_CHOOSER = 1234;
 
     @Override
@@ -77,22 +82,23 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        	case REQUEST_CHOOSER:
-            	if (resultCode == RESULT_OK) {
+                case REQUEST_CHOOSER:
+                if (resultCode == RESULT_OK) {
 
-                	final Uri uri = data.getData();
+                        final Uri uri = data.getData();
 
-					// Get the File path from the Uri
-                	String path = FileUtils.getPath(this, uri);
+                                        // Get the File path from the Uri
+                        String path = FileUtils.getPath(this, uri);
 
-					// Alternatively, use FileUtils.getFile(Context, Uri)
-					if (path != null && FileUtils.isLocal(path)) {
-						File file = new File(path);
-					}
-            	}
-				break;
+                                        // Alternatively, use FileUtils.getFile(Context, Uri)
+                                        if (path != null && FileUtils.isLocal(path)) {
+                                                File file = new File(path);
+                                        }
+                }
+                                break;
         }
     }
+```
 
 A more robust example can be found in the aFileChooserExample project.
 
@@ -107,7 +113,7 @@ Provide an extra `EXTRA_FILTER_INCLUDE_EXTENSIONS` which is an `ArrayList<String
 
 Example:
 
-```
+```java
   private static final ArrayList<String> INCLUDE_EXTENSIONS_LIST = new ArrayList<String>();
   static{
     INCLUDE_EXTENSIONS_LIST.add(".apk");
@@ -121,11 +127,43 @@ Example:
 
 ```
 
+or use the FileChooserActivity.startActivity convenience function.
+
+###Set base directory
+
+Provide an extra `EXTRA_FILTER_BASE_PATH` which is an `String` containing base directroy to be displayed:
+
+Example:
+
+```java
+      final Intent intent = new Intent (callingActivity, FileChooserActivity.class);
+
+      intent.putExtra (
+         FileChooserActivity.EXTRA_FILTER_BASE_PATH,
+         baseDirectory);
+      intent.putStringArrayListExtra (
+         FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
+         filterIncludeExtensions);
+
+      android.util.Log.v (TAG, "> intent             = " + intent);
+
+      try {
+         callingActivity.startActivityForResult (intent, requestCode);
+      } catch (@NotNull final android.content.ActivityNotFoundException e) {
+         // The reason for the existence of aFileChooser
+         android.util.Log.e (TAG, "LOG02230:", e);
+      }
+```
+
+or use the FileChooserActivity.startActivity convenience function.
+
 ## Credits
 
 Developed by Paul Burke (iPaulPro) - [paulburke.co](http://paulburke.co/)
 
 Filtering by file extension: [curioustechizen] (https://github.com/curioustechizen)
+
+Set start path by [krischik](https://github.com/krischik)
 
 Translations by [TomTasche](https://github.com/TomTasche), [booknara](https://github.com/booknara), [brenouchoa](https://github.com/brenouchoa)
 
@@ -133,7 +171,6 @@ Folder by [Sergio Calcara](http://thenounproject.com/fallacyaccount) from The No
 
 Document by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Project (ic_file.png)
 
-Maven Deployment by [krischik](https://github.com/krischik)
 
 ## Licenses
 
@@ -168,13 +205,17 @@ Portions of FileUtils.java:
 
 LocalStorageProvider.java:
 
-	Copyright (c) 2013, Ian Lake
-	All rights reserved.
+        Copyright (c) 2013, Ian Lake
+        All rights reserved.
 
-	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-	- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-	- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-	- Neither the name of the <ORGANIZATION> nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+        - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+        - Neither the name of the <ORGANIZATION> nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+> vim: set wrap tabstop=8 shiftwidth=4 softtabstop=4 expandtab :
+> vim: set textwidth=0 filetype=markdown foldmethod=marker spell spelllang=en_gb:
