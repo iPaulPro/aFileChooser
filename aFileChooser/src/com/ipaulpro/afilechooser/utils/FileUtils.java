@@ -77,18 +77,18 @@ public class FileUtils {
      @Nullable private final ArrayList<String> mFilterIncludeExtensions;
 
      public FileExtensionFilter (@Nullable final ArrayList<String> filterIncludeExtensions){
-        android.util.Log.d (TAG, "+ FileExtensionFilter");
-        android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
+        //android.util.Log.d (TAG, "+ FileExtensionFilter");
+        //android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
 
         this.mFilterIncludeExtensions = filterIncludeExtensions;
 
-        android.util.Log.d (TAG, "+ FileExtensionFilter");
+        //android.util.Log.d (TAG, "+ FileExtensionFilter");
      }
 
      @Override
      public boolean accept(@NotNull final File file) {
-        android.util.Log.d (TAG, "+ accept");
-        android.util.Log.v (TAG, "> file   = " + file);
+        //android.util.Log.d (TAG, "+ accept");
+        //android.util.Log.v (TAG, "> file   = " + file);
 
        final String fileName = file.getName();
         final android.net.Uri uri = android.net.Uri.fromFile (file);
@@ -99,8 +99,8 @@ public class FileUtils {
        final boolean retval = file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) &&
            passesExtensionsFilter;
 
-        android.util.Log.v (TAG, "> retval = " + retval);
-        android.util.Log.d (TAG, "- accept");
+        //android.util.Log.v (TAG, "> retval = " + retval);
+        //android.util.Log.d (TAG, "- accept");
         return retval;
      }
 

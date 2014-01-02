@@ -33,7 +33,7 @@
   <groupId>com.ipaulpro</groupId>
   <artifactId>afilechooser</artifactId>
   <packaging>pom</packaging>
-  <version>2.2</version>
+  <version>2.3</version>
   <name>aFileChooser</name>
   <description>aFileChooser is an Android Library Project that simplifies the process of presenting a file chooser on Android 2.1+.</description>
   <url>https://github.com/krischik/aFileChooser3</url>
@@ -97,7 +97,7 @@
       <dependency>
         <groupId>com.ipaulpro</groupId>
         <artifactId>afilechooser-library</artifactId>
-        <version>2.2</version>
+        <version>2.3</version>
         <scope>compile</scope>
         <type>apklib</type>
       </dependency>

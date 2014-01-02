@@ -31,6 +31,7 @@ val Maven_Deploy = System.getenv ("MAVEN_DEPLOY")
 val Project_Name = System.getenv ("PROJECT_NAME")
 val Maven_Name	 = Project_Name +" Maven Repository"
 
+Err_Exit_Call (mvn ::: "--activate-profiles" :: "release" :: "clean"		:: Nil)
 Err_Exit_Call (mvn ::: "--activate-profiles" :: "release" :: "install"		:: Nil)
 Err_Exit_Call (mvn ::: "--activate-profiles" :: "release" :: "javadoc:javadoc"	:: Nil)
 Err_Exit_Call (mvn ::: "--activate-profiles" :: "release" :: "source:jar"	:: Nil)

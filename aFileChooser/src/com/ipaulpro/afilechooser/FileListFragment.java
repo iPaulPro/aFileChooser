@@ -80,9 +80,9 @@ public class FileListFragment extends ListFragment implements
     @NotNull public static FileListFragment newInstance(
         @NotNull final String path,
         @Nullable final ArrayList<String> filterIncludeExtensions ) {
-        android.util.Log.d (TAG, "+ newInstance");
-        android.util.Log.v (TAG, "> path                     = " + path);
-        android.util.Log.v (TAG, "> filterIncludeExtensions  = " + filterIncludeExtensions);
+        //android.util.Log.d (TAG, "+ newInstance");
+        //android.util.Log.v (TAG, "> path                     = " + path);
+        //android.util.Log.v (TAG, "> filterIncludeExtensions  = " + filterIncludeExtensions);
 
         final FileListFragment fragment = new FileListFragment();
         final Bundle args = new Bundle();
@@ -93,8 +93,8 @@ public class FileListFragment extends ListFragment implements
            filterIncludeExtensions);
         fragment.setArguments(args);
 
-        android.util.Log.v (TAG, "> fragment                 = " + fragment);
-        android.util.Log.d (TAG, "+ newInstance");
+        //android.util.Log.v (TAG, "> fragment                 = " + fragment);
+        //android.util.Log.d (TAG, "+ newInstance");
         return fragment;
     }
 
@@ -113,8 +113,8 @@ public class FileListFragment extends ListFragment implements
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
-        android.util.Log.d (TAG, "+ onCreate");
-        android.util.Log.v (TAG, "> savedInstanceState = " + savedInstanceState);
+        //android.util.Log.d (TAG, "+ onCreate");
+        //android.util.Log.v (TAG, "> savedInstanceState = " + savedInstanceState);
 
         super.onCreate(savedInstanceState);
 
@@ -122,8 +122,8 @@ public class FileListFragment extends ListFragment implements
 
         mAdapter = new FileListAdapter(getActivity());
 
-        android.util.Log.v (TAG, "> mAdapter           = " + mAdapter);
-        android.util.Log.v (TAG, "> arguments          = " + arguments);
+        //android.util.Log.v (TAG, "> mAdapter           = " + mAdapter);
+        //android.util.Log.v (TAG, "> arguments          = " + arguments);
 
         mPath = arguments != null
            ? arguments.getString (FileChooserActivity.SAVE_INSTANCE_PATH)
@@ -133,7 +133,7 @@ public class FileListFragment extends ListFragment implements
                 FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS);
         }
 
-       android.util.Log.d (TAG, "+ onCreate");
+       //android.util.Log.d (TAG, "+ onCreate");
     }
 
     @Override

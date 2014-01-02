@@ -76,10 +76,10 @@ public class FileChooserActivity extends FragmentActivity implements
       final android.app.Activity callingActivity,
       final int requestCode,
       final java.util.ArrayList<String> filterIncludeExtensions) {
-      android.util.Log.d (TAG, "+ startActivity");
-      android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
-      android.util.Log.v (TAG, "> requestCode             = " + requestCode);
-      android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
+      //android.util.Log.d (TAG, "+ startActivity");
+      //android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
+      //android.util.Log.v (TAG, "> requestCode             = " + requestCode);
+      //android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
 
       final Intent intent = new Intent (callingActivity, FileChooserActivity.class);
 
@@ -87,7 +87,7 @@ public class FileChooserActivity extends FragmentActivity implements
           FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
           filterIncludeExtensions);
 
-      android.util.Log.v (TAG, "> intent                  = " + intent);
+      //android.util.Log.v (TAG, "> intent                  = " + intent);
 
       try {
          callingActivity.startActivityForResult (intent, requestCode);
@@ -96,7 +96,7 @@ public class FileChooserActivity extends FragmentActivity implements
          android.util.Log.e (TAG, "LOG02230:", e);
       }
 
-      android.util.Log.d (TAG, "- startActivity");
+      //android.util.Log.d (TAG, "- startActivity");
       return;
    } // startActivity
 
@@ -113,11 +113,11 @@ public class FileChooserActivity extends FragmentActivity implements
       final int requestCode,
       final String baseDirectory,
       final java.util.ArrayList<String> filterIncludeExtensions) {
-      android.util.Log.d (TAG, "+ startActivity");
-      android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
-      android.util.Log.v (TAG, "> requestCode             = " + requestCode);
-      android.util.Log.v (TAG, "> baseDirectory           = " + baseDirectory);
-      android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
+      //android.util.Log.d (TAG, "+ startActivity");
+      //android.util.Log.v (TAG, "> callingActivity         = " + callingActivity);
+      //android.util.Log.v (TAG, "> requestCode             = " + requestCode);
+      //android.util.Log.v (TAG, "> baseDirectory           = " + baseDirectory);
+      //android.util.Log.v (TAG, "> filterIncludeExtensions = " + filterIncludeExtensions);
 
       final Intent intent = new Intent (callingActivity, FileChooserActivity.class);
 
@@ -128,7 +128,7 @@ public class FileChooserActivity extends FragmentActivity implements
          FileChooserActivity.EXTRA_FILTER_INCLUDE_EXTENSIONS,
          filterIncludeExtensions);
 
-      android.util.Log.v (TAG, "> intent             = " + intent);
+      //android.util.Log.v (TAG, "> intent             = " + intent);
 
       try {
          callingActivity.startActivityForResult (intent, requestCode);
@@ -137,7 +137,7 @@ public class FileChooserActivity extends FragmentActivity implements
          android.util.Log.e (TAG, "LOG02230:", e);
       }
 
-      android.util.Log.d (TAG, "- startActivity");
+      //android.util.Log.d (TAG, "- startActivity");
       return;
    } // startActivity
     private FragmentManager mFragmentManager;
@@ -159,21 +159,21 @@ public class FileChooserActivity extends FragmentActivity implements
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        android.util.Log.d (TAG, "+ onCreate");
-        android.util.Log.v (TAG, "> savedInstanceState       = " + savedInstanceState);
+        //android.util.Log.d (TAG, "+ onCreate");
+        //android.util.Log.v (TAG, "> savedInstanceState       = " + savedInstanceState);
 
         super.onCreate(savedInstanceState);
         final Intent intent = getIntent();
 
-        android.util.Log.v (TAG, "> intent                   = " + intent);
+        //android.util.Log.v (TAG, "> intent                   = " + intent);
 
         if(intent != null){
             mFilterIncludeExtensions = intent.getStringArrayListExtra (
                 EXTRA_FILTER_INCLUDE_EXTENSIONS);
             mPath = intent.getStringExtra (
                EXTRA_FILTER_BASE_PATH);
-            android.util.Log.v (TAG, "> mFilterIncludeExtensions = " + mFilterIncludeExtensions);
-            android.util.Log.v (TAG, "> mPath                    = " + mPath);
+            //android.util.Log.v (TAG, "> mFilterIncludeExtensions = " + mFilterIncludeExtensions);
+            //android.util.Log.v (TAG, "> mPath                    = " + mPath);
         }
 
         mFragmentManager = getSupportFragmentManager();
@@ -190,7 +190,7 @@ public class FileChooserActivity extends FragmentActivity implements
 
        setTitle(mPath);
 
-       android.util.Log.d (TAG, "- onCreate");
+       //android.util.Log.d (TAG, "- onCreate");
     }
 
     @Override
