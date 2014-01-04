@@ -28,7 +28,7 @@ __Important__ `FileChooserActivity` must have `android:exported="true"` and have
         android:icon="@drawable/ic_chooser"
 		android:enabled="@bool/use_activity"
         android:exported="true"
-        android:label="@string/chooser_label" >
+        android:label="@string/choose_file" >
         <intent-filter>
             <action android:name="android.intent.action.GET_CONTENT" />
 
