@@ -17,15 +17,19 @@
 package com.ipaulpro.afilechooser;
 
 import android.content.Context;
+import android.provider.DocumentsContract.Document;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.ipaulpro.afilechooser.utils.FileUtils;
 
 /**
  * List adapter for Files.
@@ -41,9 +45,11 @@ public class FileListAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
 
     private List<File> mData = new ArrayList<File>();
+    private String mMimeType;
 
-    public FileListAdapter(Context context) {
+    public FileListAdapter(Context context, String mimeType) {
         mInflater = LayoutInflater.from(context);
+        mMimeType = mimeType;
     }
 
     public void add(File file) {
@@ -115,7 +121,25 @@ public class FileListAdapter extends BaseAdapter {
         int icon = file.isDirectory() ? ICON_FOLDER : ICON_FILE;
         view.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
 
+        // Disable visually
+        row.setEnabled(isEnabled(position));
+
         return row;
     }
 
+    @Override
+    public boolean isEnabled(int position) {
+        boolean enable = true;
+
+        File file = getItem(position);
+
+        // Always enabled if a folder
+        if (!file.isDirectory()) {
+            // Set enabled if the MIME types match
+            String concreteType = FileUtils.getMimeType(file);
+            enable = FileUtils.compareMimeTypes(concreteType, mMimeType);
+        }
+
+        return enable;
+    }
 }

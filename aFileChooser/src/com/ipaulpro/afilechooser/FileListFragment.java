@@ -60,12 +60,14 @@ public class FileListFragment extends ListFragment implements
      * Create a new instance with the given file path.
      *
      * @param path The absolute path of the file (directory) to display.
+     * @param mimeType The MIME type for the file.
      * @return A new Fragment with the given file path.
      */
-    public static FileListFragment newInstance(String path) {
+    public static FileListFragment newInstance(String path, String mimeType) {
         FileListFragment fragment = new FileListFragment();
         Bundle args = new Bundle();
         args.putString(FileChooserActivity.PATH, path);
+        args.putString(FileChooserActivity.MIME_TYPE, mimeType);
         fragment.setArguments(args);
 
         return fragment;
@@ -86,11 +88,15 @@ public class FileListFragment extends ListFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String mimeType = getArguments() != null ? getArguments().getString(
+                FileChooserActivity.MIME_TYPE)
+                : FileChooserActivity.MIME_TYPE_DEFAULT;
 
-        mAdapter = new FileListAdapter(getActivity());
+        mAdapter = new FileListAdapter(getActivity(), mimeType);
         mPath = getArguments() != null ? getArguments().getString(
                 FileChooserActivity.PATH) : Environment
                 .getExternalStorageDirectory().getAbsolutePath();
+
     }
 
     @Override
