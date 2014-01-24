@@ -32,6 +32,7 @@ import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import java.io.File;
@@ -46,8 +47,10 @@ public class FileChooserActivity extends FragmentActivity implements
         OnBackStackChangedListener, FileListFragment.Callbacks {
 
     public static final String PATH = "path";
+    public static final String MIME_TYPE = "mime_type";
     public static final String EXTERNAL_BASE_PATH = Environment
             .getExternalStorageDirectory().getAbsolutePath();
+    public static final String MIME_TYPE_DEFAULT = "*/*";
 
     private static final boolean HAS_ACTIONBAR = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 
@@ -61,10 +64,13 @@ public class FileChooserActivity extends FragmentActivity implements
     };
 
     private String mPath;
+    private String mMimeType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mMimeType = (getIntent() != null) ? getIntent().getType() : MIME_TYPE_DEFAULT;
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.addOnBackStackChangedListener(this);
@@ -144,7 +150,7 @@ public class FileChooserActivity extends FragmentActivity implements
      * Add the initial Fragment with given path.
      */
     private void addFragment() {
-        FileListFragment fragment = FileListFragment.newInstance(mPath);
+        FileListFragment fragment = FileListFragment.newInstance(mPath, mMimeType);
         mFragmentManager.beginTransaction()
                 .add(android.R.id.content, fragment).commit();
     }
@@ -158,7 +164,7 @@ public class FileChooserActivity extends FragmentActivity implements
     private void replaceFragment(File file) {
         mPath = file.getAbsolutePath();
 
-        FileListFragment fragment = FileListFragment.newInstance(mPath);
+        FileListFragment fragment = FileListFragment.newInstance(mPath, mMimeType);
         mFragmentManager.beginTransaction()
                 .replace(android.R.id.content, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

@@ -160,6 +160,33 @@ public class FileUtils {
     }
 
     /**
+     * Helper to compare two MIME types, where one may be a pattern.
+     * 
+     * @param concreteType A fully-specified MIME type.
+     * @param desiredType A desired MIME type that may be a pattern such as *\/*.
+     * @return Returns true if the two MIME types match.
+     */
+    public static boolean compareMimeTypes(String concreteType, String desiredType) {
+        final int typeLength = desiredType.length();
+        if (typeLength == 3 && desiredType.equals("*/*")) {
+            return true;
+        }
+
+        final int slashpos = desiredType.indexOf('/');
+        if (slashpos > 0) {
+            if (typeLength == slashpos+2 && desiredType.charAt(slashpos+1) == '*') {
+                if (desiredType.regionMatches(0, concreteType, 0, slashpos+1)) {
+                    return true;
+                }
+            } else if (desiredType.equals(concreteType)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param uri The Uri to check.
      * @return Whether the Uri authority is {@link LocalStorageProvider}.
      * @author paulburke
