@@ -56,6 +56,8 @@ public class FileUtils {
 	public static final String MIME_TYPE_VIDEO = "video/*"; 
 	public static final String MIME_TYPE_APP = "application/*";
 
+	public static final String EXTRA_MIME_TYPES = "net.zhuoweizhang.afilechooser.extra.MIME_TYPES";
+
 	/**
 	 * Whether the filename is a video file.
 	 * 

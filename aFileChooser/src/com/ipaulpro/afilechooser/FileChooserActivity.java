@@ -22,6 +22,8 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
@@ -63,6 +65,7 @@ public class FileChooserActivity extends ListActivity {
 	
 	private File mExternalDir;
 	private ArrayList<File> mList = new ArrayList<File>();
+	private Set<String> extendedMimeTypes = new HashSet<String>();
 
 	/**
 	 * File (not directories) filter.
@@ -70,9 +73,10 @@ public class FileChooserActivity extends ListActivity {
 	private FileFilter mFileFilter = new FileFilter() {
 		public boolean accept(File file) {
 			final String fileName = file.getName();
+			final String mimeType = FileUtils.getMimeType(FileChooserActivity.this, file);
 			// Return files only (not directories) and skip hidden files
 			return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX) && 
-				FileUtils.getMimeType(FileChooserActivity.this, file).equals(getIntent().getType());
+				(mimeType.equals(getIntent().getType()) || extendedMimeTypes.contains(mimeType));
 		}
 	};
 	
@@ -326,6 +330,8 @@ public class FileChooserActivity extends ListActivity {
 		} else {        	
 			// Set the external storage directory as the current path
 			this.mPath = this.mExternalDir.getAbsolutePath();	
+			String startPath = getIntent().getStringExtra("startPath");
+			if (startPath != null) this.mPath = startPath;
 			// Add the current path to the breadcrumb
 			updateBreadcrumb(true);
 			
@@ -333,6 +339,12 @@ public class FileChooserActivity extends ListActivity {
 				setContentView(R.layout.explorer);
 				fillList(0);
 			}
+		}
+		String[] extraMimeTypes = getIntent().getStringArrayExtra(FileUtils.EXTRA_MIME_TYPES);
+		extendedMimeTypes.clear();
+		if (extraMimeTypes != null) {
+			for (String s: extraMimeTypes)
+				extendedMimeTypes.add(s);
 		}
 	}
 
