@@ -551,7 +551,7 @@ public class FileUtils {
            @NotNull final File f1, @NotNull final
         File f2) {
             // Sort alphabetically by lower case, which is much cleaner
-            return f1.getName().toLowerCase().compareTo(
+            return f1.getName().toLowerCase(Locale.getDefault()).compareTo(
                     f2.getName().toLowerCase());
         }
     };
