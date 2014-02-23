@@ -19,6 +19,7 @@ package com.ipaulpro.afilechooser;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;

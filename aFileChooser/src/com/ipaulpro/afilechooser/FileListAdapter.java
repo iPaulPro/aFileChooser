@@ -109,11 +109,17 @@ public class FileListAdapter extends BaseAdapter {
         final File file = getItem(position);
 
         // Set the TextView as the file name
-        view.setText(file.getName());
+        if(position == 0){
+        	view.setText(R.string.go_up);
+        	view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_undo, 0, 0, 0);
+        } else {
+        	view.setText(file.getName());
 
-        // If the item is not a directory, use the file icon
-        int icon = file.isDirectory() ? ICON_FOLDER : ICON_FILE;
-        view.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+            // If the item is not a directory, use the file icon
+            int icon = file.isDirectory() ? ICON_FOLDER : ICON_FILE;
+            view.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+        }
+
 
         return row;
     }

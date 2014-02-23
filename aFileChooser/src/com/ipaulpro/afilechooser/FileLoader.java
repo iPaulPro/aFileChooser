@@ -57,6 +57,7 @@ public class FileLoader extends AsyncTaskLoader<List<File>> {
 
         // Current directory File instance
         final File pathDir = new File(mPath);
+        list.add(pathDir.getParentFile());
 
         // List file in this directory with the directory filter
         final File[] dirs = pathDir.listFiles(FileUtils.sDirFilter);
