@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * List adapter for Files.
- * 
+ *
  * @version 2013-12-11
  * @author paulburke (ipaulpro)
  */
@@ -42,8 +42,10 @@ public class FileListAdapter extends BaseAdapter {
 
     private List<File> mData = new ArrayList<File>();
 
-    public FileListAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
+    public FileListAdapter(Context context)
+    {
+       super ();
+       mInflater = LayoutInflater.from (context);
     }
 
     public void add(File file) {

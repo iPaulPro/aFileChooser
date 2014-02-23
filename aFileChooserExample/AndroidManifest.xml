@@ -30,7 +30,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name=".FileChooserExampleActivity"
+            android:name=".FileChooserExampleActivity_"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,6 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-
         <provider
             android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
             android:authorities="com.ianhanniballake.localstorage.documents"

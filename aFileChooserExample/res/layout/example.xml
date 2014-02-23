@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- –––––––––––––––––––––––––––––––––––––––––––––––––––––––––{{{1  –––––––––
+ – Copyright © 20014 Martin Krischik
+ ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––}}}1  –––––– -->
+<ScrollView
+  android:layout_height='match_parent'
+  android:layout_width='match_parent'
+  android:scrollbars='vertical'
+  xmlns:android='http://schemas.android.com/apk/res/android'
+>
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width='match_parent'
+    android:orientation='vertical'
+  >
+    <Button
+      android:gravity='center_vertical|left'
+      android:id='@+id/All_Files'
+      android:layout_height='wrap_content'
+      android:layout_width='match_parent'
+      android:text="@string/All_Files"
+      android:textAlignment='center'
+    ></Button>
+  <Button
+    android:gravity='center_vertical|left'
+    android:id='@+id/PDF_Files'
+    android:layout_height='wrap_content'
+    android:layout_width='match_parent'
+    android:text="@string/PDF_Files"
+    android:textAlignment='center'
+    ></Button>
+  <Button
+    android:gravity='center_vertical|left'
+    android:id='@+id/Calculator_Files'
+    android:layout_height='wrap_content'
+    android:layout_width='match_parent'
+    android:text="@string/Calculator_Files"
+    android:textAlignment='center'
+    ></Button>
+  </LinearLayout>
+</ScrollView>
+<!-- vim: set nowrap tabstop=8 shiftwidth=2 softtabstop=2 expandtab textwidth=96 : -->
+<!-- vim: set filetype=xml foldmethod=marker nospell spell spelllang=en_gb : -->

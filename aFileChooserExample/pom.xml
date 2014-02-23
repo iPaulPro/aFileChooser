@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– {{{1  –––––––––
+ –  Copyright © 2007 … 2013  Martin Krischik
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ –  This program is free software: you can redistribute it and/or modify
+ –  it under the terms of the GNU General Public License as published by
+ –  the Free Software Foundation, either version 3 of the License, or
+ –  (at your option) any later version.
+ –
+ –  This program is distributed in the hope that it will be useful,
+ –  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ –  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ –  GNU General Public License for more details.
+ –
+ –  You should have received a copy of the GNU General Public License
+ –  along with this program.  If not, see «http://www.gnu.org/licenses/».
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ –  $Author: krischik $
+ –  $Revision: 6359 $
+ –  $Date: 2013-12-29 13:06:36 +0100 (So, 29. Dez 2013) $
+ –  $Id: pom.xml 6359 2013-12-29 12:06:36Z krischik $
+ –  $HeadURL: svn+ssh://krischik@svn.code.sf.net/p/uiq3/code/trunk/Java/pom.xml $
+ ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––––-->
+<!--suppress CheckTagEmptyBody -->
+<project
+  xmlns='http://maven.apache.org/POM/4.0.0'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd'
+>
+<!-- Project ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>afilechooser-expample</artifactId>
+  <packaging>apk</packaging>
+  <name>aFileChooser Example</name>
+  <description>aFileChooser is an Android Library Project that simplifies the process of presenting a file chooser on Android 2.1+.</description>
+  <parent>
+    <groupId>com.ipaulpro</groupId>
+    <artifactId>afilechooser</artifactId>
+    <version>2.3</version>
+  </parent>
+  <url>https://github.com/krischik/aFileChooser3</url>
+  <developers>
+    <developer>
+      <email>krischik@users.sourceforge.net</email>
+      <id>krischik</id>
+      <name>Martin Krischik</name>
+      <organization>UIQ3 open-source software and tools</organization>
+      <organizationUrl>https://sourceforge.net/projects/uiq3/</organizationUrl>
+      <roles>
+        <role>Deployer</role>
+      </roles>
+      <timezone>GMT+1</timezone>
+      <url>https://sourceforge.net/users/krischik</url>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>pache License, Version 2.0</name>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:https://github.com/krischik/aFileChooser3</connection>
+    <developerConnection>scm:git:https://github.com/krischik/aFileChooser3</developerConnection>
+    <tag>main</tag>
+    <url>scm:git:https://github.com/krischik/aFileChooser3</url>
+  </scm>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Distribution Management ––––––––––––––––––––––––––––––– {{{1 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Dependencies –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <dependencies>
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v4</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>android</groupId>
+      <artifactId>android</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ipaulpro</groupId>
+      <artifactId>afilechooser-library</artifactId>
+      <type>apklib</type>
+    </dependency>
+    <dependency>
+      <groupId>org.androidannotations</groupId>
+      <artifactId>androidannotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.androidannotations</groupId>
+      <artifactId>androidannotations-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
+  </dependencies>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 ––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Repositories –––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Build ––––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Resources ––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Plugin Management ––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+<!-- Plugins ––––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+        <artifactId>android-maven-plugin</artifactId>
+        <configuration>
+          <release>false</release>
+          <deleteConflictingFiles>true</deleteConflictingFiles>
+          <proguard>
+            <config>proguard.cfg</config>
+            <jvmArguments>
+              <jvmArgument>-Xms256m</jvmArgument>
+              <jvmArgument>-Xmx512m</jvmArgument>
+            </jvmArguments>
+            <skip>true</skip>
+          </proguard>
+          <sign>
+            <debug>true</debug>
+          </sign>
+        </configuration>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sources>
+                <source>gen</source>
+                <source>target/generated-sources/annotations</source>
+                <source>target/generated-sources/r</source>
+              </sources>
+            </configuration>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Initialize</id>
+            <phase>initialize</phase>
+            <configuration>
+              <target
+                name='Initialize'
+                description='
+Dependency management in Java is just a joke. In Ada I would not need
+this crude hack. What am I saying: Even a C / make build system would
+work without deleting files to force dependencies to work as expected.
+'
+              >
+                <delete
+                  file='gen/com/ipaulpro/afilechooser/BuildConfig.java'
+                ></delete>
+                <delete
+                  file='gen/com/ipaulpro/afilechooser/R.java'
+                ></delete>
+                <delete>
+                  <fileset
+                    dir='target'
+                    includes='**/*_.java'
+                  ></fileset>
+                </delete>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <defaultGoal>install</defaultGoal>
+<!-- Extensions  ––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+  </build>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Profiles –––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+  <profiles>
+<!-- Release ––––––––––––––––––––––––––––––––––––––––––––––– {{{2 –––––– -->
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <compilerArguments>
+                <Xlint:all></Xlint:all>
+                <Xmaxerrs>1</Xmaxerrs>
+                <Xmaxwarns>1</Xmaxwarns>
+                <Xprefer:newer></Xprefer:newer>
+              </compilerArguments>
+              <debug>false</debug>
+              <debuglevel>none</debuglevel>
+              <fork>true</fork>
+              <optimize>true</optimize>
+              <showDeprecation>true</showDeprecation>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+            <artifactId>android-maven-plugin</artifactId>
+            <configuration>
+              <release>true</release>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                  <goal>test-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}2 –––––– -->
+  </profiles>
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Properties –––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+<!-- Modules ––––––––––––––––––––––––––––––––––––––––––––––– {{{1 –––––– -->
+<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––– }}}1 –––––– -->
+</project>
+<!-- vim: set nowrap tabstop=8 shiftwidth=2 softtabstop=2 expandtab : -->
+<!-- vim: set textwidth=96 filetype=xml foldmethod=marker spell spelllang=en_gb : -->

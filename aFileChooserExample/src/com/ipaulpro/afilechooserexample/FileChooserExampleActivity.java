@@ -20,58 +20,101 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.Toast;
-
+import com.ipaulpro.afilechooser.FileChooserActivity;
 import com.ipaulpro.afilechooser.utils.FileUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 /**
  * @author paulburke (ipaulpro)
  */
+@SuppressWarnings ({"CollectionDeclaredAsConcreteClass", "HardcodedFileSeparator"})
+@org.androidannotations.annotations.EActivity (R.layout.example)
 public class FileChooserExampleActivity extends Activity {
 
-    private static final String TAG = "FileChooserExampleActivity";
+    private static final String TAG = FileChooserExampleActivity.class.getName ();
+   /**
+    * <p>onActivityResult request code</p>
+    */
+    private static final int REQUEST_CODE = 6384;
+    @NotNull private static final ArrayList<String> PDF_Files;
+   /**
+    * <p>File types for my calculator app. Replace it with whatever you want to test.</p>
+    *
+    * author Martin Krischik" <krischik@users.sourceforge.net>
+    */
+    @NotNull private static final ArrayList<String> Calculator_Files;
+   /**
+    * <p>Directory why the unit tests of my calculator app stores there files. The
+    * real app uses {@link android.content.Context.getExternalFilesDir(java.lang.String)} </p>
+    *
+    * author Martin Krischik" <krischik@users.sourceforge.net>
+    */
+    @NotNull  private static final String Calculator_Dir;
 
-    private static final int REQUEST_CODE = 6384; // onActivityResult request
-                                                  // code
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Create a simple button to start the file chooser process
-        Button button = new Button(this);
-        button.setText(R.string.choose_file);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Display the file chooser dialog
-                showChooser();
-            }
-        });
-
-        setContentView(button);
+    static
+    {
+        PDF_Files = new java.util.ArrayList<String> ();
+        PDF_Files.add (".pdf");
+        Calculator_Files = new java.util.ArrayList<String> ();
+        Calculator_Files.add (".af");
+        Calculator_Files.add (".df");
+        Calculator_Files.add (".pf");
+        Calculator_Dir = FileChooserActivity.EXTERNAL_BASE_PATH + "/Android/FX-602P";
     }
 
-    private void showChooser() {
+    @org.androidannotations.annotations.res.StringRes (R.string.chooser_title)
+    String chooser_title;
+
+    @org.androidannotations.annotations.Click (R.id.All_Files)
+    void appFiles() {
+        android.util.Log.d (TAG, "+ All_Files");
+
         // Use the GET_CONTENT intent from the utility class
-        Intent target = FileUtils.createGetContentIntent();
+        final Intent target = FileUtils.createGetContentIntent();
         // Create the chooser Intent
-        Intent intent = Intent.createChooser(
-                target, getString(R.string.chooser_title));
+        final Intent intent = Intent.createChooser(target, chooser_title);
         try {
             startActivityForResult(intent, REQUEST_CODE);
-        } catch (ActivityNotFoundException e) {
-            // The reason for the existence of aFileChooser
+        } catch (@NotNull final ActivityNotFoundException e) {
+           // The reason for the existence of aFileChooser
+           android.util.Log.e (TAG, "LOG02230:", e);
         }
+
+        android.util.Log.d (TAG, "+ All_Files");
     }
+    @org.androidannotations.annotations.Click (R.id.PDF_Files)
+    void pdfFiles() {
+       android.util.Log.d (TAG, "+ pdfFiles");
+
+       FileChooserActivity.startActivity (
+        /* callingActivity         => */ this,
+        /* requestCode             => */ REQUEST_CODE,
+        /* filterIncludeExtensions => */ PDF_Files);
+
+       android.util.Log.d (TAG, "- pdfFiles");
+   }
+    @org.androidannotations.annotations.Click (R.id.Calculator_Files)
+    void calculatorFiles() {
+       android.util.Log.d (TAG, "+ calculatorFiles");
+
+       FileChooserActivity.startActivity (
+        /* callingActivity         => */ this,
+        /* requestCode             => */ REQUEST_CODE,
+        /* baseDirectory           => */ Calculator_Dir,
+        /* filterIncludeExtensions => */ Calculator_Files);
+
+       android.util.Log.d (TAG, "- calculatorFiles");
+   }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(
+       final int requestCode,
+       final int resultCode,
+       @Nullable final Intent data) {
         switch (requestCode) {
             case REQUEST_CODE:
                 // If the file selection was successful
@@ -83,10 +126,12 @@ public class FileChooserExampleActivity extends Activity {
                         try {
                             // Get the file path from the URI
                             final String path = FileUtils.getPath(this, uri);
-                            Toast.makeText(FileChooserExampleActivity.this,
-                                    "File Selected: " + path, Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Log.e("FileSelectorTestActivity", "File select error", e);
+                           final android.widget.Toast toast = android.widget.Toast.makeText (
+                              com.ipaulpro.afilechooserexample.FileChooserExampleActivity.this,
+                              "File Selected: " + path, android.widget.Toast.LENGTH_LONG);
+                           toast.show ();
+                        } catch (@NotNull final Exception e) {
+                            Log.e(TAG, "File select error", e);
                         }
                     }
                 }
@@ -94,4 +139,15 @@ public class FileChooserExampleActivity extends Activity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+   @Override public String toString ()
+   {
+      return TAG +
+         "{super=" +
+         super.toString () +
+         ", chooser_title=“" +
+         chooser_title +
+         '”' +
+         '}';
+   }
 }

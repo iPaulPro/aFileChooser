@@ -13,6 +13,7 @@ lint.xml
 
 # Java class files
 *.class
+*.jar
 
 # generated files
 bin/
@@ -52,3 +53,4 @@ Thumbs.db
 
 # backup files
 *.bak
+.backups
