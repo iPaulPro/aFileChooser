@@ -57,6 +57,8 @@ public class FileUtils {
 	public static final String MIME_TYPE_APP = "application/*";
 
 	public static final String EXTRA_MIME_TYPES = "net.zhuoweizhang.afilechooser.extra.MIME_TYPES";
+	public static final String EXTRA_SORT_METHOD = "net.zhuoweizhang.afilechooser.extra.SORT_METHOD";
+	public static final String SORT_LAST_MODIFIED = "net.zhuoweizhang.afilechooser.extra.SORT_LAST_MODIFIED";
 
 	/**
 	 * Whether the filename is a video file.

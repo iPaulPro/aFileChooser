@@ -103,6 +103,15 @@ public class FileChooserActivity extends ListActivity {
 		}
 	};
 
+	private Comparator<File> mLastModifiedComparator = new Comparator<File>() {
+		public int compare(File f1, File f2) {
+			long a = f1.lastModified();
+			long b = f2.lastModified();
+			if (a == b) return 0;
+			return a < b? 1: -1;
+		}
+	};
+
 	/**
 	 * External storage state broadcast receiver. 
 	 */
@@ -319,6 +328,13 @@ public class FileChooserActivity extends ListActivity {
 
 		// Get the external storage directory.
 		this.mExternalDir = Environment.getExternalStorageDirectory();
+
+		String sortMethod = getIntent().getStringExtra(FileUtils.EXTRA_SORT_METHOD);
+		if (sortMethod != null) {
+			if (sortMethod.equals(FileUtils.SORT_LAST_MODIFIED)) {
+				this.mComparator = this.mLastModifiedComparator;
+			}
+		}
 
 		if (getListAdapter() == null) {
 			// Assign the list adapter to the ListView
