@@ -449,7 +449,7 @@ public class FileUtils {
                                 MediaStore.Video.Thumbnails.MINI_KIND,
                                 null);
                     }
-                    else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
+                    else if (mimeType.contains("image")) {
                         bm = MediaStore.Images.Thumbnails.getThumbnail(
                                 resolver,
                                 id,
