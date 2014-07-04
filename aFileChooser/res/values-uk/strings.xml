@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="empty_directory">Порожня папка</string>
+  <string name="storage_removed">Сховище видалено або не примонтовано.</string>
+  <string name="choose_file">Виберіть файл</string>
+  <string name="error_selecting_file">Помилка при виборі файлу</string>
+  <string name="internal_storage">Внутрішня пам’ять</string>
+</resources>
