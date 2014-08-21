@@ -326,6 +326,13 @@ public class FileChooserActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		String[] extraMimeTypes = getIntent().getStringArrayExtra(FileUtils.EXTRA_MIME_TYPES);
+		extendedMimeTypes.clear();
+		if (extraMimeTypes != null) {
+			for (String s: extraMimeTypes)
+				extendedMimeTypes.add(s);
+		}
+
 		// Get the external storage directory.
 		this.mExternalDir = Environment.getExternalStorageDirectory();
 
@@ -355,12 +362,6 @@ public class FileChooserActivity extends ListActivity {
 				setContentView(R.layout.explorer);
 				fillList(0);
 			}
-		}
-		String[] extraMimeTypes = getIntent().getStringArrayExtra(FileUtils.EXTRA_MIME_TYPES);
-		extendedMimeTypes.clear();
-		if (extraMimeTypes != null) {
-			for (String s: extraMimeTypes)
-				extendedMimeTypes.add(s);
 		}
 	}
 
