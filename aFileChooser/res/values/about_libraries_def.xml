@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_aFileChooser"></string>
+    <string name="library_aFileChooser_author">Paul Burke</string>
+    <string name="library_aFileChooser_authorWebsite">http://about.me/ipaulpro</string>
+    <string name="library_aFileChooser_libraryName">aFileChooser</string>
+    <string name="library_aFileChooser_libraryDescription">aFileChooser is an Android Library Project that simplifies the process of presenting a file chooser on Android 2.1+.</string>
+    <string name="library_aFileChooser_libraryVersion">1.0</string>
+    <string name="library_aFileChooser_libraryWebsite">https://github.com/iPaulPro/aFileChooser</string>
+    <string name="library_aFileChooser_licenseId">apache_2_0</string>
+    <string name="library_aFileChooser_isOpenSource">true</string>
+    <string name="library_aFileChooser_repositoryLink">https://github.com/iPaulPro/aFileChooser.git</string>
+</resources>
