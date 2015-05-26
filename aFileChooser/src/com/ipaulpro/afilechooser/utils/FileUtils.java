@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * @version 2009-07-03
@@ -144,7 +145,9 @@ public class FileUtils {
     public static String getMimeType(File file) {
 
         String extension = getExtension(file.getName());
-
+        // Convert the extension to lower case to ensure compatibility with MimeTypeMap on devices 
+        // that use e.g. .MP4 for extension 
+        extension = extension.toLowerCase(Locale.getDefault());
         if (extension.length() > 0)
             return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.substring(1));
 
