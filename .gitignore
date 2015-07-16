@@ -52,3 +52,8 @@ Thumbs.db
 
 # backup files
 *.bak
+
+# gradle
+.gradle
+/local.properties
+/build
