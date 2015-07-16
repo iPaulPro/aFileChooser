@@ -1,8 +1,28 @@
 # aFileChooser - Android File Chooser
 
-aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser on Android 2.1+.
+**library** is an __Android Library Project__ that simplifies the process of presenting a file chooser on Android 2.1+.
 
 Intents provide the ability to hook into third-party app components for content selection. This works well for media files, but if you want users to be able to select *any* file, they must have an existing "file explorer" app installed. Because many Android devices don't have stock File Explorers, the developer must often instruct the user to install one, or build one, themselves. aFileChooser solves this issue.
+
+Adding to existing projects
+--------------------------------------
+We use JitPack.io to deliver an Android library for [Orange Cloud Sdk Android](https://jitpack.io/#LaurentSouchet-Orange/AFileChooser)
+
+Add it to your build.gradle with:
+```gradle
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+```
+and:
+
+```gradle
+dependencies {
+    // Orange Cloud Android Sdk
+    compile 'com.github.laurentsouchet-orange:afilechooser:1.0.0'
+}
+```
 
 ### Features:
 
@@ -94,7 +114,7 @@ Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` direct
         }
     }
 
-A more robust example can be found in the aFileChooserExample project.
+A more robust example can be found in the **sample** project.
 
 __Note__ the `FileUtils` method to get a file path from a `Uri` (`FileUtils.getPath(Context, Uri)`). This works for `File`, `MediaStore`, and `DocumentProvider` `Uris`.
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/sample/build/intermediates/exploded-aar/aFileChooser_laurent/library/unspecified/res/values-pt-rBR/values-pt-rBR.xml -->
+    <eat-comment/>
+    <string name="choose_file">Selecione um Arquivo</string>
+    <string name="empty_directory">Pasta Vazia</string>
+    <string name="error_selecting_file">Erro ao selecionar o Arquivo</string>
+    <string name="storage_removed">Unidade externa removida ou não preparada.</string>
+</resources>

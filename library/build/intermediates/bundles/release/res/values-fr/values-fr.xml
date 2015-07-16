@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/src/main/res/values-fr/strings.xml -->
+    <eat-comment/>
+    <string name="choose_file">Sélectionnez un fichier</string>
+    <string name="empty_directory">Dossier vide</string>
+    <string name="error_selecting_file">Erreur lors de la sélection du fichier</string>
+    <string name="storage_removed">Le stockage a été enlevé ou démonté.</string>
+</resources>

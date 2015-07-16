@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-894a59df4162eaaa640346f5ceb2e41abf85ddb2.jar" />
+    </item>
+    <item
+        jar="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\pre-dexed\debug\classes-806e93a3219db1b92e09c5f31e77204e076d9052.jar" />
+    </item>
+    <item
+        jar="C:\Applications\tools\android-sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.0\support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-b7a842d3a6664f968a617a68cb45aca8fc3a3e6b.jar" />
+    </item>
+    <item
+        jar="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\exploded-aar\aFileChooser_laurent\library\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ee2de2121cb0d61320598d168a349a2754de6e66">
+        <dex dex="C:\Applications\Homepoint\workspace\aFileChooser_laurent\sample\build\intermediates\pre-dexed\debug\classes-f28a51a7b1ea23e327e0b075997acde5db0f188c.jar" />
+    </item>
+
+</items>

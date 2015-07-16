@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/src/main/res/values-ca/strings.xml -->
+    <eat-comment/>
+    <string name="choose_file">Seleccioneu un fitxer</string>
+    <string name="empty_directory">Carpeta buida</string>
+    <string name="error_selecting_file">Error en seleccionar el fitxer</string>
+    <string name="storage_removed">S\'ha tret o desmuntat l\'emmagatzematge.</string>
+</resources>

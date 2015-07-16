@@ -1,0 +1,11 @@
+-classpath 'C:\\Applications\\tools\\android-sdk\\platforms\\android-22\\android.jar'
+-d 'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\build\\docs\\javadoc'
+-doctitle 'library API'
+-quiet 
+-windowtitle 'library API'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ianhanniballake\\localstorage\\LocalStorageProvider.java'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ipaulpro\\afilechooser\\FileChooserActivity.java'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ipaulpro\\afilechooser\\FileListAdapter.java'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ipaulpro\\afilechooser\\FileListFragment.java'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ipaulpro\\afilechooser\\FileLoader.java'
+'C:\\Applications\\Homepoint\\workspace\\aFileChooser_laurent\\library\\src\\main\\java\\com\\ipaulpro\\afilechooser\\utils\\FileUtils.java'

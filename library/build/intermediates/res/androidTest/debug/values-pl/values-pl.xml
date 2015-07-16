@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/build/intermediates/bundles/debug/res/values-pl/values-pl.xml -->
+    <eat-comment/>
+    <string name="choose_file">Wybierz plik</string>
+    <string name="empty_directory">Pusty katalog</string>
+    <string name="error_selecting_file">Błąd, podczas wybierania pliku</string>
+    <string name="storage_removed">Pamięć została usunięta lub odmontowana.</string>
+</resources>

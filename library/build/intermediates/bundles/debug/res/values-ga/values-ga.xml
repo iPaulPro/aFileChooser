@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/src/main/res/values-ga/strings.xml -->
+    <eat-comment/>
+    <string name="choose_file">Roghnaigh comhad</string>
+    <string name="empty_directory">Comhadlann fholamh</string>
+    <string name="error_selecting_file">Tharla botún fad is a bhí comhad á roghnú</string>
+    <string name="storage_removed">Baineadh amach an gléas stórála nó dínascadh é.</string>
+</resources>

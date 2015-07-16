@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/src/main/res/values-v19/bool.xml -->
+    <eat-comment/>
+    <bool name="use_activity">false</bool>
+    <bool name="use_provider">true</bool>
+</resources>
