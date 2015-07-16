@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/build/intermediates/bundles/debug/res/values-v11/values-v11.xml -->
-    <eat-comment/>
-    <string name="choose_file">Choose a file</string>
-</resources>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- From: file:/C:/Applications/Homepoint/workspace/aFileChooser_laurent/library/build/intermediates/bundles/debug/res/values-it/values-it.xml -->
-    <eat-comment/>
-    <string name="choose_file">Selezionare un file</string>
-    <string name="empty_directory">Directory vuota</string>
-    <string name="error_selecting_file">Errore nel selezionare il File</string>
-    <string name="storage_removed">Lo spazio di archiviazione è stato rimosso o smontato.</string>
-</resources>
