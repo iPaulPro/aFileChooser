@@ -46,7 +46,7 @@ import java.util.Comparator;
  */
 public class FileUtils {
     private FileUtils() {} //private constructor to enforce Singleton pattern
-    
+
     /** TAG for log messages. */
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
@@ -247,7 +247,7 @@ public class FileUtils {
      * <br>
      * Callers should check whether the path is local before assuming it
      * represents a local file.
-     * 
+     *
      * @param context The context.
      * @param uri The Uri to query.
      * @see #isLocal(String)
