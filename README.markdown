@@ -23,35 +23,39 @@ Add `FileChooserActivity` to your project's AndroidManifest.xml file with a full
 
 __Important__ `FileChooserActivity` must have `android:exported="true"` and have the `<intent-filter>` set as follows:
 
-    <activity
-        android:name="com.ipaulpro.afilechooser.FileChooserActivity"
-        android:icon="@drawable/ic_chooser"
-		android:enabled="@bool/use_activity"
-        android:exported="true"
-        android:label="@string/choose_file" >
-        <intent-filter>
-            <action android:name="android.intent.action.GET_CONTENT" />
+``` xml
+<activity
+    android:name="com.ipaulpro.afilechooser.FileChooserActivity"
+    android:icon="@drawable/ic_chooser"
+	android:enabled="@bool/use_activity"
+    android:exported="true"
+    android:label="@string/choose_file" >
+    <intent-filter>
+        <action android:name="android.intent.action.GET_CONTENT" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.OPENABLE" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.OPENABLE" />
 
-            <data android:mimeType="*/*" />
-        </intent-filter>
-    </activity>
+        <data android:mimeType="*/*" />
+    </intent-filter>
+</activity>
+```
 
 If you want to use the Storage Access Framework (API 19+), include [Ian Lake](https://github.com/ianhanniballake/)'s `LocalStorageProvider` (included in this library) in your `<application>`:
 
-	<provider
-        android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
-        android:authorities="com.ianhanniballake.localstorage.documents"
-		android:enabled="@bool/use_provider"
-        android:exported="true"
-        android:grantUriPermissions="true"
-        android:permission="android.permission.MANAGE_DOCUMENTS" >
-            <intent-filter>
-                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
-            </intent-filter>
-    </provider>
+``` xml
+<provider
+    android:name="com.ianhanniballake.localstorage.LocalStorageProvider"
+    android:authorities="com.ianhanniballake.localstorage.documents"
+	android:enabled="@bool/use_provider"
+    android:exported="true"
+    android:grantUriPermissions="true"
+    android:permission="android.permission.MANAGE_DOCUMENTS" >
+        <intent-filter>
+            <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+        </intent-filter>
+</provider>
+```
 
 __Note__ that like a `ContentProvider`, the `DocumentProvider` `authority` must be unique. You should change `com.ianhanniballake.localstorage.documents` in your Manifest, as well as the `LocalStorageProvider.AUTHORITY` field.
 
@@ -61,38 +65,40 @@ Using `FileChooserActivity` and `LocalStorageProvider` together are redundant if
 
 Use `startActivityForResult(Intent, int)` to launch `FileChooserActivity` directly. `FileChooserActivity` returns the `Uri` of the file selected as the `Intent` data in `onActivityResult(int, int, Intent)`. Alternatively, you can use the helper method `FileUtils.createGetContentIntent()` to construct an `ACTION_GET_CONTENT` Intent that will show an "Intent Chooser" dialog on pre Kit-Kat devices, and the "Documents UI" otherwise. E.g.:
 
-    private static final int REQUEST_CHOOSER = 1234;
+``` java
+private static final int REQUEST_CHOOSER = 1234;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // Create the ACTION_GET_CONTENT Intent
-        Intent getContentIntent = FileUtils.createGetContentIntent();
-		
-        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
-        startActivityForResult(intent, REQUEST_CHOOSER);
+    // Create the ACTION_GET_CONTENT Intent
+    Intent getContentIntent = FileUtils.createGetContentIntent();
+
+    Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+    startActivityForResult(intent, REQUEST_CHOOSER);
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+        case REQUEST_CHOOSER:
+            if (resultCode == RESULT_OK) {
+
+                final Uri uri = data.getData();
+
+				// Get the File path from the Uri
+                String path = FileUtils.getPath(this, uri);
+
+				// Alternatively, use FileUtils.getFile(Context, Uri)
+				if (path != null && FileUtils.isLocal(path)) {
+					File file = new File(path);
+				}
+            }
+			break;
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-        	case REQUEST_CHOOSER:	
-            	if (resultCode == RESULT_OK) {
-					
-                	final Uri uri = data.getData();
-					
-					// Get the File path from the Uri
-                	String path = FileUtils.getPath(this, uri);
-					
-					// Alternatively, use FileUtils.getFile(Context, Uri)
-					if (path != null && FileUtils.isLocal(path)) {
-						File file = new File(path);
-					}
-            	}
-				break;
-        }
-    }
+}
+```
 
 A more robust example can be found in the aFileChooserExample project.
 
@@ -127,7 +133,7 @@ Document by [Melvin Salas](http://thenounproject.com/msalas10) from The Noun Pro
 Portions of FileUtils.java:
 
     Copyright (C) 2007-2008 OpenIntents.org
- 
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
@@ -150,4 +156,4 @@ LocalStorageProvider.java:
 	- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 	- Neither the name of the <ORGANIZATION> nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
