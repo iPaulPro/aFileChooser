@@ -286,7 +286,12 @@ public class FileUtils {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
 
-                // TODO handle non-primary volumes
+                // Since Android M, the external SD Card used as portable storage shows the
+                // SDCard ID as DocumentsContract first parameter.
+                // So docId has the following format: XXXX-XXXX:path/to/the/file
+                if (type.matches("[A-F0-9]{4}-[A-F0-9]{4}")) {
+                    return "/storage/".concat(type).concat("/").concat(split[1]);
+                }
             }
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
