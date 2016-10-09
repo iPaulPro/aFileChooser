@@ -1,2 +1,8 @@
 build
-.idea/workspace.xml
+.idea
+.gradle
+gradle
+local.properties
+import-summary.txt
+aFileChooser.iml
+
