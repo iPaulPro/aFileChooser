@@ -82,6 +82,9 @@
 	<type extension=".ppt" mimetype="application/vnd.ms-powerpoint" />
 	<type extension=".pdf" mimetype="application/pdf" />
 	<type extension=".xls" mimetype="application/vnd.ms-excel" />
+		
+	<!-- Executable types -->
+	<type extension=".exe" mimetype="application/vnd.microsoft.portable-executable" />
 	
 	<!-- Android specific -->
 	<type extension=".apk" mimetype="application/vnd.android.package-archive" />
