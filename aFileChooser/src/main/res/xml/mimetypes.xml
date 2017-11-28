@@ -85,5 +85,8 @@
 	
 	<!-- Android specific -->
 	<type extension=".apk" mimetype="application/vnd.android.package-archive" />
+
+	<!-- Executable types -->
+	<type extension=".exe" mimetype="application/vnd.microsoft.portable-executable" />
 	
 </MimeTypes>
