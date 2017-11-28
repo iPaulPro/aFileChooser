@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * Copyright (C) 2007-2008 OpenIntents.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<MimeTypes>
+	<!-- Image types -->
+	<type extension=".png" mimetype="image/png" />
+	<type extension=".gif" mimetype="image/gif" />
+	<type extension=".jpg" mimetype="image/jpeg" />
+	<type extension=".jpeg" mimetype="image/jpeg" />
+	<type extension=".bmp" mimetype="image/bmp" />
+	<type extension=".tiff" mimetype="image/tiff" />
+	<type extension=".tif" mimetype="image/tiff" />
+	<type extension=".icon" mimetype="image/x-icon" />
+	    
+	<!-- Audio types -->
+	<type extension=".mp3" mimetype="audio/mpeg" />
+	<type extension=".mp2" mimetype="audio/mpeg" />
+	<type extension=".mpga" mimetype="audio/mpeg" />
+	<type extension=".m4a" mimetype="audio/mp4a-latm" />
+	<type extension=".m4p" mimetype="audio/mp4a-latm" />
+	<type extension=".wav" mimetype="audio/wav" />
+	<type extension=".ogg" mimetype="audio/x-ogg" />
+	<type extension=".mid" mimetype="audio/mid" />
+	<type extension=".midi" mimetype="audio/midi" />
+	<type extension=".amr" mimetype="audio/AMR" />
+	<type extension=".aac" mimetype="audio/x-aac"/>
+	<type extension=".m3u" mimetype="audio/x-mpegurl"/>
+	<type extension=".ram" mimetype="audio/x-pn-realaudio"/>
+	<type extension=".ra" mimetype="audio/x-pn-realaudio"/>
+	<type extension=".aif" mimetype="audio/x-aiff"/>
+	<type extension=".aiff" mimetype="audio/x-aiff"/>
+	<type extension=".aifc" mimetype="audio/x-aiff"/>
+			
+	<!-- Video types -->
+	<type extension=".mpeg" mimetype="video/mpeg" />
+	<type extension=".mpg" mimetype="video/mpeg" />	
+	<type extension=".mpe" mimetype="video/mpeg" />
+	<type extension=".mov" mimetype="video/quicktime" />
+	<type extension=".qt" mimetype="video/quicktime" />
+	<type extension=".mp4" mimetype="video/mpeg" />
+	<type extension=".3gp" mimetype="video/3gpp" />
+	<type extension=".3gpp" mimetype="video/3gpp" />
+	<type extension=".m4u" mimetype="video/vnd.mpegurl" />
+	<type extension=".mxu" mimetype="video/vnd.mpegurl" />
+	<type extension=".flv" mimetype="video/x-flv" />
+	<type extension=".wmx" mimetype="video/x-ms-wmv" />
+	<type extension=".avi" mimetype="video/x-msvideo" />
+			
+	<!-- Package types -->
+	<type extension=".jar" mimetype="application/java-archive" />
+	<type extension=".zip" mimetype="application/zip" />
+	<type extension=".rar" mimetype="application/x-rar-compressed" />
+	<type extension=".gz" mimetype="application/gzip" />
+	
+	<!-- Web browser types -->
+	<type extension=".htm" mimetype="text/html" />
+	<type extension=".html" mimetype="text/html" />
+	<type extension=".php" mimetype="text/php " />
+	
+	<!-- Doc types -->
+	<type extension=".txt" mimetype="text/plain" />
+	<type extension=".rtf" mimetype="text/rtf" />
+	<type extension=".csv" mimetype="text/csv" />
+	<type extension=".xml" mimetype="text/xml" />
+	<type extension=".xml" mimetype="text/xml" />
+	<type extension=".css" mimetype="text/css" />
+	<type extension=".doc" mimetype="application/msword" />
+	<type extension=".docx" mimetype="application/msword" />
+	<type extension=".ppt" mimetype="application/vnd.ms-powerpoint" />
+	<type extension=".pdf" mimetype="application/pdf" />
+	<type extension=".xls" mimetype="application/vnd.ms-excel" />
+	
+	<!-- Android specific -->
+	<type extension=".apk" mimetype="application/vnd.android.package-archive" />
+
+	<!-- Executable types -->
+	<type extension=".exe" mimetype="application/vnd.microsoft.portable-executable" />
+	
+</MimeTypes>
