@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -38,16 +39,19 @@ import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 
+
 /**
- * @version 2009-07-03
  * @author Peli
- * @version 2013-12-11
  * @author paulburke (ipaulpro)
+ * @version 2013-12-11
  */
 public class FileUtils {
-    private FileUtils() {} //private constructor to enforce Singleton pattern
-    
-    /** TAG for log messages. */
+    private FileUtils() {
+    } //private constructor to enforce Singleton pattern
+
+    /**
+     * TAG for log messages.
+     */
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
 
@@ -64,7 +68,7 @@ public class FileUtils {
      *
      * @param uri
      * @return Extension including the dot("."); "" if there is no extension;
-     *         null if uri was null.
+     * null if uri was null.
      */
     public static String getExtension(String uri) {
         if (uri == null) {
@@ -204,21 +208,31 @@ public class FileUtils {
     }
 
     /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Whatsapp.
+     * @author nieldeokar
+     */
+    public static boolean isWhatsappUri(Uri uri) {
+        return "com.whatsapp.provider.media".equals(uri.getAuthority());
+    }
+
+    /**
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @param columnName (Optional) name of the column default is _data
      * @return The value of the _data column, which is typically a file path.
      * @author paulburke
      */
     public static String getDataColumn(Context context, Uri uri, String selection,
-            String[] selectionArgs) {
+                                       String[] selectionArgs,String columnName) {
 
         Cursor cursor = null;
-        final String column = "_data";
+        final String column = columnName == null ?  "_data" : columnName;
         final String[] projection = {
                 column
         };
@@ -231,7 +245,7 @@ public class FileUtils {
                     DatabaseUtils.dumpCursor(cursor);
 
                 final int column_index = cursor.getColumnIndexOrThrow(column);
-                return cursor.getString(column_index);
+                return column.equals("_data") ? cursor.getString(column_index) : uri.toString() + "/" + cursor.getString(column_index);
             }
         } finally {
             if (cursor != null)
@@ -247,12 +261,12 @@ public class FileUtils {
      * <br>
      * Callers should check whether the path is local before assuming it
      * represents a local file.
-     * 
+     *
      * @param context The context.
-     * @param uri The Uri to query.
+     * @param uri     The Uri to query.
+     * @author paulburke
      * @see #isLocal(String)
      * @see #getFile(Context, Uri)
-     * @author paulburke
      */
     public static String getPath(final Context context, final Uri uri) {
 
@@ -265,7 +279,7 @@ public class FileUtils {
                             ", Scheme: " + uri.getScheme() +
                             ", Host: " + uri.getHost() +
                             ", Segments: " + uri.getPathSegments().toString()
-                    );
+            );
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
@@ -290,12 +304,22 @@ public class FileUtils {
             }
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
-
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                Uri contentUri;
+                try {
+                    contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                } catch (NumberFormatException e) {
 
-                return getDataColumn(context, contentUri, null, null);
+                    if (!TextUtils.isEmpty(id)) {
+                        if (id.startsWith("raw:")) {
+                            return id.replaceFirst("raw:", "");
+                        }
+                    }
+                    contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                }
+
+
+                return getDataColumn(context, contentUri, null, null, null);
             }
             // MediaProvider
             else if (isMediaDocument(uri)) {
@@ -313,11 +337,11 @@ public class FileUtils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
-                return getDataColumn(context, contentUri, selection, selectionArgs);
+                return getDataColumn(context, contentUri, selection, selectionArgs, null);
             }
         }
         // MediaStore (and general)
@@ -327,23 +351,34 @@ public class FileUtils {
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
 
-            return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
+            if (isWhatsappUri(uri)) {
 
+                String path = getDataColumn(context, uri, null, null, "_display_name");
+
+                if (path != null) {
+                    File file = new File(path);
+                    if (!file.canRead()) {
+                        return null;
+                    }
+                }
+                return path;
+            }
+            // File
+            else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                return uri.getPath();
+            }
+        }
         return null;
     }
+
 
     /**
      * Convert Uri into File, if possible.
      *
      * @return file A local file that the Uri was pointing to, or null if the
-     *         Uri is unsupported or pointed to a remote resource.
-     * @see #getPath(Context, Uri)
+     * Uri is unsupported or pointed to a remote resource.
      * @author paulburke
+     * @see #getPath(Context, Uri)
      */
     public static File getFile(Context context, Uri uri) {
         if (uri != null) {
@@ -448,8 +483,7 @@ public class FileUtils {
                                 id,
                                 MediaStore.Video.Thumbnails.MINI_KIND,
                                 null);
-                    }
-                    else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
+                    } else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
                         bm = MediaStore.Images.Thumbnails.getThumbnail(
                                 resolver,
                                 id,
