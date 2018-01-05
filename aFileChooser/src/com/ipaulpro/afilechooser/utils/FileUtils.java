@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qtsoftware.qtconnect;
+package com.ipaulpro.afilechooser.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -39,7 +39,6 @@ import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 
-import timber.log.Timber;
 
 /**
  * @author Peli
