@@ -334,7 +334,7 @@ public class FileUtils {
 
             String filePath = getDataColumn(context, uri, null, null);
             if (filePath == null) {
-                filePath = getDriveImageFilePath(context, uri);
+                filePath = getDriveFilePath(context, uri);
             }
             return filePath;
         }
@@ -346,15 +346,15 @@ public class FileUtils {
         return null;
     }
 
-    private static String getDriveImageFilePath(Context context, Uri uri) throws IOException {
+    private static String getDriveFilePath(Context context, Uri uri) throws IOException {
         ContextWrapper ctr = new ContextWrapper(context.getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = ctr.getDir("imageDir", Context.MODE_PRIVATE);
+        File directory = ctr.getDir("tempFilesDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File driveImageFile = new File(directory, "tempDriveImage.jpg");
+        File driveFile = new File(directory, "tempDriveFile");
         FileOutputStream fs = null;
         InputStream is = context.getContentResolver().openInputStream(uri);
-        fs = new FileOutputStream(driveImageFile);
+        fs = new FileOutputStream(driveFile);
         int n;
         byte[] buffer = new byte[1024];
         if (is == null) throw new IOException();
@@ -362,7 +362,7 @@ public class FileUtils {
             fs.write(buffer, 0, n);
         }
         fs.close();
-        return driveImageFile.getAbsolutePath();
+        return driveFile.getAbsolutePath();
     }
 
     /**
