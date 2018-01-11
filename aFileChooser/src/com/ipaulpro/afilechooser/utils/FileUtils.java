@@ -39,15 +39,17 @@ import java.text.DecimalFormat;
 import java.util.Comparator;
 
 /**
- * @version 2009-07-03
  * @author Peli
- * @version 2013-12-11
  * @author paulburke (ipaulpro)
+ * @version 2013-12-11
  */
 public class FileUtils {
-    private FileUtils() {} //private constructor to enforce Singleton pattern
-    
-    /** TAG for log messages. */
+    private FileUtils() {
+    } //private constructor to enforce Singleton pattern
+
+    /**
+     * TAG for log messages.
+     */
     static final String TAG = "FileUtils";
     private static final boolean DEBUG = false; // Set to true to enable logging
 
@@ -64,7 +66,7 @@ public class FileUtils {
      *
      * @param uri
      * @return Extension including the dot("."); "" if there is no extension;
-     *         null if uri was null.
+     * null if uri was null.
      */
     public static String getExtension(String uri) {
         if (uri == null) {
@@ -207,15 +209,15 @@ public class FileUtils {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      * @author paulburke
      */
     public static String getDataColumn(Context context, Uri uri, String selection,
-            String[] selectionArgs) {
+                                       String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -247,12 +249,12 @@ public class FileUtils {
      * <br>
      * Callers should check whether the path is local before assuming it
      * represents a local file.
-     * 
+     *
      * @param context The context.
-     * @param uri The Uri to query.
+     * @param uri     The Uri to query.
+     * @author paulburke
      * @see #isLocal(String)
      * @see #getFile(Context, Uri)
-     * @author paulburke
      */
     public static String getPath(final Context context, final Uri uri) {
 
@@ -265,7 +267,7 @@ public class FileUtils {
                             ", Scheme: " + uri.getScheme() +
                             ", Host: " + uri.getHost() +
                             ", Segments: " + uri.getPathSegments().toString()
-                    );
+            );
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
@@ -294,7 +296,6 @@ public class FileUtils {
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
                 return getDataColumn(context, contentUri, null, null);
             }
             // MediaProvider
@@ -313,7 +314,7 @@ public class FileUtils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -327,7 +328,11 @@ public class FileUtils {
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
 
-            return getDataColumn(context, uri, null, null);
+            String filePath = getDataColumn(context, uri, null, null);
+            if (filePath == null) {
+                filePath = getDriveFilePath(context, uri);
+            }
+            return filePath;
         }
         // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
@@ -337,13 +342,32 @@ public class FileUtils {
         return null;
     }
 
+    private static String getDriveFilePath(Context context, Uri uri) throws IOException {
+        ContextWrapper ctr = new ContextWrapper(context.getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = ctr.getDir("tempFilesDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File driveFile = new File(directory, "tempDriveFile");
+        FileOutputStream fs = null;
+        InputStream is = context.getContentResolver().openInputStream(uri);
+        fs = new FileOutputStream(driveFile);
+        int n;
+        byte[] buffer = new byte[1024];
+        if (is == null) throw new IOException();
+        while ((n = is.read(buffer)) > -1) {
+            fs.write(buffer, 0, n);
+        }
+        fs.close();
+        return driveFile.getAbsolutePath();
+    }
+
     /**
      * Convert Uri into File, if possible.
      *
      * @return file A local file that the Uri was pointing to, or null if the
-     *         Uri is unsupported or pointed to a remote resource.
-     * @see #getPath(Context, Uri)
+     * Uri is unsupported or pointed to a remote resource.
      * @author paulburke
+     * @see #getPath(Context, Uri)
      */
     public static File getFile(Context context, Uri uri) {
         if (uri != null) {
@@ -448,8 +472,7 @@ public class FileUtils {
                                 id,
                                 MediaStore.Video.Thumbnails.MINI_KIND,
                                 null);
-                    }
-                    else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
+                    } else if (mimeType.contains(FileUtils.MIME_TYPE_IMAGE)) {
                         bm = MediaStore.Images.Thumbnails.getThumbnail(
                                 resolver,
                                 id,
