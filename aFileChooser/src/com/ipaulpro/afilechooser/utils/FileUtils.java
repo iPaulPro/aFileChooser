@@ -291,7 +291,7 @@ public class FileUtils {
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
                 if (uri.toString().startsWith("raw:"))
-                    filePath= uri.replaceFirst("raw:", "");
+                    filePath= uri.toString().replaceFirst("raw:", "");
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
