@@ -1,3 +1,7 @@
+# Archived
+
+This file chooser is outdated and can't be used with current Android versions any more.
+
 # aFileChooser - Android File Chooser
 
 aFileChooser is an __Android Library Project__ that simplifies the process of presenting a file chooser on Android 2.1+.
